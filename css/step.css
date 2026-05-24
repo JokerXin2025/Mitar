@@ -1,0 +1,35 @@
+.step-block {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 8px;
+    padding: 8px 0 8px 12px;
+    border-radius: 6px;
+    border-left: 2px solid var(--border-color-light);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-15px);
+}
+
+.step-block:hover {
+    background: var(--current-step-color-background);
+    border-left-color: var(--current-step-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.step-tag {
+    font-family: 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 6px;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+}
+
+.step-content {
+    flex: 1;
+    word-break: break-word;
+}

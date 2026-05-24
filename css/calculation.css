@@ -1,0 +1,24 @@
+.calculation-block {
+    border-collapse: collapse;
+    align-self: flex-start;
+}
+.calculation-block td {
+    padding: 0 12px;
+    vertical-align: baseline;
+}
+.calculation-block .lhs {
+    text-align: right; 
+    font-weight: bold; 
+    white-space: nowrap; 
+}
+.calculation-block .rel {
+    text-align: center; 
+    padding: 0px 4px;
+}
+.calculation-block .reason {
+    font-size: 10.4px;
+    color: var(--text-muted); 
+    font-family: system-ui, -apple-system, sans-serif; 
+    padding-top: 0px;
+    padding-bottom: 8px;
+}

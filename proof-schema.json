@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema" ,
+  "$defs" : {
+    "Strategy" : {
+      "type" : "object" ,
+      "oneOf" : [
+        {
+          "properties" : {
+            "is_strategy" : { "const" : true } ,
+            "by" : { "const" : "Contradiction" } ,
+            "h_contra" : { "type" : "string" } ,
+            "proof" : {
+              "$ref" : "#/$defs/Proof"
+            }
+          } ,
+          "required" : [ "is_strategy" , "by" , "h_contra" , "proof" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "is_strategy" : { "const" : true } ,
+            "by" : { "const" : "Induction" } ,
+            "on" : { "type" : "string" } ,
+            "base_case_proof" : {
+              "$ref" : "#/$defs/Proof"
+            } ,
+            "assumed_m" : { "type" : "string" } ,
+            "inductive_h" : { "type" : "string" } ,
+            "inductive_proof" : {
+              "$ref" : "#/$defs/Proof"
+            }
+          } ,
+          "required" : [ "by" , "on" , "base_case_proof" , "assumed_m" , "inductive_h" , "inductive_proof" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "is_strategy" : { "const" : true } ,
+            "by" : { "const" : "Cases" } ,
+            "principle" : { "type" : "string" } ,
+            "cases" : {
+              "type" : "array" ,
+              "items" : {
+                "$ref" : "#/$defs/Proof"
+              } ,
+              "minItems" : 2 ,
+              "uniqueItems": true
+            }
+          } ,
+          "required" : [ "by" , "principle" , "cases" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "Calculation" } ,
+            "init_term" : { "type" : "string" } ,
+            "chain" : {
+              "type" : "array" ,
+              "items" : {
+                "type" : "object" ,
+                "properties" : {
+                  "next_term" : { "type" : "string" } ,
+                  "relation" : {
+                    "type" : "string" ,
+                    "examples" : [ "=" , "<" , "≤" ]
+                  } ,
+                  "reason" : {
+                    "type" : "string"
+                  }
+                } ,
+                "required" : [ "next_term" , "relation" , "reason" ] ,
+                "additionalProperties" : false
+              } ,
+              "minItems" : 1
+            }
+          } ,
+          "required" : [ "by" , "init_term" , "chain" ] ,
+          "additionalProperties" : false
+        }
+      ]
+    } ,
+    "Step" : {
+      "type" : "object" ,
+      "oneOf" : [
+        {
+          "properties" : {
+            "by" : { "const" : "rfl" }
+          } ,
+          "required" : [ "by" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "unfold" } ,
+            "const" : { "type": "string" } ,
+            "h" : { "type" : "string" } ,
+            "h_" : { "type" : "string" } ,
+            "goal_" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "const" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "change" } ,
+            "expr" : { "type": "string" } ,
+            "h" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "expr" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "apply" } ,
+            "thm" : { "type": "string" } ,
+            "goal" : { "type": "string" } ,
+            "goal_" : { "type": "string" }
+          } ,
+          "required" : [ "by" , "thm" , "goal" , "goal_" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "norm_num" } ,
+            "h" : { "type" : "string" } ,
+            "h_" : { "type" : "string" } ,
+            "goal" : { "type" : "string" } ,
+            "goal_" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "omega" } ,
+            "goal" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "linarith" } ,
+            "goal" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "nlinarith" } ,
+            "goal" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "ring" } ,
+            "goal" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "gcongr" } ,
+            "goal" : { "type" : "string" } ,
+            "goal_" : { "type" : "string" }
+          } ,
+          "required" : [ "by" , "goal" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "by" : { "const" : "have" } ,
+            "trivial" : { "type" : "boolean" } ,
+            "content" : { "type" : "string" } ,
+            "proof" : { "$ref" : "#/$defs/Proof" }
+          } ,
+          "required" : [ "by" , "trivial" , "content" , "proof" ] ,
+          "additionalProperties" : false
+        }
+      ]
+    } ,
+    "Proof" : {
+      "type" : "object" ,
+      "oneOf" : [
+        {
+          "properties" : {
+            "use_tactic" : { "const" : false } ,
+            "item" : {
+              "type" : "string"
+            }
+          } ,
+          "required" : [ "use" , "item" ] ,
+          "additionalProperties" : false
+        } ,
+        {
+          "properties" : {
+            "use_tactic" : { "const" : true } ,
+            "tactics" : {
+              "type" : "array" ,
+              "items" : {
+                "oneOf" : [
+                  { "$ref" : "#/$defs/Step" } ,
+                  { "$ref" : "#/$defs/Strategy" }
+                ]
+              }
+            }
+          } ,
+          "required" : [ "use" , "tactics" ] ,
+          "additionalProperties" : false
+        }
+      ]
+    }
+  } ,
+  "$ref" : "#/$defs/Proof"
+}
