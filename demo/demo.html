@@ -62,7 +62,6 @@
                 <span class="step-tag">解构</span>
                 <span class="step-content">由于 $f''$ 连续, 应用<span class="ref-link">介值定理</span>可知存在 $\xi\in(\min\{\eta_{1},\eta_{2}\},\max\{\eta_{1},\eta_{2}\})$ 使得 $$f''(\xi)=\frac{f''(\eta_{1})+f''(\eta_{2})}{2}$$</span>
             </div>
-
             <div class="step-block">
                 <span class="step-tag">构造</span>
                 <span class="step-content">我们断言 $\xi$ 就是所要找的对象, 下面我们证明 $$\xi\in(-a,a)\quad\text{且}\quad f''(\xi)=\frac{f(a)+f(-a)}{a^{2}}$$</span>
@@ -117,6 +116,7 @@
                                     <span>$f(a)=f'(0)a+\frac{f''(\eta_{1})}{2}a^{2}$</span>
                                 </summary>
                                 <div class="goal-content with-line">
+
                                     <table class="calculation-block">
                                         <tr>
                                             <td class="lhs">$f(a)$</td>
@@ -149,6 +149,7 @@
                                             <td class="reason">ring 多项式化简</td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </details>
 
@@ -158,6 +159,7 @@
                                     <span>$f(-a)=f'(0)(-a)+\frac{f''(\eta_{2})}{2}a^{2}$</span>
                                 </summary>
                                 <div class="goal-content with-line">
+
                                     <table class="calculation-block">
                                         <tr>
                                             <td class="lhs">$f(-a)$</td>
@@ -190,6 +192,7 @@
                                             <td class="reason">ring 多项式化简</td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </details>
 
@@ -200,6 +203,7 @@
                                     <span class="final-mark">$\to$ 证毕</span>
                                 </summary>
                                 <div class="goal-content with-line">
+
                                     <table class="calculation-block">
                                         <tr>
                                             <td class="lhs">$\displaystyle\frac{f(a)+f(-a)}{a^{2}}$</td>
@@ -242,6 +246,7 @@
                                             <td class="reason"></td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </details>
 
@@ -260,6 +265,7 @@
             <span class="statement-title">ECNU 20260523 Problem&#8239;22-2</span>
         </summary>
         <div class="goal-content with-line">
+
             <div class="step-block">
                 <span class="step-tag">注意到</span>
                 <span class="step-content">对 $f$ 的极值点 $x_{0}$ 应用<span class="ref-link">Fermat引理</span>可知 $f'(x_0)=0$</span>
@@ -279,6 +285,7 @@
                     <span>$f(a)=f(x_0)+\frac{f''(\eta_{1})}{2}(a-x_0)^{2}$</span>
                 </summary>
                 <div class="goal-content with-line">
+
                     <table class="calculation-block">
                         <tr>
                             <td class="lhs">$f(a)$</td>
@@ -311,6 +318,7 @@
                             <td class="reason">ring 多项式化简</td>
                         </tr>
                     </table>
+
                 </div>
             </details>
 
@@ -320,6 +328,7 @@
                     <span>$f(-a)=f(x_0)+\frac{f''(\eta_{2})}{2}(a+x_0)^{2}$</span>
                 </summary>
                 <div class="goal-content with-line">
+
                     <table class="calculation-block">
                         <tr>
                             <td class="lhs">$f(-a)$</td>
@@ -352,6 +361,7 @@
                             <td class="reason">ring 多项式化简</td>
                         </tr>
                     </table>
+
                 </div>
             </details>
 
@@ -361,6 +371,7 @@
                     <span>$|f(a)-f(-a)|\le\frac{|f''(\eta_{1})|}{2}(a-x_0)^{2}+\frac{|f''(\eta_{2})|}{2}(a+x_0)^{2}$</span>
                 </summary>
                 <div class="goal-content with-line">
+
                     <div class="step-block">
                         <span class="step-tag">linarith</span>
                         <span class="step-content">注意到 $$f(a)-f(-a)=\frac{f''(\eta_{1})}{2}(a-x_0)^{2}-\frac{f''(\eta_{2})}{2}(a+x_0)^{2}$$</span>
@@ -397,6 +408,7 @@
                             <td class="reason"></td>
                         </tr>
                     </table>
+
                 </div>
             </details>
 
@@ -420,6 +432,7 @@
                             <span>$|f''(\eta_1)|\geqslant|f''(\eta_2)|$</span>
                         </summary>
                         <div class="goal-content with-line">
+
                             <div class="step-block">
                                 <span class="step-tag">构造</span>
                                 <span class="step-content">我们断言 $\eta_1$ 就是所要找的对象, 下面我们证明 $$\eta_1\in(-a,a)\quad\text{且}\quad|f''(\eta_1)|\ge\frac{|f(a)-f(-a)|}{2a^{2}}$$</span>
@@ -439,7 +452,7 @@
                                             <div class="strategy-block cases">
                                                 <span class="tag cases">目标分解</span>
                                                 <div class="goal-content">
-                                                    
+
                                                     <details class="goal-block" open>
                                                         <summary>
                                                             <span class="tag default">子目标</span>
@@ -480,6 +493,7 @@
                                             <span>$|f''(\eta_1)|\ge\frac{|f(a)-f(-a)|}{2a^{2}}$</span>
                                         </summary>
                                         <div class="goal-content with-line">
+
                                             <div class="step-block">
                                                 <span class="step-tag">注意到</span>
                                                 <span class="step-content">$|f''(\eta_{1})|\geqslant 0$</span>
@@ -493,10 +507,13 @@
                                                 <span class="step-content">两边同除以 $2a^2$ 即证</span>
                                                 <span class="final-mark">$\to$ 证毕</span>
                                             </div>
+
                                         </div>
                                     </details>
+
                                 </div>
                             </div>
+
                         </div>
                     </details>
 
@@ -506,6 +523,7 @@
                             <span>$|f''(\eta_{1})|<{|f''(\eta_{2})|}$</span>
                         </summary>
                         <div class="goal-content with-line">
+
                             <div class="step-block">
                                 <span class="step-tag">构造</span>
                                 <span class="step-content">我们断言 $\eta_2$ 就是所要找的对象, 下面我们证明 $$\eta_2\in(-a,a)\quad\text{且}\quad|f''(\eta_2)|\ge\frac{|f(a)-f(-a)|}{2a^{2}}$$</span>
@@ -525,18 +543,20 @@
                                             <div class="strategy-block cases">
                                                 <span class="tag cases">目标分解</span>
                                                 <div class="goal-content">
-                                                    
+
                                                     <details class="goal-block" open>
                                                         <summary>
                                                             <span class="tag default">子目标</span>
                                                             <span>$-a<\eta_2$</span>
                                                         </summary>
                                                         <div class="goal-content with-line">
+
                                                             <div class="step-block">
                                                                 <span class="step-tag">推导</span>
                                                                 <span class="step-content">$\eta_2 > \min\{x_0,-a\} = -a$</span>
                                                                 <span class="final-mark">$\to$ 证毕</span>
                                                             </div>
+
                                                         </div>
                                                     </details>
 
@@ -546,11 +566,13 @@
                                                             <span>$\eta_2<{a}$</span>
                                                         </summary>
                                                         <div class="goal-content with-line">
+
                                                             <div class="step-block">
                                                                 <span class="step-tag">推导</span>
                                                                 <span class="step-content">$\eta_2<\max\{x_0,-a\}=x_{0}<{a}$</span>
                                                                 <span class="final-mark">$\to$ 证毕</span>
                                                             </div>
+
                                                         </div>
                                                     </details>
 
@@ -567,6 +589,7 @@
                                             <span class="final-mark">$\to$ 证毕</span>
                                         </summary>
                                         <div class="goal-content with-line">
+
                                             <div class="step-block">
                                                 <span class="step-tag">注意到</span>
                                                 <span class="step-content">$|f''(\eta_{2})|\geqslant 0$</span>
@@ -580,12 +603,16 @@
                                                 <span class="step-content">两边同除以 $2a^2$ 即证</span>
                                                 <span class="final-mark">$\to$ 证毕</span>
                                             </div>
+
                                         </div>
                                     </details>
+
                                 </div>
                             </div>
+
                         </div>
                     </details>
+
                 </div>
             </div>
 
@@ -593,16 +620,6 @@
     </details>
 
     <div class="qed">□</div>
-
-
-
-
-
-
-
-
-
-
 
     <div class="statement-box">
         <div class="statement-title">命题 20260515</div>
