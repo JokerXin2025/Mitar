@@ -19,11 +19,11 @@ class ProofEngine:
             for i, tactic in enumerate(tactics):
                 is_last_tactic = (i == len(tactics) - 1)
                 final_mark = type if is_last_tactic else None
-                handler = TACTIC_HANDLERS.get(tactic.get("by"))
+                handler = TACTIC_HANDLERS.get(tactic.get("tacticId"))
                 if handler:
                     html_blocks.append(handler(tactic, final_mark, self))
                 else:
-                    html_blocks.append(f"<!-- 未知操作: {tactic.get('by')} -->")
+                    html_blocks.append(f"<!-- 未知操作: {tactic.get('tacticId')} -->")
             return "\n".join(html_blocks)
 
 def main():

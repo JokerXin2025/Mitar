@@ -1,31 +1,36 @@
 import Lean2TeX.Basic
 import Lean2TeX.Utils
 
+open Lean2TeX
 open Lean Meta ConstantInfo
 
-def getConstDef (name : Name) (expr_rec : ExprRecFunc) : MetaM String := do
-  match ← getConstInfo name with
-  /- Normal Definition: Expression or Equations -/
+def Lean.Expr.getConstDef : MetaRule := fun expr parent style expr_rec => do
+  match ← getConstInfo expr.constName! with
+  /- Move `.Def` from the TeXStyle list -/
+  /- Expression or Equations -/
   | defnInfo defn => do
     if Expr.isComplexDef defn.value then
-      if let some eqns ← getEqnsFor? name then
-        let mut texcode := ""
+      if let some eqns ← getEqnsFor? expr.constName! then
+        let mut output_array := #[]
         for eqnName in eqns do
-          texcode := texcode ++ (← expr_rec (← getConstInfo eqnName).type Basic)
-        return texcode
+          let next ← expr_rec (← getConstInfo eqnName).type .MultiLine style
+          output_array := output_array.push next
+        let output := "\\\\".intercalate output_array.toList
+        let output' := s!"$$\\begin{"{"}cases{"}"}{output}\\end{"{"}cases{"}"}$$"
+        return (output', OperNode.Text)
       else
-        return ""  -- silence
+        return none
     else
-      return ← expr_rec defn.value Basic
+      return (← expr_rec defn.value parent style, parent)
   /- Theorem (or Lemma) -/
   | thmInfo thm => do
-    return ← expr_rec thm.type Basic
+    return (← expr_rec thm.type parent style, parent)
   /- Axiom -/
   | axiomInfo _axiom => do
-    return ← expr_rec _axiom.type Basic
+    return (← expr_rec _axiom.type parent style, parent)
   /- Inductive (i.e. Nat) -/
   | inductInfo _ /- induct -/ =>
-    return ""  -- silence
+    return none
     /-
     let texType ← Expr2TeX induct.type
     queueLatexInfo box.getId s!"{nameStr}_type" texType
@@ -39,13 +44,13 @@ def getConstDef (name : Name) (expr_rec : ExprRecFunc) : MetaM String := do
     -/
   /- Constructor (i.e. Nat.zero, Nat.succ) -/
   | ctorInfo _ =>
-    return ""  -- silence
+    return none
   /- Recursor/Eliminator (i.e. Nat.rec) -/
   | recInfo _ => do
-    return ""  -- silence
+    return none
   /- Opaque -/
   | opaqueInfo _ => do
-    return ""  -- silence
+    return none
   /- Quotient Info -/
   | quotInfo _ => do
-    return ""  -- silence
+    return none

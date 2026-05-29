@@ -1,7 +1,8 @@
 import Lean2TeX.Basic
 import Lean2TeX.ExpressionRecursion
 
-open Lean Elab Command
+open Lean2TeX
+open Lean Elab Term Command
 
 syntax "#Lean2TeX_const " ident : command
 syntax "Lean2TeX " ident " -> " ident : command
@@ -10,8 +11,9 @@ syntax "Lean2TeX " ident " => " str : command
 elab_rules : command
 | `(#Lean2TeX_const $const:ident) => do
   liftTermElabM do
-    let name ← resolveGlobalConstNoOverload const
-    logInfo m! "[Lean2TeX] {const} :\n{← getConstDef name Expr2TeX}"
+    let expr ← instantiateMVars (← elabTerm const none)
+    let output ← Expr2TeX expr .Text .Def
+    logInfo m! "[Lean2TeX] {const} :\n{output}"
 | `(Lean2TeX $box:ident => $file:str) => do
   /- Export the JSON array to JSON file -/
   liftCoreM do

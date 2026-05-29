@@ -1,6 +1,7 @@
 import Lean2TeX.Basic
 import Lean2TeX.ExpressionRecursion
 
+open Lean2TeX
 open Lean Elab Meta Tactic
 
 def GetGoal : TacticM String := do
@@ -8,7 +9,7 @@ def GetGoal : TacticM String := do
   let goal ← getMainGoal
   let goal_expr ← goal.getType
   let goal_expr' ← instantiateMVars goal_expr
-  return ← Expr2TeX goal_expr' .Root
+  return ← Expr2TeX goal_expr' .Text .Root
 
 def AddtoJsonArray (box : Name) (json_obj : Json) : MetaM Unit := do
   /- # Add JSON objects `json_obj` to the JSON array -/
@@ -20,14 +21,14 @@ def AddtoJsonArray (box : Name) (json_obj : Json) : MetaM Unit := do
     | none =>  -- create the JSON array for the first time
       arr.push (box, #[json_obj])
 
-syntax "Lean2TeX_step " ident " <- " ident " [" (ident)* (" | " term)? "] " : tactic
-syntax "Lean2TeX_record " ident " <- " " goal " (ident)* : tactic
+syntax "Lean2TeX_step " ident " <- " (colGt ident)+ (" | " colGt term)? : tactic
+syntax "Lean2TeX_state " ident " <- " " goal " (colGt ident)* : tactic
 
 elab_rules : tactic
-| `(tactic| Lean2TeX_step $box:ident <- $tactic:ident [$args:ident* $[| $arg_term:term]?]) =>
-
-  /- _* Use this tactic before the step *_ -/
+| `(tactic| Lean2TeX_step $box:ident <- $tactic:ident $args:ident* $[| $arg_term:term]?) =>
   withMainContext do
+
+  /- __· Use this tactic before the step ·__ -/
 
     let mut NewStepList := [
       ("tacticId", Json.str tactic.getId.toString)
@@ -38,7 +39,7 @@ elab_rules : tactic
     for var in args do
       let expr ← instantiateMVars (← elabTerm var none)
       NewStepList := NewStepList.concat (
-        s!"arg_{var_index}", Json.str (← Expr2TeX expr .Root)
+        s!"arg_{var_index}", Json.str (← Expr2TeX expr .Text .Root)
       )
       var_index := var_index + 1
 
@@ -48,16 +49,16 @@ elab_rules : tactic
       let expr_type ← instantiateMVars (← inferType expr)
       let expr' := if ← isProp expr_type then expr_type else expr
       NewStepList := NewStepList.concat (
-        "expr", Json.str (← Expr2TeX expr' .Root)
+        "expr", Json.str (← Expr2TeX expr' .Text .Root)
       )
 
     AddtoJsonArray box.getId (Json.mkObj NewStepList)
     RefreshGoal
 
-|`(tactic| Lean2TeX_record $box:ident <- goal $ids:ident*) =>
-
-  /- _* Use this tactic after the non-final step *_ -/
+|`(tactic| Lean2TeX_state $box:ident <- goal $ids:ident*) =>
   withMainContext do
+
+  /- _· Use this tactic after the non-final step ·_ -/
 
     let mut NewRecordList := [
       ("goal", Json.str (← GetGoal))
@@ -68,7 +69,7 @@ elab_rules : tactic
     for var in ids do
       let expr ← instantiateMVars (← elabTerm var none)
       NewRecordList := NewRecordList.concat (
-        s!"id_{var_index}", Json.str (← Expr2TeX expr .Root)
+        s!"id_{var_index}", Json.str (← Expr2TeX expr .Text .Root)
       )
       var_index := var_index + 1
 
