@@ -8,14 +8,14 @@ details.goal-block > summary {
     padding: 4px 0;
     transition: color 0.2s;
 }
-details.goal-block > summary::before {
-    content: "▶";
+
+details.goal-block > summary i.toggle-icon {
     color: var(--text-muted);
-    margin: 4px;
-    margin-left: 2px;
+    margin-top: 6px;
     transition: transform 0.2s ease;
 }
-details.goal-block[open] > summary::before {
+
+details.goal-block[open] > summary i.toggle-icon {
     transform: rotate(90deg);
 }
 

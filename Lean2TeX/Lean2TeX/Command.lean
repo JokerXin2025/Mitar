@@ -11,11 +11,12 @@ syntax "Lean2TeX " ident " => " str : command
 elab_rules : command
 | `(#Lean2TeX_const $const:ident) => do
   liftTermElabM do
+  /- # View the definition of a constant -/
     let expr ← instantiateMVars (← elabTerm const none)
     let output ← Expr2TeX expr .Text .Def
     logInfo m! "[Lean2TeX] {const} :\n{output}"
 | `(Lean2TeX $box:ident => $file:str) => do
-  /- Export the JSON array to JSON file -/
+  /- # Export the JSON array to a JSON file -/
   liftCoreM do
     let boxName := box.getId
     let arr ← JSON_boxes.get
@@ -23,9 +24,9 @@ elab_rules : command
     | some idx =>
       let (_, currentData) := arr[idx]!
       if currentData.isEmpty then
-        logWarning m! "[Lean2TeX] 暂存器 '{boxName}' 已清空"
+        logWarning m! "[Lean2TeX] Box '{boxName}' has been dumped."
       else
         IO.FS.writeFile file.getString (Json.arr currentData).pretty
         JSON_boxes.set (arr.set! idx (boxName, #[]))
     | none =>
-      logWarning m! "[Lean2TeX] 暂存器 '{boxName}' 未启用"
+      logWarning m! "[Lean2TeX] Box '{boxName}' has not been initialized."

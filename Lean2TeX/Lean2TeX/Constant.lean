@@ -4,10 +4,12 @@ import Lean2TeX.Utils
 open Lean2TeX
 open Lean Meta ConstantInfo
 
+namespace Lean2TeX
+
 def Lean.Expr.getConstDef : MetaRule := fun expr parent style expr_rec => do
   match ← getConstInfo expr.constName! with
   /- Move `.Def` from the TeXStyle list -/
-  /- Expression or Equations -/
+  /- ## Expression or Equations -/
   | defnInfo defn => do
     if Expr.isComplexDef defn.value then
       if let some eqns ← getEqnsFor? expr.constName! then
@@ -22,13 +24,13 @@ def Lean.Expr.getConstDef : MetaRule := fun expr parent style expr_rec => do
         return none
     else
       return (← expr_rec defn.value parent style, parent)
-  /- Theorem (or Lemma) -/
+  /- ## Theorem (or Lemma) -/
   | thmInfo thm => do
     return (← expr_rec thm.type parent style, parent)
-  /- Axiom -/
+  /- ## Axiom -/
   | axiomInfo _axiom => do
     return (← expr_rec _axiom.type parent style, parent)
-  /- Inductive (i.e. Nat) -/
+  /- ## Inductive -/
   | inductInfo _ /- induct -/ =>
     return none
     /-
@@ -42,15 +44,17 @@ def Lean.Expr.getConstDef : MetaRule := fun expr parent style expr_rec => do
         queueLatexInfo box.getId outName ctorTex
         idx := idx + 1
     -/
-  /- Constructor (i.e. Nat.zero, Nat.succ) -/
+  /- ## Constructor -/
   | ctorInfo _ =>
     return none
-  /- Recursor/Eliminator (i.e. Nat.rec) -/
+  /- ## Recursor/Eliminator -/
   | recInfo _ => do
     return none
-  /- Opaque -/
+  /- ## Opaque -/
   | opaqueInfo _ => do
     return none
-  /- Quotient Info -/
+  /- ## Quotient Info -/
   | quotInfo _ => do
     return none
+
+end Lean2TeX

@@ -2,9 +2,9 @@
 
 # Strategy
 
-from .Induction import rule_induction
-from .Contradiction import rule_contradiction
-from .Cases import rule_cases
+from .Induction import rule_Induction
+from .Contradiction import rule_Contradiction
+from .Cases import rule_Cases
 
 # Step
 

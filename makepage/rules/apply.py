@@ -1,12 +1,29 @@
 from makepage.utils import register_rule, render_step
 
+"""
+
+step
+----------
+step        : apply
+
+previous
+----------
+goal        : goal_before
+
+subsequent
+----------
+goal(!final): goal_after
+
+"""
+
 @register_rule("apply")
-def rule_apply(tactic, final_mark, proof):
-    proof.tactic_counter["apply"] += 1
-    goal_before = tactic.get("goal", "<code>goal_before</code>")
-    goal_after = tactic.get("goal_", "<code>goal_after</code>")
+def rule_apply(step, previous, subsequent, mark_list, proof):
+    goal_before = previous.get("goal", "<code>goal_before</code>")
+    goal_after = subsequent.get("goal", "<code>goal_after</code>")
     return render_step(
         tag = "应用结论",
         content = f"要证明 {goal_before} , 只需证明 {goal_after} 即可",
-        final_mark = final_mark
+        goal_before = goal_before,
+        goal_after = goal_after,
+        mark_list = mark_list
     )

@@ -5,6 +5,12 @@
     --border-color-light: #e7e7e7;
     --current-step-color: #3b82f6;
     --current-step-color-background: #eff6ff;
+    --proof-mark-pass-color-light: #007acc;
+    --proof-mark-pass-color-dark: #3794ff;
+    --proof-mark-warning-color-light: #bf8803;
+    --proof-mark-warning-color-dark: #cca700;
+    --proof-mark-error-color-light: #e51400;
+    --proof-mark-error-color-dark: #f14c4c;
     --tag-color: #475569;
     --tag-color-background: #e2e8f0;
     --lemma-color: #4f46e5;
@@ -31,10 +37,16 @@ body {
 }
 
 h2 {
+    position: relative;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 8px;
 }
 
+h2 sup {
+    position: absolute;
+    right: 100%;
+    margin-right: 4px;
+}
 .statement-box {
     border: 0.5px solid var(--border-color);
     padding: 28px 32px;
@@ -51,6 +63,16 @@ h2 {
     font-size: 18.4px;
     font-weight: 750;
     margin-bottom: 12px;
+}
+
+.proof-mark.pass {
+    color: var(--proof-mark-pass-color-light);
+}
+.proof-mark.warning {
+    color: var(--proof-mark-warning-color-light);
+}
+.proof-mark.error {
+    color: var(--proof-mark-error-color-light);
 }
 
 .tag {

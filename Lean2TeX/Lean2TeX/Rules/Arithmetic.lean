@@ -1,5 +1,7 @@
 import Lean2TeX.Basic
 
+open Lean2TeX
+
 def Rule_Succ : Rule := fun expr expr_rec => do
   if expr.isAppOfArity' ``Nat.succ 1 then
     let args := expr.getAppArgs'

@@ -5,7 +5,6 @@ import Lean2TeX.Variable
 import Lean2TeX.Rules
 
 open Lean2TeX NodeInfo
-open Lean Elab Meta Command Tactic
 
 namespace Lean2TeX
 

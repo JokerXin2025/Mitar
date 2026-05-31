@@ -1,10 +1,21 @@
 from makepage.utils import register_rule, render_step
 
+"""
+
+step
+----------
+step        : linarith
+
+previous
+----------
+goal        : goal_before
+
+"""
+
 @register_rule("linarith")
-def rule_linarith(tactic, final_mark, proof):
-    proof.tactic_counter["linarith"] += 1
-    goal_before = tactic.get("goal", "<code>goal_before</code>")
-    # `final_mark` is always not `None`
+def rule_linarith(step, previous, subsequent, mark_list, proof):
+    # `mark_list` is always not `None`
+    goal_before = previous.get("goal", "<code>goal_before</code>")
     if goal_before == "矛盾":
         content = "导出不等式矛盾"
     else:
@@ -12,5 +23,7 @@ def rule_linarith(tactic, final_mark, proof):
     return render_step(
         tag = "linarith",
         content = content,
-        final_mark = final_mark
+        goal_before = goal_before,
+        goal_after = "",
+        mark_list = mark_list
     )

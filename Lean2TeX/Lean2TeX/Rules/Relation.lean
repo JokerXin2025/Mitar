@@ -1,5 +1,7 @@
 import Lean2TeX.Basic
 
+open Lean2TeX
+
 def Rule_Eq : Rule := fun expr expr_rec => do
   if expr.isAppOfArity' ``Eq 3 then
     let args := expr.getAppArgs

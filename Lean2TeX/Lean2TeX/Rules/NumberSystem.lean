@@ -1,5 +1,7 @@
 import Lean2TeX.Basic
 
+open Lean2TeX
+
 def Rule_Mathbb_Nat : Rule := fun expr _ => do
   if expr.consumeMData.isConstOf ``Nat then
     return (s!"\\mathbb{"{"}N{"}"}", OperNode.Unit)

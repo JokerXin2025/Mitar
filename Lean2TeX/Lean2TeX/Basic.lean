@@ -1,7 +1,10 @@
 import Lean
 import Mathlib.Data.Real.Basic
 
-export Lean (Name Expr Json MetaM Meta.inferType)
+export Lean (Name Expr Json MetaM)
+export Lean.Meta (isProp inferType)
+
+namespace Lean2TeX
 
 inductive TeXStyle where
   | Root
@@ -40,3 +43,5 @@ abbrev Rule := Expr → ExprRecFunc → MetaM (Option NodeInfo)
 abbrev MetaRule := Expr → OperNode → TeXStyle → ExprRecFunc → MetaM (Option NodeInfo)
 
 initialize JSON_boxes : IO.Ref (Array (Name × Array Json)) ← IO.mkRef #[]
+
+end Lean2TeX
