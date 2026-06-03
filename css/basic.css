@@ -13,8 +13,6 @@
     --proof-mark-error-color-dark: #f14c4c;
     --tag-color: #475569;
     --tag-color-background: #e2e8f0;
-    --lemma-color: #4f46e5;
-    --lemma-color-background: #e0e7ff;
     --cases-color: #6b7280;
     --cases-color-light: #d1d5db;
     --induction-color: #2b6a4a;
@@ -26,14 +24,17 @@
     --ref-color: #2563eb;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: serif, "Microsoft YaHei";
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.5;
     color: var(--text-color);
     max-width: 900px;
     margin: 0 auto;
-    padding: 48px 32px;
 }
 
 h2 {
@@ -49,49 +50,43 @@ h2 sup {
 }
 .statement-box {
     border: 0.5px solid var(--border-color);
-    padding: 28px 32px;
-    border-radius: 10px;
     margin: 40px 0;
+    border-radius: 10px;
+    padding: 28px 32px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
+    transition: 0.25s;
 }
 .statement-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 .statement-title {
-    font-size: 18.4px;
+    font-size: 18px;
     font-weight: 750;
     margin-bottom: 12px;
 }
 
-.proof-mark.pass {
-    color: var(--proof-mark-pass-color-light);
-}
-.proof-mark.warning {
-    color: var(--proof-mark-warning-color-light);
-}
-.proof-mark.error {
-    color: var(--proof-mark-error-color-light);
+.proof-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .tag {
     display: inline-flex;
     align-items: center;
-    font-size: 13.6px;
     line-height: 1;
-    font-weight: 600;
-    padding: 8px 10px;
-    border-radius: 6px;
-    margin: 0 12px 0px 6px;
+    font-size: 12px;
     font-family: system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    margin-left: 8px;
+    margin-right: 16px;
+    border-radius: 6px;
+    padding: 8px 10px;
     letter-spacing: 0.27px;
 }
 .tag.default {
     background: var(--tag-color-background);
     color: var(--tag-color);
-}
-.tag.lemma {
-    color: var(--lemma-color);
-    background: var(--lemma-color-background);
 }

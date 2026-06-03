@@ -36,9 +36,12 @@ def Rule_Iff_Word : Rule := fun expr expr_rec => do
 
 def Rule_Not_Word : Rule := fun expr expr_rec => do
   if expr.isAppOfArity' `Not 1 then
-    let args := expr.getAppArgs
-    let A ← expr_rec args[0]! .Text .Basic
-    return (s!"命题{A}不成立", OperNode.Text)
+    let arg := expr.getAppArgs[0]!
+    let A ← expr_rec arg .Text .Basic
+    if arg.isAppOfArity' ``Exists 2 then
+      return (s!"不{A}", OperNode.Text)
+    else
+      return (s!"命题{A}不成立", OperNode.Text)
   return none
 
 def Rule_Implies_Symbol : Rule := fun expr expr_rec => do
@@ -91,7 +94,7 @@ def Rule_Exists_Word : Rule := fun expr expr_rec => do
         let A ← expr_rec (← inferType fvar) .Rel .Basic
         varList := varList.push s!"{x}\\in{A}"
       let xAyB := "\\,,\\,".intercalate varList.toList
-      let XXX ← expr_rec safeBody .Rel .Basic
-      return s!"存在 ${xAyB}$ 使得 {XXX}"
+      let XXX ← expr_rec safeBody .Text .Basic
+      return s!"存在 ${xAyB}$ 使得{XXX}"
     return (res, OperNode.Text)
   return none

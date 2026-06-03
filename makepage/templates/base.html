@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" overflow-y: scroll;>
 
 <head>
 
@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="css/step.css">
     <link rel="stylesheet" href="css/goal.css">
     <link rel="stylesheet" href="css/strategy.css">
-    <link rel="stylesheet" href="css/calculation.css">
     <link rel="stylesheet" href="css/sundry.css">
     <link rel="stylesheet" href="css/animation.css">
     <link rel="stylesheet" href="css/codicon.css">
 
     <script defer src="js/katex.js"></script>
     <script defer src="js/animation.js"></script>
+    <script defer src="js/equation_size.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -28,18 +28,16 @@
 
 <body>
 
-    <h2>证明</h2>
+    <h2>
+        $proof_state
+        证明
+    </h2>
+    
+    <div class="proof-container">
 
-    <details class="goal-block" open>
-        <summary>
-            <i class="fa-solid fa-play toggle-icon"></i>
-            <i class="fa-solid fa-play toggle-icon"></i>
-            <span class="tag default">证明</span>
-        </summary>
-        <div class="goal-content">
-$content
-        </div>
-    </details>
+$proof_content
+
+    </div>
 
     <div class="qed">□</div>
 

@@ -9,18 +9,15 @@ details[open] > *:not(summary) {
     100% { opacity: 1; transform: translateY(0) scaleY(1); }
 }
 
-details .step-block,
-details .calculation-block {
+details .step-block {
     opacity: 0;
 }
 
-details[open] .step-block,
-details[open] .calculation-block {
+details[open] .step-block {
     animation: slideInStep 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-details details:not([open]) .step-block,
-details details:not([open]) .calculation-block {
+details details:not([open]) .step-block {
     animation: none !important;
     opacity: 0;
 }
@@ -35,20 +32,14 @@ details[open] .step-block {
     animation-delay: calc(var(--step-idx, 0) * 0.04s); 
 }
 
-details[open] .calculation-block {
-    animation-delay: calc(var(--step-idx, 0) * 0.04s + 0.1s);
-}
-
 @media (prefers-reduced-motion: reduce) {
     details[open] > *:not(summary),
-    details[open] .step-block,
-    details[open] .calculation-block {
+    details[open] .step-block {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
     }
-    details .step-block,
-    details .calculation-block {
+    details .step-block {
         opacity: 1;
     }
 }

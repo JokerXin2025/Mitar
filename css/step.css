@@ -1,16 +1,16 @@
 .step-block {
     display: flex;
-    align-items: flex-start;
-    margin-left: 8px;
-    padding: 8px 0 8px 12px;
-    border-radius: 6px;
-    border-left: 2px solid var(--border-color-light);
-    font-size: 15px;
-    transition: all 0.3s ease;
-    opacity: 0;
+    flex-wrap: wrap;
+    position: relative;
+    margin-left: 16px;
+    padding: 8px;
+    padding-right: 38px;
+    transition: 0.3s;
     transform: translateX(-15px);
 }
-
+.step-block.calc {
+    align-items: center;
+}
 .step-block:hover {
     background: var(--current-step-color-background);
     border-left-color: var(--current-step-color);
@@ -18,18 +18,43 @@
 }
 
 .step-tag {
+    height: 24px;
+    display: flex;
     font-family: 'Consolas', monospace;
     font-size: 12px;
     font-weight: 600;
-    padding: 4px 6px;
-    border-radius: 4px;
-    margin-right: 10px;
-    flex-shrink: 0;
-    text-transform: lowercase;
-    letter-spacing: 0.5px;
+    align-items: center;
+    margin-left: 6px;
+    margin-right: 16px;
+}
+.step-tag.calc {
+    width: 96px;
+    margin-right: 0;
 }
 
 .step-content {
     flex: 1;
-    word-break: break-word;
+    align-items: center;
+}
+
+.step-rel {
+    width: 24px;
+    margin: 0 6px;
+    text-align: center;
+}
+.step-lhs, .step-rhs {
+    flex: 1;
+    display: inline-block;
+    white-space: nowrap;
+    transform-origin: left;
+    min-width: 0;
+}
+.step-lhs {
+    text-align: right;
+}
+.step-rhs {
+    text-align: left;
+}
+.step-cal-end {
+    width: 96px;
 }

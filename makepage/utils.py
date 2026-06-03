@@ -11,7 +11,9 @@ def load_template(filename):
         return Template(f.read())
 
 TEMPLATE_BASE = load_template("base.html")
+TEMPLATE_PROOF = load_template("proof.html")
 TEMPLATE_STEP = load_template("step.html")
+TEMPLATE_CAL_STEP = load_template("cal_step.html")
 TEMPLATE_DETAILS = load_template("details.html")
 TEMPLATE_STRATEGY = load_template("strategy.html")
 
@@ -23,38 +25,64 @@ def register_rule(name):
         return func
     return decorator
 
+def is_strategy(name):
+    return name in [
+        "Cases", "Contradiction", "Induction"
+    ]
+
 def render_step(tag, content, goal_before, goal_after, mark_list):
     final_mark = ""
-    mark_count = len(mark_list)
-    while mark_list:
-        mark = mark_list.pop()
-        if mark == "Global" and mark_count == 1:
-            final_mark = '\n   <span class="final-mark">$\\to$ 证毕</span>'
-        elif mark == "Local" and mark_count == 1:
+    marks = mark_list.copy()
+    while marks:
+        mark = marks.pop()
+        if mark == "Global" and len(mark_list) == 1:
+            final_mark = '\n   <span class="final-mark">$\\to\\,$ 证毕</span>'
+        elif mark == "Local" and len(mark_list) == 1:
             final_mark = '\n   <span class="final-mark"><i class="codicon codicon-check"></i></span>'
         elif mark == "Contradiction":
-            final_mark += '\n    <span class="final-mark contradiction">$\\to$ 矛盾</span>'
+            final_mark += '\n    <span class="final-mark contradiction">$\\to\\,$ 矛盾</span>'
         elif mark == "Induction":
-            final_mark += '\n    <span class="final-mark induction">$\\to$ 完成</span>'
+            final_mark += '\n    <span class="final-mark induction">$\\to\\,$ 完成</span>'
     return TEMPLATE_STEP.substitute(
         tag = tag,
         content = content,
         final_mark = final_mark
     )
 
-def render_details(open, tag, title, line, content):
+def render_cal_step(tag, lhs, rel, rhs, mark_list):
+    final_mark = ""
+    marks = mark_list.copy()
+    while marks:
+        mark = marks.pop()
+        if mark == "Global" and len(mark_list) == 1:
+            final_mark = '\n   <span class="final-mark">$\\to\\,$ 证毕</span>'
+        elif mark == "Local" and len(mark_list) == 1:
+            final_mark = '\n   <span class="final-mark"><i class="codicon codicon-check"></i></span>'
+        elif mark == "Contradiction":
+            final_mark += '\n    <span class="final-mark contradiction">$\\to\\,$ 矛盾</span>'
+        elif mark == "Induction":
+            final_mark += '\n    <span class="final-mark induction">$\\to\\,$ 完成</span>'
+    return TEMPLATE_CAL_STEP.substitute(
+        tag = tag,
+        lhs = lhs,
+        rel = rel,
+        rhs = rhs,
+        final_mark = final_mark
+    )
+
+def render_details(open, tag, title, content):
     return TEMPLATE_DETAILS.substitute(
         open = "open" if open else "close",
         tag = tag,
         title = title,
-        line = " with-line" if line else "",
         content = indent(content, "        ")
     )
 
-def render_strategy(sort, tag, content):
+def render_strategy(sort, tag, pre_content, content):
     return TEMPLATE_STRATEGY.substitute(
         sort = sort,
         tag = tag,
+        pre_content = indent(pre_content, "        "),
         content = indent(content, "        ")
     )
 

@@ -48,7 +48,7 @@ def GetGoal : TacticM Expr := do
 
 end Tactic
 
-def AddtoJsonArray (box : Name) (json_obj : Json) : MetaM Unit := do
+def addtoBox (box : Name) (json_obj : Json) : MetaM Unit := do
   /- # Add JSON objects `json_obj` to the JSON array -/
   JSON_boxes.modify fun arr =>
     match arr.findIdx? (fun (b, _) => b == box) with

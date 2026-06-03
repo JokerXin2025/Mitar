@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN" overflow-y: scroll;>
+
+<head>
+
+    <base href="./">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命题</title>
+
+    <link rel="stylesheet" href="css/basic.css">
+    <link rel="stylesheet" href="css/step.css">
+    <link rel="stylesheet" href="css/goal.css">
+    <link rel="stylesheet" href="css/strategy.css">
+    <link rel="stylesheet" href="css/sundry.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/codicon.css">
+
+    <script defer src="js/katex.js"></script>
+    <script defer src="js/animation.js"></script>
+    <script defer src="js/equation_size.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://kit.fontawesome.com/22e1239b05.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <h2>
+        <sup class="proof-mark pass"><i class="codicon codicon-check-all"></i></sup>
+        证明
+    </h2>
+    
+    <div class="proof-container">
+
+        <details class="goal-block" style="margin-left: 0" open>
+            <summary>
+                <i class="fa-solid fa-play toggle-icon"></i>
+                <span class="tag default">引理 I</span>
+                <span> $a_{n}\geqslant 2$ </span>
+            </summary>
+            <div class="goal-content with-line">
+
+                <div class="strategy-block induction">
+                    <span class="tag induction">数学归纳法</span>
+                    <div class="goal-content">
+                        <div class="step-block">
+                            <span class="step-tag">归纳对象</span>
+                            <span class="step-content">对自然数 $n$ 使用<span class='ref-link'>数学归纳法</span></span>
+                        </div>
+                        <details class="goal-block" open>
+                            <summary>
+                                <i class="fa-solid fa-play toggle-icon"></i>
+                                <span class="tag default">基础情形</span>
+                                <span>验证命题对 $0$ 成立</span>
+                            </summary>
+                            <div class="goal-content with-line">
+
+                                <div class="step-block">
+                                    <span class="step-tag">显然</span>
+                                    <span class="step-content">该命题显然成立</span>
+                                    <span class="final-mark induction">$\to\,$ 完成</span>
+                                </div>
+
+                            </div>
+                        </details>
+
+                        <details class="goal-block" open>
+                            <summary>
+                                <i class="fa-solid fa-play toggle-icon"></i>
+                                <span class="tag default">归纳步骤</span>
+                                <span>假设命题对 $k$ 成立, 下面证明命题对 $k$  $\!+1$ 成立</span>
+                            </summary>
+                            <div class="goal-content with-line">
+
+                                <div class="step-block">
+                                    <span class="step-tag">应用定义</span>
+                                    <span class="step-content">根据  $a$  的定义, 我们需要证明  $a_{k}\cdot \left(a_{k}-1\right)+1\geqslant 2$ </span>
+                                </div>
+                                <div><div class="step-block">
+                                    <span class="step-tag calc">计算</span>
+                                    <span class="step-lhs"> $2$ </span>
+                                    <span class="step-rel">$=$</span>
+                                    <span class="step-rhs"> $2\cdot 1$ </span>
+                                    <span class="step-cal-end"></span>
+                                </div>
+                                <div class="step-block">
+                                    <span class="step-tag calc"></span>
+                                    <span class="step-lhs"></span>
+                                    <span class="step-rel">$\leqslant$</span>
+                                    <span class="step-rhs"> $a_{k}\cdot \left(a_{k}-1\right)$ </span>
+                                    <span class="step-cal-end"></span>
+                                </div>
+                                <div class="step-block">
+                                    <span class="step-tag calc"></span>
+                                    <span class="step-lhs"></span>
+                                    <span class="step-rel">$\leqslant$</span>
+                                    <span class="step-rhs"> $a_{k}\cdot \left(a_{k}-1\right)+1$ </span>
+                                    <span class="step-cal-end"></span>
+                                    <span class="final-mark induction">$\to\,$ 完成</span>
+                                </div></div>
+
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+
+            </div>
+        </details>
+
+        <details class="goal-block" style="margin-left: 0" open>
+            <summary>
+                <i class="fa-solid fa-play toggle-icon"></i>
+                <span class="tag default">证明</span>
+        
+            </summary>
+            <div class="goal-content with-line">
+
+                <div class="strategy-block contradiction">
+                    <span class="tag contradiction">反证法</span>
+                    <div class="goal-content">
+                        <div class="step-block">
+                            <span class="step-tag">假设</span>
+                            <span class="step-content">假设结论不成立, 即存在 $m\in\mathbb{N}$ 使得 $a_{n}=m^{2}$ </span>
+                        </div>
+                        <!-- Unknown Step: obtain -->
+                        <div class="strategy-block cases">
+                            <span class="tag cases">分类讨论</span>
+                            <div class="goal-content">
+                                <div class="step-block">
+                                    <span class="step-tag">分类依据</span>
+                                    <span class="step-content">自然数 $n$ 要么为 $0$ , 要么作为某个自然数 $k$ 的后继</span>
+                                </div>
+                                <details class="goal-block" open>
+                                    <summary>
+                                        <i class="fa-solid fa-play toggle-icon"></i>
+                                        <span class="tag default">情形 I</span>
+                                        <span> $n$ $=0$</span>
+                                    </summary>
+                                    <div class="goal-content with-line">
+
+                                        <div class="step-block">
+                                            <span class="step-tag">应用定义</span>
+                                            <span class="step-content">根据  $a$  的定义, 我们有  $2=m^{2}$ </span>
+                                        </div>
+                                        <div class="strategy-block cases">
+                                            <span class="tag cases">分类讨论</span>
+                                            <div class="goal-content">
+                                                <div class="step-block">
+                                                    <span class="step-tag">分类依据</span>
+                                                    <span class="step-content"> $m=0$ 或 $m=1$ 或 $m\geqslant 2$ </span>
+                                                </div>
+                                                <details class="goal-block" open>
+                                                    <summary>
+                                                        <i class="fa-solid fa-play toggle-icon"></i>
+                                                        <span class="tag default">情形 I</span>
+                                                        <span></span>
+                                                    </summary>
+                                                    <div class="goal-content with-line">
+
+                                                        <div class="step-block">
+                                                            <span class="step-tag">计算</span>
+                                                            <span class="step-content">通过数值计算获得矛盾</span>
+                                                            <span class="final-mark contradiction">$\to\,$ 矛盾</span>
+                                                        </div>
+
+                                                    </div>
+                                                </details>
+
+                                                <details class="goal-block" open>
+                                                    <summary>
+                                                        <i class="fa-solid fa-play toggle-icon"></i>
+                                                        <span class="tag default">情形 II</span>
+                                                        <span></span>
+                                                    </summary>
+                                                    <div class="goal-content with-line">
+
+                                                        <div class="step-block">
+                                                            <span class="step-tag">计算</span>
+                                                            <span class="step-content">通过数值计算获得矛盾</span>
+                                                            <span class="final-mark contradiction">$\to\,$ 矛盾</span>
+                                                        </div>
+
+                                                    </div>
+                                                </details>
+
+                                                <details class="goal-block" open>
+                                                    <summary>
+                                                        <i class="fa-solid fa-play toggle-icon"></i>
+                                                        <span class="tag default">情形 III</span>
+                                                        <span></span>
+                                                    </summary>
+                                                    <div class="goal-content with-line">
+
+                                                        <details class="goal-block" open>
+                                                            <summary>
+                                                                <i class="fa-solid fa-play toggle-icon"></i>
+                                                                <span class="tag default">我们有</span>
+                                                                <span> $m^{2}\geqslant 4$ </span>
+                                                            </summary>
+                                                            <div class="goal-content with-line">
+
+                                                                <!-- Unknown Step: norm_cast -->
+                                                                <div class="step-block">
+                                                                    <span class="step-tag">改写</span>
+                                                                    <span class="step-content">原命题等价于  $m^{2}\geqslant 2^{2}$ </span>
+                                                                </div>
+                                                                <div class="step-block">
+                                                                    <span class="step-tag">放缩</span>
+                                                                    <span class="step-content">不等式  $m^{2}\geqslant 2^{2}$  可通过对已知条件进行保序变换得到</span>
+                                                                   <span class="final-mark"><i class="codicon codicon-check"></i></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </details>
+                                                        <div class="step-block">
+                                                            <span class="step-tag">omega</span>
+                                                            <span class="step-content">导出算术矛盾</span>
+                                                            <span class="final-mark contradiction">$\to\,$ 矛盾</span>
+                                                        </div>
+
+                                                    </div>
+                                                </details>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </details>
+
+                                <details class="goal-block" open>
+                                    <summary>
+                                        <i class="fa-solid fa-play toggle-icon"></i>
+                                        <span class="tag default">情形 II</span>
+                                        <span> $n$ $=$ $k$ $+1\quad(\,$ $k$ $\in\mathbb N\,)$</span>
+                                    </summary>
+                                    <div class="goal-content with-line">
+
+                                        <div class="step-block">
+                                            <span class="step-tag">应用定义</span>
+                                            <span class="step-content">根据  $a$  的定义, 我们有  $a_{k}\cdot \left(a_{k}-1\right)+1=m^{2}$ </span>
+                                        </div>
+                                        <details class="goal-block" open>
+                                            <summary>
+                                                <i class="fa-solid fa-play toggle-icon"></i>
+                                                <span class="tag default">我们有</span>
+                                                <span> $\left(2\cdot m-2\cdot a_{k}+1\right)\cdot \left(2\cdot m+2\cdot a_{k}-1\right)=3$ </span>
+                                            </summary>
+                                            <div class="goal-content with-line">
+
+                                                <div><div class="step-block">
+                                                    <span class="step-tag calc">计算</span>
+                                                    <span class="step-lhs"> $\left(2\cdot m-2\cdot a_{k}+1\right)\cdot \left(2\cdot m+2\cdot a_{k}-1\right)$ </span>
+                                                    <span class="step-rel">$=$</span>
+                                                    <span class="step-rhs"> $4\cdot m^{2}-2\cdot a_{k}-1^{2}$ </span>
+                                                    <span class="step-cal-end"></span>
+                                                </div>
+                                                <div class="step-block">
+                                                    <span class="step-tag calc"></span>
+                                                    <span class="step-lhs"></span>
+                                                    <span class="step-rel">$=$</span>
+                                                    <span class="step-rhs"> $4\cdot \left(a_{k}\cdot \left(a_{k}-1\right)+1\right)-2\cdot a_{k}-1^{2}$ </span>
+                                                    <span class="step-cal-end"></span>
+                                                </div>
+                                                <div class="step-block">
+                                                    <span class="step-tag calc"></span>
+                                                    <span class="step-lhs"></span>
+                                                    <span class="step-rel">$=$</span>
+                                                    <span class="step-rhs"> $3$ </span>
+                                                    <span class="step-cal-end"></span>
+                                                   <span class="final-mark"><i class="codicon codicon-check"></i></span>
+                                                </div></div>
+
+                                            </div>
+                                        </details>
+                                        <details class="goal-block" open>
+                                            <summary>
+                                                <i class="fa-solid fa-play toggle-icon"></i>
+                                                <span class="tag default">我们有</span>
+                                                <span> $2\cdot m-2\cdot a_{k}+1\geqslant 1$ </span>
+                                            </summary>
+                                            <div class="goal-content with-line">
+
+                                                <div class="strategy-block contradiction">
+                                                    <span class="tag contradiction">反证法</span>
+                                                    <div class="goal-content">
+                                                        <div class="step-block">
+                                                            <span class="step-tag">假设</span>
+                                                            <span class="step-content">假设结论不成立, 即命题[mvar]不成立</span>
+                                                        </div>
+                                                        <div class="step-block">
+                                                            <span class="step-tag">linarith</span>
+                                                            <span class="step-content">导出不等式矛盾</span>
+                                                            <span class="final-mark contradiction">$\to\,$ 矛盾</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </details>
+                                        <div class="step-block">
+                                            <span class="step-tag">omega</span>
+                                            <span class="step-content">导出算术矛盾</span>
+                                            <span class="final-mark contradiction">$\to\,$ 矛盾</span>
+                                        </div>
+
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </details>
+
+    </div>
+
+    <div class="qed">□</div>
+
+</body>
+</html>
