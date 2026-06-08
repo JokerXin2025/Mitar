@@ -1,5 +1,5 @@
 import Lean
-import Mathlib.Data.Real.Basic
+import Batteries.Lean.Expr
 
 export Lean (Name Expr Json MetaM)
 export Lean.Meta (isProp inferType)

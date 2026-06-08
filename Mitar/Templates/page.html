@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN" overflow-y: scroll;>
+
+<head>
+
+    <base href="${source_path}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命题</title>
+
+    <link rel="stylesheet" href="css/basic.css">
+    <link rel="stylesheet" href="css/step.css">
+    <link rel="stylesheet" href="css/goal.css">
+    <link rel="stylesheet" href="css/strategy.css">
+    <link rel="stylesheet" href="css/sundry.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/codicon.css">
+    <link rel="stylesheet" href="css/screen_warning.css">
+
+    <script defer src="js/katex.js"></script>
+    <script defer src="js/animation.js"></script>
+    <script defer src="js/equation_size.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://kit.fontawesome.com/22e1239b05.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div id="device-warning">
+        <div class="warning-content">
+            <div class="warning-icon"><i class="codicon codicon-move"></i></div>
+            <h2 class="warning-title">请使用平板或电脑访问</h2>
+            <p class="warning-desc">
+                为了保证最佳阅读体验<br>
+                本页面暂不支持窄屏浏览
+            </p>
+        </div>
+    </div>
+
+    <div id="main-content" class="proof-container">
+
+        <h2>
+            ${proof_state}
+            证明
+        </h2>
+
+${proof_content}
+
+        <div class="qed">□</div>
+
+    </div>
+
+</body>
+</html>

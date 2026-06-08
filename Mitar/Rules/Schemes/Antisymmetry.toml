@@ -1,0 +1,78 @@
+tag = "反对称性"
+
+[[theorems]] # as axiom of `PartialOrder`
+id = ["PartialOrder.le_antisymm"]
+args = [3, 4]
+# [self : PartialOrder α]
+# (a b : α) : a ≤ b → b ≤ a → a = b
+# from "Mathlib.Order.Defs.PartialOrder"
+
+[[theorems]]
+id = ["le_antisymm", "LE.le.antisymm"]
+args = [1, 2]
+# [PartialOrder α]
+# : a ≤ b → b ≤ a → a = b
+# from "Mathlib.Order.Defs.PartialOrder", "Mathlib.Order.Defs.Basic"
+
+[[theorems]]
+id = ["ge_antisymm", "LE.le.antisymm'"]
+args = [1, 2]
+# [PartialOrder α]
+# : b ≤ a → a ≤ b → a = b
+# from "Mathlib.Order.Defs.PartialOrder", "Mathlib.Order.Defs.Basic"
+
+[[theorems]]
+id = ["LE.le.ge_iff_eq"]
+args = [1, 2]
+# [PartialOrder α]
+# (h : a ≤ b) : b ≤ a ↔ a = b
+# from "Mathlib.Order.Defs.Basic"
+
+[[theorems]]
+id = ["LE.le.ge_iff_eq'"]
+args = [1, 2]
+# [PartialOrder α]
+# (h : b ≤ a) : a ≤ b ↔ a = b
+# from "Mathlib.Order.Defs.Basic"
+
+[[theorems]]
+id = ["le_antisymm_iff"]
+# [PartialOrder α]
+# : a = b ↔ a ≤ b ∧ b ≤ a
+# from "Mathlib.Order.Defs.PartialOrder"
+
+[[theorems]]
+id = ["ge_antisymm_iff"]
+# [PartialOrder α]
+# : a = b ↔ b ≤ a ∧ a ≤ b
+# from "Mathlib.Order.Defs.PartialOrder"
+
+[[theorems]] # as axiom of `Std.Antisymm`
+id = ["Std.Antisymm.antisymm"]
+# [self : Std.Antisymm r]
+# (a b : α) : r a b → r b a → a = b
+# from "(lean).Init.Core"
+
+[[theorems]]
+id = ["antisymm"]
+# [Std.Antisymm r]
+# : r a b → r b a → a = b
+# from "Mathlib.Order.Defs.Unbundled"
+
+[[theorems]]
+id = ["antisymm'"]
+# [Std.Antisymm r]
+# : r a b → r b a → b = a
+# from "Mathlib.Order.Defs.Unbundled"
+
+[[theorems]]
+id = ["antisymm_of"]
+# [Std.Antisymm r]
+# (r : α → α → Prop) : r a b → r b a → a = b
+# from "Mathlib.Order.Defs.Unbundled"
+
+[[theorems]]
+id = ["antisymm_of'"]
+# [Std.Antisymm r]
+# (r : α → α → Prop) : r a b → r b a → b = a
+# from "Mathlib.Order.Defs.Unbundled"

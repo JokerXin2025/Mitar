@@ -1,0 +1,8 @@
+tag = "放缩"
+id = ["gcongr"]
+
+[Final]
+content = "不等式#{goal}可通过对已知条件进行保序变换得到"
+
+[NonFinal]
+content = "要证明#{goal}, 只需证明#{goal'}即可"

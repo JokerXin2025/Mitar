@@ -1,0 +1,7 @@
+tag = "显然"
+id = ["rfl"]
+
+content = "该命题显然成立"
+
+# always `Final`
+# always not `Contra`

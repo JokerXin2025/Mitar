@@ -1,0 +1,39 @@
+[[Tactic]]
+name = "rfl"
+path = "./Tactics/rfl.toml"
+
+[[Tactic]]
+name = "apply"
+path = "./Tactics/apply.toml"
+
+[[Tactic]]
+name = "unfold"
+path = "./Tactics/unfold.toml"
+
+[[Tactic]]
+name = "change"
+path = "./Tactics/change.toml"
+
+[[Tactic]]
+name = "gcongr"
+path = "./Tactics/gcongr.toml"
+
+[[Tactic]]
+name = "norm_num"
+path = "./Tactics/norm_num.toml"
+
+[[Tactic]]
+name = "omega"
+path = "./Tactics/omega.toml"
+
+[[Tactic]]
+name = "linarith"
+path = "./Tactics/linarith.toml"
+
+[[Tactic]]
+name = "nlinarith"
+path = "./Tactics/nlinarith.toml"
+
+[[Tactic]]
+name = "ring"
+path = "./Tactics/ring.toml"

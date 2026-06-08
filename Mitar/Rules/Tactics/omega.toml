@@ -1,0 +1,9 @@
+tag = "omega"
+id = ["omega"]
+
+content = "通过算术推导即可证明#{goal}"
+
+[Contra]
+content = "导出算术矛盾"
+
+# always `Final`

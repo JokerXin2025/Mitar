@@ -1,0 +1,9 @@
+tag = "nlinarith"
+id = ["nlinarith"]
+
+content = "通过不等式推导即可证明#{goal}"
+
+[Contra]
+content = "导出不等式矛盾"
+
+# always `Final`

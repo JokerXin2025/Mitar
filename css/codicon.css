@@ -38,6 +38,7 @@
  *  Icons
  *-------------------*/
 
+.codicon-move:before { content: "\eb22" }
 .codicon-check:before { content: "\eab2" }
 .codicon-check-all:before { content: "\ebb1" }
 .codicon-copilot-warning:before { content: "\ec38" }

@@ -1,0 +1,9 @@
+tag = "应用定义"
+id = ["unfold"]
+args = ["concept"]
+
+[atHypo]
+content = "根据#{concept}的定义, 我们有#{h'}"
+
+[atGoal]
+content = "根据#{concept}的定义, 我们需要证明#{goal'}"

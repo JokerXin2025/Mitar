@@ -1,0 +1,47 @@
+[tactics.obtain]
+regex = "^obtain\\s+⟨\\s*(?P<m>\\w+)\\s*,\\s*(?P<h_m>\\w+)\\s*⟩\\s*:=\\s*(?P<from>\\w+)$"
+position = "after"
+args = [ { match="m" }, { match="h_m" } ]
+
+[tactics.unfold]
+regex = "^unfold\\s+(?P<concept>\\w+)(?:\\s+at\\s+(?P<at>\\w+))?$"
+position = "before"
+args = [ { match="concept", label="concept" }, { match="at", label="at", carry=true } ]
+
+[tactics.norm_num]
+regex = "^norm_num(?:\\s+at\\s+(?P<h>\\w+))?$"
+position = "before"
+args = [ { match="h", label="h" } ]
+
+[tactics.norm_cast]
+regex = "^norm_cast$"
+position = "before"
+
+[tactics.change]
+regex = "^change\\s+(.*)$"
+position = "before"
+
+[tactics.gcongr]
+regex = "^gcongr$"
+position = "before"
+
+[tactics.omega]
+regex = "^omega$"
+position = "before"
+
+[tactics.linarith]
+regex = "^linarith$"
+position = "before"
+
+[tactics.ring]
+regex = "^ring$"
+position = "before"
+
+[tactics.rfl]
+regex = "^rfl$"
+position = "before"
+
+[tactics.have_term]
+regex = "^have\\s+(?P<prop>\\w+)\\s*:.*:=\\s*(?!by)(.*)$"
+position = "after"
+args = [ { match="prop", label="prop" } ]

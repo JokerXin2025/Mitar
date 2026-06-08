@@ -1,6 +1,5 @@
 name = "Lean2TeX"
 version = "0.1.0"
-keywords = ["math"]
 defaultTargets = ["Lean2TeX"]
 
 [leanOptions]
@@ -10,9 +9,9 @@ weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
 
 [[require]]
-name = "mathlib"
-scope = "leanprover-community"
-rev = "v4.29.1"
+name = "batteries"
+git = "https://github.com/leanprover-community/batteries"
+rev = "main"
 
 [[lean_lib]]
 name = "Lean2TeX"

@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     position: relative;
     margin-left: 16px;
+    border-radius: 8px;
     padding: 8px;
     padding-right: 38px;
     transition: 0.3s;
@@ -28,7 +29,7 @@
     margin-right: 16px;
 }
 .step-tag.calc {
-    width: 96px;
+    width: 36px;
     margin-right: 0;
 }
 
@@ -43,7 +44,6 @@
     text-align: center;
 }
 .step-lhs, .step-rhs {
-    flex: 1;
     display: inline-block;
     white-space: nowrap;
     transform-origin: left;
@@ -56,5 +56,5 @@
     text-align: left;
 }
 .step-cal-end {
-    width: 96px;
+    width: 12px;
 }

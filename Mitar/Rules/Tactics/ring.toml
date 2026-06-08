@@ -1,0 +1,7 @@
+tag = "ring"
+id = ["ring"]
+
+content = "通过代数推导即可证明#{goal}"
+
+# always `Final`
+# always not `Contra`

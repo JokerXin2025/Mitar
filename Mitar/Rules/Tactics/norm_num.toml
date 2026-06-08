@@ -1,0 +1,17 @@
+tag = "计算"
+id = ["norm_num"]
+
+[Final]
+content = "通过数值计算即可证明#{goal}"
+
+[Final.Contra.atHypo]
+content = "算式#{h}不成立"
+
+[Final.Contra.atGoal]
+content = "通过数值计算获得矛盾"
+
+[NonFinal]
+content = "目标可转化为#{goal'}"
+
+[NonFinal.atHypo]
+content = "通过计算可得#{h'}"

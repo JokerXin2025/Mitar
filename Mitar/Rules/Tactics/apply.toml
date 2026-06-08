@@ -1,0 +1,9 @@
+tag = "应用结论"
+id = ["apply"]
+args = ["causality"]
+
+[atHypo]
+content = "从已知条件#{h}可推出#{h'}"
+
+[atGoal]
+content = "要证明#{goal}, 只需证明#{goal'}即可"
