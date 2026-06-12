@@ -33,6 +33,10 @@ position = "before"
 regex = "^linarith$"
 position = "before"
 
+[tactics.nlinarith]
+regex = "^nlinarith$"
+position = "before"
+
 [tactics.ring]
 regex = "^ring$"
 position = "before"

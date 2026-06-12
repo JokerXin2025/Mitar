@@ -1,24 +1,19 @@
 from string import Template
 from pathlib import Path
 from textwrap import indent
-from .utils import HANDLERS, to_roman
+from Mitar.utils import HANDLERS, to_roman
 
 PASS = 0
 SORRY = 1
 ERROR = 2
 
 CURRENT_DIR = Path(__file__).absolute().parent
-
-def load_template(filename: str):
-    tpl_path = CURRENT_DIR / "Templates" / filename
-    return Template(tpl_path.read_text())
-
-TEMPLATE_STEP = load_template("step.html")
-TEMPLATE_CAL_STEP = load_template("cal_step.html")
-TEMPLATE_DETAILS = load_template("details.html")
-TEMPLATE_STRATEGY = load_template("strategy.html")
-TEMPLATE_PROOF = load_template("proof.html")
-TEMPLATE_PAGE = load_template("page.html")
+TEMPLATE_STEP = Template((CURRENT_DIR / "Templates/step.html").read_text())
+TEMPLATE_CAL_STEP = Template((CURRENT_DIR / "Templates/cal_step.html").read_text())
+TEMPLATE_DETAILS = Template((CURRENT_DIR / "Templates/details.html").read_text())
+TEMPLATE_STRATEGY = Template((CURRENT_DIR / "Templates/strategy.html").read_text())
+TEMPLATE_PROOF = Template((CURRENT_DIR / "Templates/proof.html").read_text())
+TEMPLATE_PAGE = Template((CURRENT_DIR / "Templates/page.html").read_text())
 
 
 def render_step(tag, content, mark_list):

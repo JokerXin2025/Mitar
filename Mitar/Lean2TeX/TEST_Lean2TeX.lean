@@ -15,7 +15,7 @@ def Lemma1 (n : ℕ) : a n ≥ 2 := by
     Lean2TeX _base <- "rfl"
     rfl
   | succ k ih =>
-    Lean2TeX _induct <- _goal_
+    Lean2TeX _induct <- _goal_ k("assume_on") ih("assume_h")
     Lean2TeX _induct <- "unfold" a("concept")
     unfold a
     Lean2TeX _induct <- _goal_
@@ -76,7 +76,7 @@ def Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
       Lean2TeX __zero <- "Cases" *___info("info") &___cases("cases")
       omega
   | succ k =>
-    Lean2TeX __succ <- _goal_
+    Lean2TeX __succ <- _goal_ k("n-1")
     Lean2TeX __succ <- "unfold" a("concept") h_m("at")
     unfold a at h_m
     Lean2TeX __succ <- _goal_ h_m("last_at")
@@ -124,4 +124,6 @@ def Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
     Lean2TeX vals TEST <- &Lemma1 &Theorem
     omega
 
-Lean2TeX TEST => "Calculus@Mitar/TEST.json"
+Lean2TeX TEST => "/Users/zhoukexin/Desktop/Mitar/Mitar/Lean2TeX/TEST.json"
+
+-- Lean2TeX 1781051577.415901

@@ -21,7 +21,7 @@ install:
 	@cp -r js/. $(HOME)/.Mitar/js/
 	@rm -rf $(HOME)/.Mitar/Lean2TeX/.lake
 	@pip install -e .
-	@echo "Successfully Installed in $(HOME)/.Mitar"
+	@echo "\n\033[1m\033[32m✓ Successfully Installed to \033[4m$(HOME)/.Mitar/\033[0m\n"
 
 clean:
 	@rm -rf build/ dist/

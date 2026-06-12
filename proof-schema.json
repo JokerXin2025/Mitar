@@ -24,17 +24,32 @@
       "required" : [ "is_strategy" , "by" , "h_contra" , "proof" ] ,
       "additionalProperties" : false
     } ,
-    "Induction" : {
-      "properties" : {
-        "strategy" : { "const" : "Induction" } ,
-        "on" : { "type" : "string" } ,
-        "base_case_proof" : { "$ref" : "#/$defs/Proof" } ,
-        "assume_on" : { "type" : "string" } ,
-        "inductive_h" : { "type" : "string" } ,
+    "Induction": {
+      "properties": {
+        "name": {"const": "Induction"},
+        "info": {
+          "properties": {
+            "on": {
+              "type": "string"
+            }
+          }
+        },
+        "base": {
+          "$ref": "#/$defs/Proof",
+          "items": [
+            {}
+          ]
+        },
+      
+        "inductive": {
+          "properties": {
+            "on": {
+              "type": "string"
+            }
+          }
+        },
         "inductive_proof" : { "$ref" : "#/$defs/Proof" }
-      } ,
-      "required" : [ "by" , "on" , "base_case_proof" , "assumed_m" , "inductive_h" , "inductive_proof" ] ,
-      "additionalProperties" : false
+      }
     } ,
     "rfl" : {
       "properties" : {
@@ -129,10 +144,10 @@
       "properties" : {
         "step" : { "const" : "have" } ,
         "trivial" : { "type" : "boolean" } ,
-        "statement" : { "type" : "string" } ,
+        "proposition" : { "type" : "string" } ,
         "proof" : { "$ref" : "#/$defs/Proof" }
       } ,
-      "required" : [ "step" , "trivial" , "statement" , "proof" ] ,
+      "required" : [ "step" , "trivial" , "proposition" , "proof" ] ,
       "additionalProperties" : false
     } ,
     "calculation" : {

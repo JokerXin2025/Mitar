@@ -300,3 +300,10 @@ tmbootpicker.efi
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+
+# --------------------------------------------------
+# Mitar | Lean2TeX
+# --------------------------------------------------
+
+*_Lean2TeX.lean

@@ -4,11 +4,6 @@ from pathlib import Path
 
 CURRENT_DIR = Path(__file__).absolute().parent
 
-def load_template(filename):
-    path = join(CURRENT_DIR, "Templates", filename)
-    with open(path, "r", encoding="utf-8") as f:
-        return Template(f.read())
-
 MAP_CONDITION = {
     "Final": "mark_list",
     "NonFinal": "not mark_list",
@@ -17,7 +12,7 @@ MAP_CONDITION = {
     "atGoal": "not h"
 }
 
-MAP_BASIC = {
+MAP_ARGS_BASIC = {
     "#{goal}": "{goal}",
     "#{goal'}": "{goal_}",
     "#{h}": "{h}",
@@ -68,7 +63,7 @@ class Rules(list):
 def generate_codes(tactic: dict):
 
     lines = []
-    map_args = MAP_BASIC.copy()
+    map_args = MAP_ARGS_BASIC.copy()
 
     # Exclusive Arguments
     for arg in tactic.get("args", []):
