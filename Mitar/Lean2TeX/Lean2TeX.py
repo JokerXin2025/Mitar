@@ -1,10 +1,8 @@
-import re, tomllib
-from time import time
+import re, time
 from pathlib import Path
 from Mitar.utils import len_indent
 
 CURRENT_DIR = Path(__file__).absolute().parent
-CONFIG_PATH = CURRENT_DIR / "tactics.toml"
 
 RELATION_SYMBOL = {
     "=": "$=$",
@@ -12,6 +10,7 @@ RELATION_SYMBOL = {
     ">": "$>$",
     "≤": "$\\\\leqslant$",
     "≥": "$\\\\geqslant$",
+    "=?": "$\\\\textcolor{lightgrey}=$",
 }
 
 
@@ -65,7 +64,7 @@ SUBTREE_CONFIG = {
 }
 
 
-def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
+def __parser(lines, start, basic_indent: int, tactics_cfg, contra = False):
 
     """
     ### Return Value
@@ -89,14 +88,28 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
             continue
 
         # Parse: Theorem / Lemma
-        match = re.match(r'^(theorem|lemma)\s+(\w+)', line)
+        match = re.match(r'^(?:theorem|lemma)\s+(\w+)', line)
         if match and start == 0:
-            node = Root(line)
-            node.name = match.group(2)
+            raw = line
+            # 修复：先检查当前行是否已经包含了 ':= by'
+            if not re.search(r':=\s*by', line):
+                i += 1
+                while i < len(lines):
+                    # retain raw codes while skipping the blank line
+                    if lines[i].strip():
+                        raw += ("\n" + lines[i])
+                    if re.search(r':=\s*by', lines[i]):
+                        i += 1
+                        break
+                    i += 1
+            else:
+                i += 1
+                
             # Substitute `def` for `theorem` or `lemma`
             # to avoid some problems caused by parallel processing of Lean
-            node.raw = re.sub(r'^(theorem|lemma)', 'def', line)
-            node.steps, i = __parser(lines, i + 1, 1, TACTIC_CONFIG)
+            node = Root(re.sub(r'^(?:theorem|lemma)', 'def', raw))
+            node.name = match.group(1)
+            node.steps, i = __parser(lines, i, 1, tactics_cfg)
             nodes.append(node)
             continue
 
@@ -121,18 +134,18 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
         if match:
             node = NewGoal(line)
             node.proof = Node()
-            node.proof.steps, i = __parser(lines, i + 1, len_indent(line) + 1, TACTIC_CONFIG)
+            node.proof.steps, i = __parser(lines, i + 1, len_indent(line) + 1, tactics_cfg)
             nodes.append(node)
             continue
 
         # Parse: Contradiction
-        match = re.match(r'^(intro|by_contra)\s+(\w+)', line.strip())
+        match = re.match(r'^(?:intro|by_contra)\s+(\w+)', line.strip())
         if match:
             node = Contra(line)
-            node.args = match.group(2)
+            node.args = match.group(1)
             # get branch "base"
             node.proof = Node()
-            node.proof.steps, i = __parser(lines, i + 1, basic_indent, TACTIC_CONFIG)
+            node.proof.steps, i = __parser(lines, i + 1, basic_indent, tactics_cfg)
             nodes.append(node)
             break
 
@@ -147,7 +160,7 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
                 i += 1
             node.base = Node(lines[i])
             base_indent = len_indent(node.base.raw)
-            node.base.steps, i = __parser(lines, i + 1, base_indent + 1, TACTIC_CONFIG)
+            node.base.steps, i = __parser(lines, i + 1, base_indent + 1, tactics_cfg)
             # get branch "inductive"
             while i < len(lines) and not lines[i].strip().startswith('|'):
                 i += 1
@@ -155,7 +168,7 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
             match_induct = re.search(r'succ\s+(\w+)\s+(\w+)', node.induct.raw)
             node.induct.args = (match_induct.group(1), match_induct.group(2))
             induct_indent = len_indent(node.induct.raw)
-            node.induct.steps, i = __parser(lines, i + 1, induct_indent + 1, TACTIC_CONFIG)
+            node.induct.steps, i = __parser(lines, i + 1, induct_indent + 1, tactics_cfg)
             nodes.append(node)
             break
 
@@ -169,22 +182,22 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
             while i < len(lines) and not lines[i].strip().startswith('|'):
                 i += 1
             node.zero = Node(lines[i])
-            node.zero.steps, i = __parser(lines, i + 1, len_indent(node.zero.raw) + 1, TACTIC_CONFIG)
+            node.zero.steps, i = __parser(lines, i + 1, len_indent(node.zero.raw) + 1, tactics_cfg)
             # get branch "succ"
             while i < len(lines) and not lines[i].strip().startswith('|'):
                 i += 1
             node.succ = Node(lines[i])
             match_succ = re.search(r'succ\s+(\w+)', node.succ.raw)
             node.succ.arg = match_succ.group(1)
-            node.succ.steps, i = __parser(lines, i + 1, len_indent(node.succ.raw) + 1, TACTIC_CONFIG)
+            node.succ.steps, i = __parser(lines, i + 1, len_indent(node.succ.raw) + 1, tactics_cfg)
             nodes.append(node)
             break
 
         # Parse: Cases by Principle
-        match = re.match(r'^(rcases)\s+(\w+)\s+with\s+(.*)', line.strip())
+        match = re.match(r'^rcases\s+(\w+)\s+with\s+(.*)', line.strip())
         if match:
             node = CasesP(line)
-            node.args = match.group(2)
+            node.args = match.group(1)
             i += 1
             n = 0
             # get branches
@@ -215,7 +228,7 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
                 branch = Node(" " * len_indent(b_line) + f"· -- case {n}")
                 branch.dot_indent = len_indent(b_line)
                 branch.dot_idx = dot_idx
-                branch.steps, _ = __parser(branch_lines, 0, 0, TACTIC_CONFIG)
+                branch.steps, _ = __parser(branch_lines, 0, 0, tactics_cfg)
                 setattr(node, f"case{n}", branch)
                 SUBTREE_CONFIG[CasesP]["branches"].append(f"case{n}")
             nodes.append(node)
@@ -223,20 +236,22 @@ def __parser(lines, start, basic_indent: int, TACTIC_CONFIG):
 
         # Parse: Normal Tactic / Others
         node = None
-        for t_name, t_cfg in TACTIC_CONFIG.items():
-            match = re.match(t_cfg['regex'], line.strip())
+        for tactic in tactics_cfg:
+            regex = tactic.get("regex", "$.").replace(
+                "@{ident}", "[a-zA-Z0-9_'?!]+"
+            )
+            match = re.match(regex, line.strip())
             if match:
                 node = Tactic(line)
-                node.tactic_name = t_name
-                node.position = t_cfg.get("position", "before")
+                node.name = tactic.get("name", "")
+                node.position = tactic.get("position", "before")
                 node.args = []
-                for arg in t_cfg.get("args", []):
-                    var_name = match.group(arg['match'])
-                    if var_name:
-                        if "label" in arg:
-                            node.args.append((arg["label"], var_name, arg.get("carry", False)))
-                        else:
-                            node.args.append(("", var_name, arg.get("carry", False)))
+                for name, label in tactic.get("args", {}).items():
+                    var_name = match.group(name)
+                    if var_name and name in tactic.get("relay_args", []):
+                        node.args.append((label, var_name, True))
+                    elif var_name:
+                        node.args.append((label, var_name, False))
                 break
         node = Other(line) if node == None else node
         nodes.append(node)
@@ -253,10 +268,10 @@ def __get_terminal(nodes):
     """
 
     for node in reversed(nodes):
-        if node.__class__ == Root:
-            return __get_terminal(node.steps)
-        elif node.__class__ in [Tactic, Calc]:
+        if node.__class__ in [Tactic, Calc]:
             return node
+        elif node.__class__ == Root:
+            return __get_terminal(node.steps)
         elif node.__class__ == Contra:
             return __get_terminal(node.proof.steps)
         elif node.__class__ == Induct:
@@ -294,27 +309,35 @@ def __resolve(nodes: list, tag: str, depth: int):
                         nodes[n+1].step_args = f""" {var_name}(\"last_{label}\")"""
                 else:
                     args_str += f' {var_name}'
-            node.step_info = f'Lean2TeX {tag} <- "{node.tactic_name}"{args_str}'.strip()
+            node.step_info = f'Lean2TeX {tag} <- "{node.name}"{args_str}'.strip()
 
         elif node.__class__ == Calc:
-
+            node.calc_info = []
+            # 1. 把所有计算步骤拼接为一整段文本，并移除单行注释，防止干扰
+            full_text = "\n".join(node.raw_calsteps)
+            clean_text = re.sub(r'--.*', '', full_text)
+            # 2. 全局匹配 calc 步骤
+            # 匹配逻辑：(行首或换行) + 空白 + (可选的下划线) + (关系符) + 空白 + (表达式) + := 
+            pattern = r'(?:^|\n)\s*(?:_\s+)?([=≤≥<>]|=\?)\s+(.*?)\s+:='
+            matches = list(re.finditer(pattern, clean_text, re.DOTALL))
             lhs = None
             step_idx = 1
-            node.calc_info = []
-            for line in node.raw_calsteps:
-                if ":=" not in line: continue
-                eq_part = line.split(":=")[0].strip()
-                match = re.search(r'([=≤≥<>])', eq_part)
-                if not match: continue
-                rel, right = match.group(1), eq_part[match.end():].strip()
+            for match in matches:
+                rel = match.group(1).strip()
+                # 压缩表达式内的多余换行和空格，防止插入 let 语句时引发缩进错误
+                rhs = " ".join(match.group(2).split())
+                # 如果是新的关系符(如 =?)，去字典拿 TeX 映射，没有则保留原样
+                tex_rel = RELATION_SYMBOL.get(rel, rel)
                 if lhs is None:
-                    lhs = eq_part[:match.start()].strip()
+                    # 第一次匹配：提取第一行的 LHS (从文本开头到第一个关系符之前)
+                    lhs_raw = clean_text[:match.start()]
+                    lhs = " ".join(lhs_raw.split())
                     node.calc_info.append(f"""let _lhs_ := {lhs}""")
-                    node.calc_info.append(f"""let _rhs1_ := {right}""")
-                    node.calc_info.append(f"""Lean2TeX _calc_ <- \"{RELATION_SYMBOL[rel]}\" _lhs_(\"lhs\") _rhs1_(\"rhs\")""")
+                    node.calc_info.append(f"""let _rhs1_ := {rhs}""")
+                    node.calc_info.append(f"""Lean2TeX _calc_ <- \"{tex_rel}\" _lhs_(\"lhs\") _rhs1_(\"rhs\")""")
                 else:
-                    node.calc_info.append(f"""let _rhs{step_idx}_ := {right}""")
-                    node.calc_info.append(f"""Lean2TeX _calc_ <- \"{RELATION_SYMBOL[rel]}\" _rhs{step_idx}_(\"rhs\")""")
+                    node.calc_info.append(f"""let _rhs{step_idx}_ := {rhs}""")
+                    node.calc_info.append(f"""Lean2TeX _calc_ <- \"{tex_rel}\" _rhs{step_idx}_(\"rhs\")""")
                 step_idx += 1
             node.calc_info.append(f"""Lean2TeX {tag} <- \"calc\" &_calc_(\"calc_steps\")""")
 
@@ -441,7 +464,7 @@ def __output(node):
     return output
 
 
-def Lean2TeX_init(input_file: Path):
+def Lean2TeX_init(input_file: Path, tactics_cfg: list):
 
     """
     ## Initialize Lean2TeX
@@ -456,22 +479,15 @@ def Lean2TeX_init(input_file: Path):
     json_file = input_file.with_name(f"{input_file.stem}_Lean2TeX.json")
     output_file = input_file.with_name(f"{input_file.stem}_Lean2TeX.lean")
 
-    # Read the configuration file
-    if CONFIG_PATH.exists():
-        with open(CONFIG_PATH, 'rb') as f:
-            TACTIC_CONFIG = tomllib.load(f).get("tactics", {})
-    else:
-        return 1
-
     # Read the input file
     if input_file.exists():
         lines = input_file.read_text(encoding = "utf-8").splitlines()
     else:
-        return 2
+        return 1
 
     # Build Lean2TeX AST
-    root_nodes, _ = __parser(lines, 0, 0, TACTIC_CONFIG)
-    __resolve(root_nodes, input_file.stem, 0)
+    root_nodes, _ = __parser(lines, 0, 0, tactics_cfg)
+    __resolve(root_nodes, "", 0)
 
     # Merge Lean2TeX's data
     terminal = __get_terminal(root_nodes)
@@ -480,7 +496,9 @@ def Lean2TeX_init(input_file: Path):
         for node in root_nodes:
             if node.__class__ == Root:
                 prop_list += f" &{node.name}"
-        terminal.post_recorders.append(f"""Lean2TeX vals {input_file.stem} <-{prop_list}""")
+        terminal.post_recorders.append(f"""Lean2TeX vals Lean2TeX_Data <-{prop_list}""")
+    else:
+        print("未找到terminal!")
 
     output_lines = []
 
@@ -493,11 +511,11 @@ def Lean2TeX_init(input_file: Path):
         output_lines.extend(__output(node))
 
     # Add Lean2TeX's export command
-    output_lines.append(f"""\nLean2TeX {input_file.stem} => \"{json_file}\"""")
+    output_lines.append(f"""\nLean2TeX Lean2TeX_Data => \"{json_file}\"""")
 
     # Record the current timestamp
     # to avoid some problems caused by cache invocation of Lean
-    output_lines.append(f"""\n-- Lean2TeX {time()}""")
+    output_lines.append(f"""\n-- Lean2TeX {time.time()}""")
 
     # Output
     output_file.write_text("\n".join(output_lines) + "\n")
@@ -507,4 +525,4 @@ def Lean2TeX_init(input_file: Path):
 if __name__ == "__main__":
 
     # Test with `TEST.lean`
-    Lean2TeX_init(CURRENT_DIR / "TEST.lean")
+    Lean2TeX_init("TEST.lean", None)

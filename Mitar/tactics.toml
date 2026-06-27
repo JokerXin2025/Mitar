@@ -1,0 +1,99 @@
+
+### Initially, all proof terms including will be rewritten as tactic `exact`.
+### The same pre-processing applies to `sorry` terms.
+###
+### Key `regex` specifies the regular expression to match the tactic in Lean4
+### proof scripts. Note that spaces at the beginning and the end of the line
+### will be stripped before matching.
+### The following macros can be used in key `regex`'s value:
+###   `@{ident}` => (match any identifier in Lean4)
+###
+### Key `position` specifies where the Lean2TeX tactic recorder should be
+### inserted relative to the tactic itself, which default value is `before`.
+### For tactics introducing new variables (i.e. `obtain` `have`), the recorder
+### should be inserted after the tactic to work on these variables correctly.
+###
+### Key `args` specifies the correspondence between regex capturing group names
+### and Lean2TeX argument labels.
+###
+### Key `relay_args` specifies which arguments to be relayed to the next record.
+###
+### See to it that the regexes is enclosed with single quotes `'` or triple
+### quotes `'''`, so that they will be treated as literal strings.
+
+###################################################################################
+
+
+[[built-in]]
+name = "sorry"
+regex = '^sorry$'
+
+[[built-in]]
+name = "exact"
+regex = '^exact'
+
+[[built-in]]
+name = "apply"
+regex = '^apply'
+
+[[built-in]]
+name = "obtain"
+regex = '^obtain\s+⟨\s*(?P<m>\w+)\s*,\s*(?P<h_m>\w+)\s*⟩\s*:=\s*(?P<from>\w+)$'
+position = "after"
+args = { m = "", h_m = "" }
+
+[[built-in]]
+name = "unfold"
+regex = '^unfold\s+(?P<concept>\w+)(?:\s+at\s+(?P<at>\w+))?$'
+args = { concept = "concept", at = "at" }
+relay_args = [ "at" ]
+
+[[built-in]]
+name = "norm_num"
+regex = '^norm_num(?:\s+at\s+(?P<h>\w+))?$'
+args = { h = "h" }
+
+[[built-in]]
+name = "norm_cast"
+regex = '^norm_cast$'
+
+[[built-in]]
+name = "change"
+regex = '^change\s+(.*)$'
+
+[[built-in]]
+name = "gcongr"
+regex = '^gcongr$'
+
+[[built-in]]
+name = "omega"
+regex = '^omega$'
+
+[[built-in]]
+name = "linarith"
+regex = '^linarith$'
+
+[[built-in]]
+name = "nlinarith"
+regex = '^nlinarith$'
+
+[[built-in]]
+name = "ring"
+regex = '^ring$'
+
+[[built-in]]
+name = "rfl"
+regex = '^rfl$'
+
+[[built-in]]
+name = "have"
+regex = '''
+^have\s+(?P<prop>@{ident})\s*:.*:=\s*(?!by)(?P<proof>.*)$'''
+position = "after"
+args = { prop = "prop" }
+
+###################################################################################
+
+[[import]]
+name = "Calculus@JokerXin"
+path = "/Users/zhoukexin/Desktop/Mitar/Universes/Calculus@Mitar"

@@ -16,9 +16,9 @@ install:
 		$(HOME)/.Mitar/Lean2TeX \
 		$(HOME)/.Mitar/css \
 		$(HOME)/.Mitar/js
-	@cp -r Lean2TeX/. $(HOME)/.Mitar/Lean2TeX/
-	@cp -r css/. $(HOME)/.Mitar/css/
-	@cp -r js/. $(HOME)/.Mitar/js/
+	@cp -rv Lean2TeX/. $(HOME)/.Mitar/Lean2TeX/
+	@cp -rv css/. $(HOME)/.Mitar/css/
+	@cp -rv js/. $(HOME)/.Mitar/js/
 	@rm -rf $(HOME)/.Mitar/Lean2TeX/.lake
 	@pip install -e .
 	@echo "\n\033[1m\033[32m✓ Successfully Installed to \033[4m$(HOME)/.Mitar/\033[0m\n"

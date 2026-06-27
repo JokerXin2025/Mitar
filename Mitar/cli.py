@@ -2,7 +2,7 @@ import sys, argparse
 from Mitar.make import make
 from Mitar.clean import clean
 
-def Mitar_make(args: argparse.Namespace, ):
+def Mitar_make(args: argparse.Namespace):
     make(args.input_file)
     if not args.keep:
         clean(False)

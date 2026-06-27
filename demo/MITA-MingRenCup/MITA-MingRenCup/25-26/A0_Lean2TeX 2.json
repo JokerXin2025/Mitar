@@ -1,0 +1,31 @@
+[[{"goal":
+   " $\\frac{e^{e^{x^{2}}}-e}{\\left(x^{e}+x^{e+1}\\right)^{e^{-1}}-x}=\\frac{e^{e^{x^{2}}-1}-1}{\\frac{x\\cdot \\left(\\left(1+x\\right)^{e^{-1}}-1\\right)}{e}}$ 对一切 $x\\in\\mathbb{R}$ 和 $x>0\\inx>0$ 成立"},
+  {"name": "sorry"}],
+ [{"goal":
+   " $RightLimitExpr[\\frac{e^{e^{x^{2}}}-e}{\\left(x^{e}+x^{e+1}\\right)^{e^{-1}}-x}](0)=Option.some[\\mathbb{R}](e^{2})$ "},
+  {"proof":
+   [{"goal": " $isRightInfinitesimal[e^{x^{2}}-1](0)$ "},
+    {"name": "apply"},
+    {"goal": " $FuncLimitExpr[e^{x^{2}}-1](0)=Option.some[\\mathbb{R}](0)$ "},
+    {"name": "exact"}],
+   "name": "have"},
+  {"goal":
+   " $RightLimitExpr[\\frac{e^{e^{x^{2}}}-e}{\\left(x^{e}+x^{e+1}\\right)^{e^{-1}}-x}](0)=Option.some[\\mathbb{R}](e^{2})$ "},
+  {"name": "calc"}],
+ [{"goal":
+   " $UndeterminedEqual[\\mathbb{R}][RightLimitExpr[\\frac{e^{e^{x^{2}}-1}-1}{\\frac{x\\cdot \\left(\\left(1+x\\right)^{e^{-1}}-1\\right)}{e}}](0)][RightLimitExpr[\\frac{e^{x^{2}}-1}{\\frac{x\\cdot \\left(\\left(1+x\\right)^{e^{-1}}-1\\right)}{e}}](0)]$ "},
+  {"proof":
+   [{"goal": " $isRightInfinitesimal[e^{x^{2}}-1](0)$ "},
+    {"name": "apply"},
+    {"goal": " $FuncLimitExpr[e^{x^{2}}-1](0)=Option.some[\\mathbb{R}](0)$ "},
+    {"name": "exact"}],
+   "name": "have"}],
+ [{"goal":
+   " $UndeterminedEqual[\\mathbb{R}][Option.some[\\mathbb{R}](e^{2})\\cdot RightLimitExpr[\\frac{e^{x}-1}{x}](0)][Option.some[\\mathbb{R}](e^{2})\\cdot RightLimitExpr[\\frac{x}{x}](0)]$ "},
+  {"prop": " $isRightInfinitesimal[x][0]$ ", "name": "have"},
+  {"goal":
+   " $UndeterminedEqual[\\mathbb{R}][Option.some[\\mathbb{R}](e^{2})\\cdot RightLimitExpr[\\frac{e^{x}-1}{x}](0)][Option.some[\\mathbb{R}](e^{2})\\cdot RightLimitExpr[\\frac{x}{x}](0)]$ "},
+  {"name": "sorry"}],
+ [{"goal":
+   " $Option.some[\\mathbb{R}](e^{2})\\cdot RightLimitExpr[\\frac{x}{x}](0)=Option.some[\\mathbb{R}](e^{2})$ "},
+  {"name": "lim_simp"}]]

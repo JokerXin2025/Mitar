@@ -1,4 +1,4 @@
-import Lean2TeX.Basic
+import Lean2TeX.Defs
 import Lean2TeX.ExpressionRecursion
 
 open Lean2TeX
@@ -116,20 +116,20 @@ syntax "Lean2TeX" ident "=>" str : command
 
 elab_rules : command
 | `(command| #Lean2TeX_const $const:ident) => liftTermElabM do
-  /- # View constant's definition -/
+  /- ## View constant's definition -/
   let expr ← instantiateMVars (← elabTerm const none)
-  let output ← Expr2TeX expr .Text .Def
+  let output ← Expr2TeX expr .Text [.Def] []
   logInfo m! "[Lean2TeX] {const} :\n{output}"
 | `(command| Lean2TeX $box:ident <-
     $[$name:str]? $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
-  /- # Merge JSON values into a new JSON object -/
+  /- ## Merge JSON values into a new JSON object -/
   Lean2TeX.Command.addObj box name ptrs ptr_keys arrs arr_keys
 | `(command| Lean2TeX vals $box:ident <-
     $[* $ptrs:ident]* $[& $arrs:ident]*) =>
-  /- # Merge JSON values into a new JSON array -/
+  /- ## Merge JSON values into a new JSON array -/
   Lean2TeX.Command.addVals box ptrs arrs
 | `(command| Lean2TeX $box:ident => $file:str) => do
-  /- # Export JSON box into a JSON file (as JSON array) -/
+  /- ## Export JSON box into a JSON file (as JSON array) -/
   let boxName := box.getId
   let arr ← JSON_boxes.get
   match arr.findIdx? (fun (b, _) => b == boxName) with

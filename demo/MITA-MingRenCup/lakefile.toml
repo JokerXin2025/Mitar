@@ -1,0 +1,11 @@
+name = "MITA-MingRenCup"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["MITA-MingRenCup"]
+
+[[require]]
+name = "Calculus@Mitar"
+path = "/Users/zhoukexin/desktop/Mitar/Universes/Calculus@Mitar/"
+
+[[lean_lib]]
+name = "MITA-MingRenCup"

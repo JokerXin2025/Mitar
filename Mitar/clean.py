@@ -10,7 +10,7 @@ def clean(print_info: bool):
         aux_file.unlink(missing_ok = True)
 
     if print_info:
-        print(f"\n\033[32m\033[1m✓ Auxiliary files have been cleaned up\033[0m\n")
+        print(f"\n\033[32m\033[1m✓ Mitar's auxiliary files have been cleaned up successfully\033[0m\n")
 
 
 if __name__ == "__main__":

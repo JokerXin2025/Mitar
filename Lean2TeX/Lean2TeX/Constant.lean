@@ -1,4 +1,4 @@
-import Lean2TeX.Basic
+import Lean2TeX.Defs
 import Lean2TeX.Utils
 
 open Lean2TeX
@@ -6,30 +6,31 @@ open Lean Meta ConstantInfo
 
 namespace Lean2TeX
 
-def Lean.Expr.getConstDef : MetaRule := fun expr parent style expr_rec => do
+def Lean.Expr.getConstDef : MetaRule := fun expr expr_rec parent styles fvars => do
+  /- Move `.Def` from the DisplayType list -/
+  let styles := styles.erase .Def
   match ← getConstInfo expr.constName! with
-  /- Move `.Def` from the TeXStyle list -/
   /- ## Expression or Equations -/
   | defnInfo defn => do
     if Expr.isComplexDef defn.value then
       if let some eqns ← getEqnsFor? expr.constName! then
         let mut output_array := #[]
         for eqnName in eqns do
-          let next ← expr_rec (← getConstInfo eqnName).type .MultiLine style
+          let next ← expr_rec (← getConstInfo eqnName).type .MultiLine styles fvars
           output_array := output_array.push next
         let output := "\\\\".intercalate output_array.toList
         let output' := s!"$$\\begin{"{"}cases{"}"}{output}\\end{"{"}cases{"}"}$$"
-        return (output', OperNode.Text)
+        return (output', NodeType.Text)
       else
         return none
     else
-      return (← expr_rec defn.value parent style, parent)
+      return (← expr_rec defn.value parent styles fvars, parent)
   /- ## Theorem (or Lemma) -/
   | thmInfo thm => do
-    return (← expr_rec thm.type parent style, parent)
+    return (← expr_rec thm.type parent styles fvars, parent)
   /- ## Axiom -/
   | axiomInfo _axiom => do
-    return (← expr_rec _axiom.type parent style, parent)
+    return (← expr_rec _axiom.type parent styles fvars, parent)
   /- ## Inductive -/
   | inductInfo _ /- induct -/ =>
     return none

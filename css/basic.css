@@ -40,6 +40,7 @@ body {
 
 h2 {
     position: relative;
+    font-size: 24px;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 8px;
 }

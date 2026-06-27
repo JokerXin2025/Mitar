@@ -1,4 +1,4 @@
-import «Calculus@Mitar».Basic
+import «Calculus@Mitar».Prelude
 
 
 /- # 数列 Sequence -/

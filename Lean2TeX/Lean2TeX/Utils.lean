@@ -1,4 +1,4 @@
-import Lean2TeX.Basic
+import Lean2TeX.Defs
 
 open Lean Elab Meta Expr Tactic
 
@@ -31,15 +31,6 @@ end Expr
 
 namespace Tactic
 
-def RefreshGoal : TacticM Unit := do
-  /- Refresh the goal to eliminate the warning -/
-  let goal ← getMainGoal
-  let goal_expr ← goal.getType
-  let goal_tag ← goal.getTag
-  let new_goal ← mkFreshExprSyntheticOpaqueMVar goal_expr goal_tag
-  goal.assign new_goal
-  replaceMainGoal [new_goal.mvarId!]
-
 def GetGoal : TacticM Expr := do
   /- # Get the expression of current Goal -/
   let goal ← getMainGoal
@@ -55,18 +46,22 @@ def addtoBox (box : Name) (json_obj : Json) : MetaM Unit := do
     | some idx =>
       let (b, items) := arr[idx]!
       arr.set! idx (b, items.push json_obj)
-    | none =>  -- create the JSON array for the first time
+    | none =>
+      /- create the JSON array for the first time -/
       arr.push (box, #[json_obj])
 
-def NodeInfo.WrappedIn (nodeInfo : NodeInfo) (parent : OperNode) : MetaM String := do
+def NodeInfo.WrappedIn (nodeInfo : NodeInfo) (parent : NodeType) : MetaM String := do
   let mut (expr, node) := nodeInfo
-  /- bracket the expression with `(` and `)` -/
+  /- Operation Priority -/
   if node == .Add && parent == .Mul then
     expr := s!"\\left({expr}\\right)"
-  /- bracket the expression with `$` -/
+  /- Base of Power Expression -/
+  if (node == .Add || node == .Mul || node == .Supscript) && parent == .BySupscript then
+    expr := s!"\\left({expr}\\right)"
+  /- Inline Equation -/
   if node != .Text && parent == .Text then
     expr := s!" ${expr}$ "
-  /- bracket the expression with `\text{` and `}` -/
+  /- Embedded Text -/
   if node == .Text && parent != .Text then
     expr := s!"\\text{"{"}{expr}{"}"}"
   return expr

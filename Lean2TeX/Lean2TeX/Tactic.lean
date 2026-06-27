@@ -1,4 +1,4 @@
-import Lean2TeX.Basic
+import Lean2TeX.Defs
 import Lean2TeX.ExpressionRecursion
 
 open Lean2TeX
@@ -24,7 +24,7 @@ def addObj (box : TSyntax `ident)
     )
   if withGoal then
     PropertiesList := PropertiesList.concat (
-      "goal", Json.str (← Expr2TeX (← GetGoal) .Text .Root)
+      "goal", Json.str (← Expr2TeX (← GetGoal) .Text [.Root] [])
     )
   /- Add arguments to `PropertiesList` -/
   let mut arg_index := 1
@@ -32,11 +32,11 @@ def addObj (box : TSyntax `ident)
     let expr ← instantiateMVars (← elabTerm arg none)
     if let some arg_key! := arg_key then
       PropertiesList := PropertiesList.concat (
-        arg_key!.getString, Json.str (← Expr2TeX expr .Text .Root)
+        arg_key!.getString, Json.str (← Expr2TeX expr .Text [.Root] [])
       )
     else
       PropertiesList := PropertiesList.concat (
-        s!"arg_{arg_index}", Json.str (← Expr2TeX expr .Text .Root)
+        s!"arg_{arg_index}", Json.str (← Expr2TeX expr .Text [.Root] [])
       )
     arg_index := arg_index + 1
   /- Add JSON objects to `PropertiesList` by pointers -/
@@ -84,7 +84,8 @@ def addObj (box : TSyntax `ident)
     arr_index := arr_index + 1
   /- Make JSON object -/
   addtoBox box.getId (Json.mkObj PropertiesList)
-  RefreshGoal
+  /- Refresh the goal to eliminate the warning -/
+  evalTactic (← `(tactic| skip))
 
 def addVals (box : TSyntax `ident)
             (ptrs : Array (TSyntax `ident))
@@ -124,7 +125,8 @@ def addVals (box : TSyntax `ident)
   /- Add JSON values to JSON box -/
   for val in ItemsList do
     addtoBox box.getId val
-  RefreshGoal
+  /- Refresh the goal to eliminate the warning -/
+  evalTactic (← `(tactic| skip))
 
 end Lean2TeX.Tactic
 
@@ -138,14 +140,14 @@ elab_rules : tactic
 | `(tactic| Lean2TeX $box:ident <-
     $[$name:str]? $[$args:ident$[($arg_keys:str)]?]*
     $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
-  /- # Add information to a JSON array -/
+  /- ## Add information to a JSON array -/
   Lean2TeX.Tactic.addObj box name args arg_keys ptrs ptr_keys arrs arr_keys
 | `(tactic| Lean2TeX $box:ident <-
     $[$name:str]? _goal_ $[$args:ident$[($arg_keys:str)]?]*
     $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
-  /- # Add information to a JSON array (with current goal) -/
+  /- ## Add information to a JSON array (with current goal) -/
   Lean2TeX.Tactic.addObj box name args arg_keys ptrs ptr_keys arrs arr_keys true
 | `(tactic| Lean2TeX vals $box:ident <-
     $[* $ptrs:ident]* $[& $arrs:ident]*) =>
-  /- # Merge JSON values into a new JSON array -/
+  /- ## Merge JSON values into a new JSON array -/
   Lean2TeX.Tactic.addVals box ptrs arrs

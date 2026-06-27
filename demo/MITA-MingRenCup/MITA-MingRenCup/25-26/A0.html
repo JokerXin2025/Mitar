@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN" overflow-y: scroll;>
+
+<head>
+
+    <base href="/Users/zhoukexin/.Mitar/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命题</title>
+
+    <link rel="stylesheet" href="css/basic.css">
+    <link rel="stylesheet" href="css/step.css">
+    <link rel="stylesheet" href="css/goal.css">
+    <link rel="stylesheet" href="css/strategy.css">
+    <link rel="stylesheet" href="css/sundry.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/codicon.css">
+    <link rel="stylesheet" href="css/screen_warning.css">
+
+    <script defer src="js/katex.js"></script>
+    <script defer src="js/animation.js"></script>
+    <script defer src="js/equation_size.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://kit.fontawesome.com/22e1239b05.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div id="device-warning">
+        <div class="warning-content">
+            <div class="warning-icon"><i class="codicon codicon-move"></i></div>
+            <h2 class="warning-title">请使用平板或电脑访问</h2>
+            <p class="warning-desc">
+                为了保证最佳阅读体验<br>
+                本页面暂不支持窄屏浏览
+            </p>
+        </div>
+    </div>
+
+    <div id="main-content" class="proof-container">
+
+        <h2>
+            <sup class="proof-mark pass"><i class="codicon codicon-check-all"></i></sup>
+            证明
+        </h2>
+
+        <details class="goal-block" style="margin-left: 0" open>
+            <summary>
+                <i class="fa-solid fa-play toggle-icon"></i>
+                <span class="tag default">引理 I</span>
+                <span>对任意满足 $x>0$ 的 $x\in \mathbb{R}$ 有 $\frac{e^{e^{x^{2}}}-e}{\left(x^{e}+x^{e+1}\right)^{e^{-1}}-x}=\frac{e^{e^{x^{2}}-1}-1}{\frac{x\cdot \left(\left(1+x\right)^{e^{-1}}-1\right)}{e}}$ </span>
+            </summary>
+            <div class="goal-content with-line">
+
+                <!-- Silent Step: sorry -->
+
+            </div>
+        </details>
+
+        <details class="goal-block" style="margin-left: 0" open>
+            <summary>
+                <i class="fa-solid fa-play toggle-icon"></i>
+                <span class="tag default">引理 II</span>
+                <span> $\lim\limits_{ℝ1\to0^+}\frac{e^{e^{ℝ1^{2}}}-e}{\left(ℝ1^{e}+ℝ1^{e+1}\right)^{e^{-1}}-ℝ1}=Option.some[\mathbb{R}](e^{2})$ </span>
+            </summary>
+            <div class="goal-content with-line">
+
+                <details class="goal-block" open>
+                    <summary>
+                        <i class="fa-solid fa-play toggle-icon"></i>
+                        <span class="tag default">我们有</span>
+                        <span class="content"> $e^{ℝ1^{2}}-1$ 是无穷小量 $(ℝ1\to 0^+)$</span>
+                    </summary>
+                    <div class="goal-content with-line">
+
+                        <div class="step-block">
+                            <span class="step-tag">应用结论</span>
+                            <span class="step-content">要证明 $e^{ℝ1^{2}}-1$ 是无穷小量 $(ℝ1\to 0^+)$, 只需证明即可</span>
+                            <span class="final-mark"><i class="codicon codicon-check"></i></span>
+                        </div>
+
+                    </div>
+                </details>
+                <div><div class="step-block calc">
+                    <span class="step-tag calc">计算</span>
+                    <span class="step-lhs"> $$\lim\limits_{ℝ1\to0^+}\frac{e^{e^{ℝ1^{2}}}-e}{\left(ℝ1^{e}+ℝ1^{e+1}\right)^{e^{-1}}-ℝ1}$$ </span>
+                    <span class="step-rel">$=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}\frac{e^{e^{ℝ1^{2}}-1}-1}{\frac{ℝ1\cdot \left(\left(1+ℝ1\right)^{e^{-1}}-1\right)}{e}}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$\textcolor{lightgrey}=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}\frac{e^{ℝ1^{2}}-1}{\frac{ℝ1\cdot \left(\left(1+ℝ1\right)^{e^{-1}}-1\right)}{e}}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}\frac{\frac{e}{ℝ1}\cdot \left(e^{ℝ1^{2}}-1\right)}{\left(1+ℝ1\right)^{e^{-1}}-1}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$\textcolor{lightgrey}=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}\frac{\frac{e}{ℝ1}\cdot \left(e^{ℝ1^{2}}-1\right)}{e^{-1}\cdot ℝ1}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}e^{2}\cdot \frac{e^{ℝ1^{2}}-1}{ℝ1^{2}}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$\textcolor{lightgrey}=$</span>
+                    <span class="step-rhs"> $$\lim\limits_{ℝ1\to0^+}e^{2}\cdot \frac{e^{ℝ1}-1}{ℝ1}$$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$\textcolor{lightgrey}=$</span>
+                    <span class="step-rhs"> $\lim\limits_{ℝ1\to0^+}e^{2}\cdot \lim\limits_{ℝ1\to0^+}\frac{e^{ℝ1}-1}{ℝ1}$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$=$</span>
+                    <span class="step-rhs"> $Option.some[[mvar]][e^{2}]\cdot \lim\limits_{ℝ1\to0^+}\frac{e^{ℝ1}-1}{ℝ1}$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$\textcolor{lightgrey}=$</span>
+                    <span class="step-rhs"> $Option.some[[mvar]][e^{2}]\cdot \lim\limits_{ℝ1\to0^+}\frac{ℝ1}{ℝ1}$ </span>
+                    <span class="step-cal-end"></span>
+                </div>
+                <div class="step-block calc">
+                    <span class="step-tag calc"></span>
+                    <span class="step-lhs"></span>
+                    <span class="step-rel">$=$</span>
+                    <span class="step-rhs"> $Option.some[[mvar]][e^{2}]$ </span>
+                    <span class="step-cal-end"></span>
+                    <span class="final-mark">$\to\,$ 证毕</span>
+                </div></div>
+
+            </div>
+        </details>
+
+        <details class="goal-block" style="margin-left: 0" open>
+            <summary>
+                <i class="fa-solid fa-play toggle-icon"></i>
+                <span class="tag default">证明</span>
+        
+            </summary>
+            <div class="goal-content with-line">
+
+                <!-- Silent Step: sorry -->
+
+            </div>
+        </details>
+
+        <div class="qed">□</div>
+
+    </div>
+
+</body>
+</html>
