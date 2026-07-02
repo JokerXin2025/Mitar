@@ -1,4 +1,4 @@
-import «Calculus@Mitar»
+import «Calculus@JokerXin»
 
 lemma equation_1 : ∀ x > 0,
     (e ^ e ^ x^2 - e) / ((x ^ e + x ^ (e + 1)) ^ e⁻¹ - x)
@@ -11,7 +11,7 @@ theorem MingRenCup_A₀ :
 := by
   have h_ifs : isRightInfinitesimal (fun x ↦ e ^ x^2 - 1) 0 := by
     apply FuncLimitExpr.toRight
-    exact Eq.trans (Check_Continuous _ _) (by norm_num)
+    exact Eq.trans (Check_Continuity _ _) (by norm_num)
   calc
         lim₊ (fun x ↦ (e ^ e ^ x^2 - e) / ((x ^ e + x ^ (e + 1)) ^ e⁻¹ - x)) 0
      =  lim₊ (fun x ↦ (e ^ (e ^ x^2 - 1) - 1) / (x * ((1 + x) ^ e⁻¹ - 1) / e)) 0
@@ -48,7 +48,7 @@ theorem step_2 :
 := by
   have h_ifs : isRightInfinitesimal (fun x ↦ e ^ x^2 - 1) 0 := by
     apply FuncLimitExpr.toRight
-    exact Eq.trans (Check_Continuous _ _) (by norm_num)
+    exact Eq.trans (Check_Continuity _ _) (by norm_num)
   lim_equiv
 
 -- Step 3: 同余代换（域公理）

@@ -1,5 +1,5 @@
 import Lean2TeX
-import «Calculus@Mitar»
+import «Calculus@JokerXin»
 
 def equation_1 : ∀ x > 0,
     (e ^ e ^ x^2 - e) / ((x ^ e + x ^ (e + 1)) ^ e⁻¹ - x)
@@ -20,7 +20,7 @@ def MingRenCup_A₀ :
     Lean2TeX _proof <- _goal_
     Lean2TeX _proof <- "exact"
     Lean2TeX MingRenCup_A₀ <- "have" &_proof("proof")
-    exact Eq.trans (Check_Continuous _ _) (by norm_num)
+    exact Eq.trans (Check_Continuity _ _) (by norm_num)
   Lean2TeX MingRenCup_A₀ <- _goal_
   Lean2TeX MingRenCup_A₀ <- "calc" &_calc_("calc_steps")
   calc
@@ -65,7 +65,7 @@ def step_2 :
     Lean2TeX _proof <- _goal_
     Lean2TeX _proof <- "exact"
     Lean2TeX step_2 <- "have" &_proof("proof")
-    exact Eq.trans (Check_Continuous _ _) (by norm_num)
+    exact Eq.trans (Check_Continuity _ _) (by norm_num)
   lim_equiv
 
 -- Step 3: 同余代换（域公理）

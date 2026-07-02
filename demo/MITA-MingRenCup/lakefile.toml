@@ -4,8 +4,8 @@ keywords = ["math"]
 defaultTargets = ["MITA-MingRenCup"]
 
 [[require]]
-name = "Calculus@Mitar"
-path = "/Users/zhoukexin/desktop/Mitar/Universes/Calculus@Mitar/"
+name = "Calculus@JokerXin"
+path = "/Users/zhoukexin/desktop/Mitar/Universes/Calculus@JokerXin/"
 
 [[lean_lib]]
 name = "MITA-MingRenCup"
