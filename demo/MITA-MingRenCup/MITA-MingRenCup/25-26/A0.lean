@@ -1,8 +1,36 @@
 import «Calculus@JokerXin»
 
-example : D (exp + sin) 2 = the (exp 2 + cos 2) := by
-  deriv
+example {x : ℝ} (h : x > 0)
+  : lim (ln ∘ sin) x = ln (sin x)
+:= by lim_simp
 
+example {x : ℝ}
+  : D (exp + sin) x = exp x + cos x + 0 * x
+:= by deriv
+
+example {x : ℝ} (h1 : sin x > 0) (h2 : sin x ≠ 0)
+  : D (ln ∘ sin) x = cos x / sin x
+:= by deriv
+
+example {x : ℝ} (h1 : x > 0) (h2 : x ≠ 0)
+  : D (fun x ↦ ln x + x) x = 1 / x + 1
+:= by deriv
+
+example {x : ℝ} (h1 : x > 0) (h2 : x ≠ 0)
+  : D (ln + (·)) x = 1 / x + 1
+:= by deriv
+
+example {x₀ : ℝ}
+  : 1 + D (fun x => x * x + sin x) x₀ = the (1 + 2 * x₀ + cos x₀)
+:= by deriv
+
+example
+  : D (ln ∘ ((·) + (·))) 1 = 1
+:= by deriv
+
+example
+  : lim (fun x ↦ x / x) 0 = the 1
+:= by lim_luo
 
 lemma equation_1 : ∀ x > 0,
     (e ^ e ^ x^2 - e) / ((x ^ e + x ^ (e + 1)) ^ e⁻¹ - x)
@@ -20,7 +48,7 @@ theorem MingRenCup_A₀ :
        =  lim₊ (fun x ↦ (e ^ (e ^ x^2 - 1) - 1) / (x * ((1 + x) ^ e⁻¹ - 1) / e)) 0
           := by sorry -- lim_congr equation_1 within 1                   -- 同余代换（引理）
     _  =? lim₊ (fun x ↦ (e ^ x^2 - 1) / (x * ((1 + x) ^ e⁻¹ - 1) / e)) 0
-          := by lim_equiv                                       -- 等价无穷小代换
+          := by lim_equiv                                                -- 等价无穷小代换
     _  =  lim₊ (fun x ↦ (e / x * (e ^ x^2 - 1)) / ((1 + x) ^ e⁻¹ - 1)) 0
           := by sorry -- lim_congr_by_field                              -- 同余代换（域公理）
     _  =? lim₊ (fun x ↦ (e / x * (e ^ x^2 - 1)) / (e⁻¹ * x)) 0
@@ -30,13 +58,13 @@ theorem MingRenCup_A₀ :
     _  =? lim₊ (fun x ↦ e^2 * ((e ^ x - 1) / x)) 0
           := sorry -- FuncLimit_Comp? (by lim_simp)                      -- 化简（变量代换）
     _  =? lim₊ (fun _ ↦ e^2) 0 * lim₊ (fun x ↦ (e ^ x - 1) / x) 0
-          := RightLimitExpr.Mul                                 -- 乘法法则
+          := RightLimitExpr.Mul                                         -- 乘法法则
     _  =  the (e^2) * lim₊ (fun x ↦ (e ^ x - 1) / x) 0
           := by sorry -- lim_simp                                        -- 化简（常数极限）
     _  =? the (e^2) * lim₊ (fun x ↦ x / x) 0
-          := sorry                                     -- 等价无穷小代换
+          := sorry                                                        -- 等价无穷小代换
     _  =  the (e^2)
-          := by lim_simp                                        -- 常规化简
+          := by lim_simp                                                  -- 常规化简
 
 -- Step 1: 同余代换（引理）
 theorem step_1 :

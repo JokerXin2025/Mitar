@@ -10,13 +10,13 @@ private lemma rewrite_Sqrt (x : ℝ)
   : √x = Sqrt.map x
 := rfl
 private lemma rewrite_Abs (x : ℝ)
-  : abs x = Abs.map x
+  : |x| = Abs.map x
 := rfl
 private lemma rewrite_Exp (x : ℝ)
   : exp x = Exp.map x
 := rfl
 private lemma rewrite_Ln (x : ℝ)
-  : log x = Ln.map x
+  : ln x = Ln.map x
 := rfl
 private lemma rewrite_Sin (x : ℝ)
   : sin x = Sin.map x

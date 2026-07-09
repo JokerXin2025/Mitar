@@ -1,11 +1,10 @@
 import «Calculus@JokerXin».Prelude
-import «Calculus@JokerXin».Expr.Prelude
-import «Calculus@JokerXin».Expr.UndeterminedEqual
+import «Calculus@JokerXin».Expr.Defs
 import «Calculus@JokerXin».Expr.Tactics
 import «Calculus@JokerXin».Sequence.Defs
+import «Calculus@JokerXin».Sequence.Concept
 import «Calculus@JokerXin».Function.Defs
-import «Calculus@JokerXin».Function.Bound
-import «Calculus@JokerXin».Function.Misc
+import «Calculus@JokerXin».Function.Concept
 import «Calculus@JokerXin».Function.Tactics.ToFunction
 import «Calculus@JokerXin».Limit.Infinitesimal.Defs
 import «Calculus@JokerXin».Limit.Infinitesimal.Higher
@@ -18,9 +17,10 @@ import «Calculus@JokerXin».Limit.Tactics.Simplify
 import «Calculus@JokerXin».Limit.Tactics.Congr
 import «Calculus@JokerXin».Limit.Tactics.Equiv
 -- import «Calculus@JokerXin».Limit.Tactics.Rational
+import «Calculus@JokerXin».Limit.Tactics.L'Hospital
 import «Calculus@JokerXin».Function.Continuity.Defs
+import «Calculus@JokerXin».Function.Continuity.Elementary
 import «Calculus@JokerXin».Function.Continuity.Rules
-import «Calculus@JokerXin».Function.Continuity.Tactic
 import «Calculus@JokerXin».Function.Differential.Defs
 import «Calculus@JokerXin».Function.Differential.Expr
 import «Calculus@JokerXin».Function.Differential.Rules

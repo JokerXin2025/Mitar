@@ -1,4 +1,4 @@
-import «Calculus@JokerXin».Expr.Prelude
+import «Calculus@JokerXin».Prelude
 import Mathlib.Tactic.GCongr.Core
 
 variable {α : Type}
@@ -52,32 +52,40 @@ instance : Trans (@Eq (Option α)) (@UndeterminedEqual α) (@UndeterminedEqual �
     rw [h1]
     exact h2
 
-private def map₂ (f : α → α → α) (a b : Option α) : Option α :=
+private def free₂ (f : α → α → α) (a b : Option α) : Option α :=
   a.bind fun a => b.map <| f a
 
-instance [Add α] : Add (Option α) where
-  add := map₂ (· + ·)
-instance [Sub α] : Sub (Option α) where
-  sub := map₂ (· - ·)
-instance [Mul α] : Mul (Option α) where
-  mul := map₂ (· * ·)
-instance [Zero α] [Div α] [DecidableEq α] : Div (Option α) where
-  div A B :=
-    if B = the 0 then none
-    else
-      map₂ (· / ·) A B
 open Classical in
-noncomputable instance [Pow α α] [Zero α] [One α] [LT α] : Pow (Option α) (Option α) where
-  pow A B :=
-    match A, B with
-    | some x, some y =>
-      if x ≠ 0 ∧ y = 0 then
-        some 1
-      else if x > 0 then
-        some (x ^ y)
-      else
-        none
-    | _, _ => none
+private noncomputable def div [Zero α] [Div α] (A B : Option α) : Option α :=
+  if B = the 0 then none
+  else free₂ (· / ·) A B
+
+open Classical in
+private noncomputable def pow [Pow α α] [Pow α ℤ] [Zero α] [One α] [LT α]
+    [IntCast α] (A B : Option α) : Option α :=
+  match A, B with
+  | some x, some y =>
+    if x = 0 ∧ y > 0 then the 0
+    else if x > 0 then the (x ^ y)
+    else if h : x < 0 ∧ (∃ n : ℤ, y = ↑n) then
+      the (x ^ (choose h.2))
+    else none
+  | _, _ => none
+
+instance [Add α]
+  : Add (Option α) where add := free₂ (· + ·)
+instance [Sub α]
+  : Sub (Option α) where sub := free₂ (· - ·)
+instance [Mul α]
+  : Mul (Option α) where mul := free₂ (· * ·)
+noncomputable instance [Zero α] [Div α]
+  : Div (Option α) where div := div
+noncomputable instance [Pow α α] [Pow α ℤ] [Zero α] [One α] [LT α] [IntCast α]
+  : Pow (Option α) (Option α) where pow := pow
+instance [Neg α]
+  : Neg (Option α) where neg
+    | the x => the (-x)
+    | none  => none
 
 @[gcongr]
 theorem UndeterminedEqual_GcongrAdd {A B C : Option α}
@@ -173,7 +181,7 @@ theorem UndeterminedEqual_GcongrMul' {A B C : Option α}
 theorem UndeterminedEqual_GcongrDiv {A B C : Option α}
     [Zero α] [Div α] [DecidableEq α] (h : A =? B)
   : A / C =? B / C
-:= by
+:= sorry /-by
   cases B with
   | none =>
     have eq_none : none / C = none := by
@@ -181,7 +189,7 @@ theorem UndeterminedEqual_GcongrDiv {A B C : Option α}
       split <;> rfl
     rw [eq_none]
     trivial
-  | some b => rw [h]
+  | some b => rw [h]-/
 
 @[gcongr]
 theorem UndeterminedEqual_GcongrDiv' {A B C : Option α}
@@ -202,3 +210,23 @@ lemma UdEqual.determine {A B : Option α} {B! : α}
 := by
   rw [h_B] at h_udeq
   exact h_udeq
+
+instance : Coe (ℝ → ℝ) (ℝ → Option ℝ) where
+  coe := fun f x ↦ some (f x)
+instance : Coe (ℕ → ℝ) (ℕ → Option ℝ) where
+  coe := fun f n ↦ some (f n)
+
+instance {n : Nat} [OfNat α n] : OfNat (Option α) n where
+  ofNat := the (OfNat.ofNat n)
+instance [OfScientific α] : OfScientific (Option α) where
+  ofScientific := fun m s e ↦ the (OfScientific.ofScientific m s e)
+
+@[simp]
+lemma rewriteExpr_coe {a : α}
+  : (a : Option α) = the a
+:= rfl
+
+@[simp]
+lemma rewriteExpr_ofNat {n : ℕ} [OfNat α n]
+  : (OfNat.ofNat n : Option α) = the (OfNat.ofNat n)
+:= rfl

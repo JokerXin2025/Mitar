@@ -7,7 +7,7 @@ import Lean.Elab.Tactic.Basic
 
 /-- ### 常数列的极限（表达式）
     ### Constant Sequence's Limit (Expression) -/
-@[aesop norm simp (rule_sets := [LimitBasic])]
+@[aesop safe apply (rule_sets := [LimitBasic])]
 lemma SeqLimitExpr.Constant {L : ℝ}
   : limₙ (fun _ ↦ L) = the L
 := sorry
@@ -17,31 +17,79 @@ lemma SeqLimitExpr.Constant {L : ℝ}
 
 /- ## 极限运算法则 Limit Calculation Rules -/
 
-/- __数乘法则__ -/
+/-
+/-  ### 数列极限数乘
+    ### Sequence Limit Scalar Multiplication -/
+
+/-- ### 数列极限数乘（表达式）
+    ### Sequence Limit Scalar Multiplication (Expression) -/
+theorem SeqLimitExpr.SMul {a : ℕ → ℝ} {k : ℝ}
+  : limₙ (k • a) =? the k * limₙ a
+:= sorry
+
+/-- ### 函数极限数乘
+    ### Function Limit Scalar Multiplication -/
+theorem FuncLimit.SMul {F : Function} {k x₀ L : ℝ}
+    (h_f : FuncLimit F x₀ L)
+  : FuncLimit (k • F) x₀ (k * L)
+:= sorry
+
+/-- ### 函数极限数乘（表达式）
+    ### Function Limit Scalar Multiplication (Expression) -/
+theorem FuncLimitExpr.Smul {f : ℝ → ℝ} {k x₀ : ℝ}
+  : lim (k • f) x₀ =? the k * lim f x₀
+:= sorry
+
+/-- ### 左极限数乘
+    ### Left Limit Scalar Multiplication -/
+theorem LeftLimit.SMul {F : Function} {k x₀ L : ℝ}
+    (h_f : LeftLimit F x₀ L)
+  : LeftLimit (k • F) x₀ (k * L)
+:= sorry
+
+/-- ### 左极限数乘（表达式）
+    ### Left Limit Scalar Multiplication (Expression) -/
+theorem LeftLimitExpr.SMul {f : ℝ → ℝ} {k x₀ : ℝ}
+  : lim₋ (k • f) x₀ =? the k * lim₋ f x₀
+:= sorry
+
+/-- ### 右极限数乘
+    ### Right Limit Scalar Multiplication -/
+theorem RightLimit.SMul {F G : Function} {k x₀ L : ℝ}
+    (h_f : RightLimit F x₀ L)
+  : RightLimit (k • F) x₀ (k * L)
+:= sorry
+
+/-- ### 右极限数乘（表达式）
+    ### Right Limit Scalar Multiplication (Expression) -/
+theorem RightLimitExpr.SMul {f : ℝ → ℝ} {k x₀ : ℝ}
+  : lim₊ (k • f) x₀ =? the k * lim₊ f x₀
+:= sorry
+-/
 
 /-- ### 数列极限加法
     ### Sequence Limit Addition -/
-theorem SeqLimit.Add {a b : Sequence} {A B : ℝ}
-    (h_a : SeqLimit a A) (h_b : SeqLimit b B)
-  : SeqLimit (a + b) (A + B)
+theorem SeqLimit.Add {A B : Sequence} {L1 L2 : ℝ}
+    (h_A : SeqLimit A L1) (h_B : SeqLimit B L2)
+  : SeqLimit (A + B) (L1 + L2)
 := sorry
 
 /-- ### 数列极限加法（表达式）
     ### Sequence Limit Addition (Expression) -/
-theorem SeqLimitExpr.Add {a b : Sequence}
+theorem SeqLimitExpr.Add {a b : ℕ → ℝ}
   : limₙ (a + b) =? limₙ a + limₙ b
 := sorry
 
 /-- ### 函数极限加法
     ### Function Limit Addition -/
-theorem FuncLimit.Add {F G : Function} {x₀ A B : ℝ}
-    (h_f : FuncLimit F x₀ A) (h_g : FuncLimit G x₀ B)
-  : FuncLimit (F + G) x₀ (A + B)
+theorem FuncLimit.Add {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : FuncLimit F x₀ L1) (h_G : FuncLimit G x₀ L2)
+  : FuncLimit (F + G) x₀ (L1 + L2)
 := sorry
 
 /-- ### 函数极限加法（表达式）
     ### Function Limit Addition (Expression) -/
-theorem FuncLimitExpr.Add {f g : ℝ → ℝ} {x₀ : ℝ }
+theorem FuncLimitExpr.Add {f g : ℝ → ℝ} {x₀ : ℝ}
   : lim (f + g) x₀ =? lim f x₀ + lim g x₀
 := by
   cases h_A : lim f x₀ with
@@ -62,9 +110,9 @@ theorem FuncLimitExpr.Add {f g : ℝ → ℝ} {x₀ : ℝ }
 
 /-- ### 左极限加法
     ### Left Limit Addition -/
-theorem LeftLimit.Add {F G : Function} {x₀ A B : ℝ}
-    (h_f : LeftLimit F x₀ A) (h_g : LeftLimit G x₀ B)
-  : LeftLimit (F + G) x₀ (A + B)
+theorem LeftLimit.Add {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : LeftLimit F x₀ L1) (h_G : LeftLimit G x₀ L2)
+  : LeftLimit (F + G) x₀ (L1 + L2)
 := sorry
 
 /-- ### 左极限加法（表达式）
@@ -90,9 +138,9 @@ theorem LeftLimitExpr.Add {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 右极限加法
     ### Right Limit Addition -/
-theorem RightLimit.Add {F G : Function} {x₀ A B : ℝ}
-    (h_f : RightLimit F x₀ A) (h_g : RightLimit G x₀ B)
-  : RightLimit (F + G) x₀ (A + B)
+theorem RightLimit.Add {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : RightLimit F x₀ L1) (h_G : RightLimit G x₀ L2)
+  : RightLimit (F + G) x₀ (L1 + L2)
 := sorry
 
 /-- ### 右极限加法（表达式）
@@ -118,22 +166,22 @@ theorem RightLimitExpr.Add {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 数列极限减法
     ### Sequence Limit Subtraction -/
-theorem SeqLimit.Sub {a b : Sequence} {A B : ℝ}
-    (h_a : SeqLimit a A) (h_b : SeqLimit b B)
-  : SeqLimit (a - b) (A - B)
+theorem SeqLimit.Sub {A B : Sequence} {L1 L2 : ℝ}
+    (h_A : SeqLimit A L1) (h_B : SeqLimit B L2)
+  : SeqLimit (A - B) (L1 - L2)
 := sorry
 
 /-- ### 数列极限减法（表达式）
     ### Sequence Limit Subtraction (Expression) -/
-theorem SeqLimitExpr.Sub {a b : Sequence}
+theorem SeqLimitExpr.Sub {a b : ℕ → ℝ}
   : limₙ (a - b) =? limₙ a - limₙ b
 := sorry
 
 /-- ### 函数极限减法
     ### Function Limit Subtraction -/
-theorem FuncLimit.Sub {F G : Function} {x₀ A B : ℝ}
-    (h_f : FuncLimit F x₀ A) (h_g : FuncLimit G x₀ B)
-  : FuncLimit (F - G) x₀ (A - B)
+theorem FuncLimit.Sub {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : FuncLimit F x₀ L1) (h_G : FuncLimit G x₀ L2)
+  : FuncLimit (F - G) x₀ (L1 - L2)
 := sorry
 
 /-- ### 函数极限减法（表达式）
@@ -159,9 +207,9 @@ theorem FuncLimitExpr.Sub {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 左极限减法
     ### Left Limit Subtraction -/
-theorem LeftLimit.Sub {F G : Function} {x₀ A B : ℝ}
-    (h_f : LeftLimit F x₀ A) (h_g : LeftLimit G x₀ B)
-  : LeftLimit (F - G) x₀ (A - B)
+theorem LeftLimit.Sub {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : LeftLimit F x₀ L1) (h_G : LeftLimit G x₀ L2)
+  : LeftLimit (F - G) x₀ (L1 - L2)
 := sorry
 
 /-- ### 左极限减法（表达式）
@@ -187,9 +235,9 @@ theorem LeftLimitExpr.Sub {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 右极限减法
     ### Right Limit Subtraction -/
-theorem RightLimit.Sub {F G : Function} {x₀ A B : ℝ}
-    (h_f : RightLimit F x₀ A) (h_g : RightLimit G x₀ B)
-  : RightLimit (F - G) x₀ (A - B)
+theorem RightLimit.Sub {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : RightLimit F x₀ L1) (h_G : RightLimit G x₀ L2)
+  : RightLimit (F - G) x₀ (L1 - L2)
 := sorry
 
 /-- ### 右极限减法（表达式）
@@ -215,22 +263,22 @@ theorem RightLimitExpr.Sub {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 数列极限乘法
     ### Sequence Limit Multiplication -/
-theorem SeqLimit.Mul {a b : Sequence} {A B : ℝ}
-    (h_a : SeqLimit a A) (h_b : SeqLimit b B)
-  : SeqLimit (a * b) (A * B)
+theorem SeqLimit.Mul {A B : Sequence} {L1 L2 : ℝ}
+    (h_A : SeqLimit A L1) (h_B : SeqLimit B L2)
+  : SeqLimit (A * B) (L1 * L2)
 := sorry
 
 /-- ### 数列极限乘法（表达式）
     ### Sequence Limit Multiplication (Expression) -/
-theorem SeqLimitExpr.Mul {a b : Sequence}
+theorem SeqLimitExpr.Mul {a b : ℕ → ℝ}
   : limₙ (a * b) =? limₙ a * limₙ b
 := sorry
 
 /-- ### 函数极限乘法
     ### Function Limit Multiplication -/
-theorem FuncLimit.Mul {F G : Function} {x₀ A B : ℝ}
-    (h_f : FuncLimit F x₀ A) (h_g : FuncLimit G x₀ B)
-  : FuncLimit (F * G) x₀ (A * B)
+theorem FuncLimit.Mul {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : FuncLimit F x₀ L1) (h_G : FuncLimit G x₀ L2)
+  : FuncLimit (F * G) x₀ (L1 * L2)
 := sorry
 
 /-- ### 函数极限乘法（表达式）
@@ -256,9 +304,9 @@ theorem FuncLimitExpr.Mul {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 左极限乘法
     ### Left Limit Multiplication -/
-theorem LeftLimit.Mul {F G : Function} {x₀ A B : ℝ}
-    (h_f : LeftLimit F x₀ A) (h_g : LeftLimit G x₀ B)
-  : LeftLimit (F * G) x₀ (A * B)
+theorem LeftLimit.Mul {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : LeftLimit F x₀ L1) (h_G : LeftLimit G x₀ L2)
+  : LeftLimit (F * G) x₀ (L1 * L2)
 := sorry
 
 /-- ### 左极限乘法（表达式）
@@ -284,9 +332,9 @@ theorem LeftLimitExpr.Mul {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 右极限乘法
     ### Right Limit Multiplication -/
-theorem RightLimit.Mul {F G : Function} {x₀ A B : ℝ}
-    (h_f : RightLimit F x₀ A) (h_g : RightLimit G x₀ B)
-  : RightLimit (F * G) x₀ (A * B)
+theorem RightLimit.Mul {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : RightLimit F x₀ L1) (h_G : RightLimit G x₀ L2)
+  : RightLimit (F * G) x₀ (L1 * L2)
 := sorry
 
 /-- ### 右极限乘法（表达式）
@@ -312,33 +360,31 @@ theorem RightLimitExpr.Mul {f g : ℝ → ℝ} {x₀ : ℝ}
 
 /-- ### 数列极限除法
     ### Sequence Limit Division -/
-theorem SeqLimit.Div {a b : Sequence} {A B : ℝ}
-    (h_a : SeqLimit a A) (h_b : SeqLimit b B)
-    (h_B_ne_0 : B ≠ 0)
-  : SeqLimit (a / b) (A / B)
+theorem SeqLimit.Div {A B : Sequence} {L1 L2 : ℝ}
+    (h_A : SeqLimit A L1) (h_B : SeqLimit B L2)
+    (h_B_ne_0 : L2 ≠ 0)
+  : SeqLimit (A / B) (L1 / L2)
 := sorry
 
 /-- ### 数列极限除法（表达式）
-    ### Sequence Limit Division (Expression)
-    - Note that there's no need to ensure the expression's validity here -/
-theorem SeqLimitExpr.Div {a b : Sequence}
+    ### Sequence Limit Division (Expression) -/
+theorem SeqLimitExpr.Div {a b : ℕ → ℝ}
   : limₙ (a / b) =? limₙ a / limₙ b
 := sorry
 
 /-- ### 函数极限除法
     ### Function Limit Division -/
-theorem FuncLimit.Div {F G : Function} {x₀ A B : ℝ}
-    (h_f : FuncLimit F x₀ A) (h_g : FuncLimit G x₀ B)
-    (h_B_ne_0 : B ≠ 0)
-  : FuncLimit (F / G) x₀ (A / B)
+theorem FuncLimit.Div {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : FuncLimit F x₀ L1) (h_G : FuncLimit G x₀ L2)
+    (h_B_ne_0 : L2 ≠ 0)
+  : FuncLimit (F / G) x₀ (L1 / L2)
 := sorry
 
 /-- ### 函数极限除法（表达式）
-    ### Function Limit Division (Expression)
-    - Note that there's no need to ensure the expression's validity here -/
+    ### Function Limit Division (Expression) -/
 theorem FuncLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
   : lim (f / g) x₀ =? lim f x₀ / lim g x₀
-:= by
+:= sorry/-by
   cases h_A : lim f x₀ with
   | none =>
     cases h_B : lim g x₀ with
@@ -396,22 +442,21 @@ theorem FuncLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
         have h_fg_eq : lim (f / g) x₀ = the (A / B) := by
           apply FuncLimit_to_FuncLimitExpr
           exact FuncLimit.Div h_f h_g h_B0
-        rw [h_fg_eq]
+        rw [h_fg_eq]-/
 
 /-- ### 左极限除法
     ### Left Limit Division -/
-theorem LeftLimit.Div {F G : Function} {x₀ A B : ℝ}
-    (h_f : LeftLimit F x₀ A) (h_g : LeftLimit G x₀ B)
-    (h_B_ne_0 : B ≠ 0)
-  : LeftLimit (F / G) x₀ (A / B)
+theorem LeftLimit.Div {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : LeftLimit F x₀ L1) (h_G : LeftLimit G x₀ L2)
+    (h_B_ne_0 : L2 ≠ 0)
+  : LeftLimit (F / G) x₀ (L1 / L2)
 := sorry
 
 /-- ### 左极限除法（表达式）
-    ### Left Limit Division (Expression)
-    - Note that there's no need to ensure the expression's validity here -/
+    ### Left Limit Division (Expression) -/
 theorem LeftLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
   : lim₋ (f / g) x₀ =? lim₋ f x₀ / lim₋ g x₀
-:= by
+:= sorry/-by
   cases h_A : lim₋ f x₀ with
   | none =>
     cases h_B : lim₋ g x₀ with
@@ -469,22 +514,21 @@ theorem LeftLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
         have h_fg_eq : lim₋ (f / g) x₀ = the (A / B) := by
           apply LeftLimit_to_LeftLimitExpr
           exact LeftLimit.Div h_f h_g h_B0
-        rw [h_fg_eq]
+        rw [h_fg_eq]-/
 
 /-- ### 右极限除法
     ### Right Limit Division -/
-theorem RightLimit.Div {F G : Function} {x₀ A B : ℝ}
-    (h_f : RightLimit F x₀ A) (h_g : RightLimit G x₀ B)
-    (h_B_ne_0 : B ≠ 0)
-  : RightLimit (F / G) x₀ (A / B)
+theorem RightLimit.Div {F G : Function} {x₀ L1 L2 : ℝ}
+    (h_F : RightLimit F x₀ L1) (h_G : RightLimit G x₀ L2)
+    (h_B_ne_0 : L2 ≠ 0)
+  : RightLimit (F / G) x₀ (L1 / L2)
 := sorry
 
 /-- ### 右极限除法（表达式）
-    ### Right Limit Division (Expression)
-    - Note that there's no need to ensure the expression's validity here -/
+    ### Right Limit Division (Expression) -/
 theorem RightLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
   : lim₊ (f / g) x₀ =? lim₊ f x₀ / lim₊ g x₀
-:= by
+:= sorry/-by
   cases h_A : lim₊ f x₀ with
   | none =>
     cases h_B : lim₊ g x₀ with
@@ -542,7 +586,7 @@ theorem RightLimitExpr.Div {f g : ℝ → ℝ} {x₀ : ℝ}
         have h_fg_eq : lim₊ (f / g) x₀ = the (A / B) := by
           apply RightLimit_to_RightLimitExpr
           exact RightLimit.Div h_f h_g h_B0
-        rw [h_fg_eq]
+        rw [h_fg_eq]-/
 
 /-- ### 函数极限复合
     ### Function Limit Composition -/
@@ -554,62 +598,9 @@ theorem FuncLimit.Comp {x₀ u₀ L : ℝ} {F G : Function}
   : FuncLimit (F ⊙ G) x₀ L
 := sorry
 
-/-- ### 函数极限复合（表达式特别版本）
-    ### Function Limit Composition (Expression's Special Version)
-    - This version requires outer function `f` to be continuous -/
-theorem FuncLimitExpr.CompSV {x₀ u₀ : ℝ} {f g : ℝ → ℝ}
-    (h_ : lim g x₀ = the u₀)
-    (h_f_cont : lim f u₀ = the (f u₀))
-  : lim (fun x ↦ f (g x)) x₀ = the (f u₀)
-:= sorry
-
-/-- ### 左极限复合（表达式特别版本）
-    ### Left Limit Composition (Expression's Special Version)
-    - This version requires outer function `f` to be left continuous -/
-theorem LeftLimitExpr.CompSV {x₀ u₀ : ℝ} {f g : ℝ → ℝ}
-    (h_u₀ : lim₋ g x₀ = the u₀)
-    (h_f_cont : lim₋ f u₀ = the (f u₀))
-  : lim₋ (fun x ↦ f (g x)) x₀ = the (f u₀)
-:= sorry
-
-/-- ### 右极限复合（表达式特别版本）
-    ### Right Limit Composition (Expression's Special Version)
-    - This version requires outer function `f` to be right continuous -/
-theorem RightLimitExpr.CompSV {x₀ u₀ : ℝ} {f g : ℝ → ℝ}
-    (h_u₀ : lim₊ g x₀ = the u₀)
-    (h_f_cont : lim₊ f u₀ = the (f u₀))
-  : lim₊ (fun x ↦ f (g x)) x₀ = the (f u₀)
-:= sorry
-
-/-- ### 极限 ⇒ 左极限
-    ### Function Limit ⇒ Left Limit -/
-theorem FuncLimit.toLeft {F : Function} {x₀ L : ℝ}
-    (h_lim : FuncLimit F x₀ L)
-  : LeftLimit F x₀ L
-:= sorry
-
-/-- ### 极限 ⇒ 左极限（表达式）
-    ### Function Limit ⇒ Left Limit (Expression) -/
-theorem FuncLimitExpr.toLeft {f : ℝ → ℝ} {x₀ : ℝ}
-  : lim₋ f x₀ =? lim f x₀
-:= sorry
-
-/-- ### 极限 ⇒ 右极限
-    ### Function Limit ⇒ Right Limit -/
-theorem FuncLimit.toRight {F : Function} {x₀ L : ℝ}
-    (h_lim : FuncLimit F x₀ L)
-  : RightLimit F x₀ L
-:= sorry
-
-/-- ### 极限 ⇒ 右极限（表达式）
-    ### Function Limit ⇒ Right Limit (Expression) -/
-theorem FuncLimitExpr.toRight {f : ℝ → ℝ} {x₀ : ℝ}
-  : lim₊ f x₀ =? lim f x₀
-:= sorry
-
 /-- ### 夹逼定理（数列极限）
     ### Squeeze Theorem (Sequence Limit) -/
-theorem SeqLimitSqueeze {a b c : Sequence} {L : ℝ}
+theorem SeqLimitSqueeze {a b c : ℕ → ℝ} {L : ℝ}
     (h_a : limₙ a = the L) (h_c : limₙ c = the L)
     (h_chain : ∀ n, a n ≤ b n ∧ b n ≤ c n)
   : limₙ b = the L

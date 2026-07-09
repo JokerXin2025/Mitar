@@ -4,7 +4,7 @@ import «Calculus@JokerXin».Limit.Tactics.Simplify
 open Lean Elab Tactic
 
 
-/- ## Preparations !!! -/
+/- ## Preparations -/
 
 @[aesop unsafe 95% tactic (rule_sets := [LimitEquivalent])]
 def apply_EquivSubst_SinEquiv : TacticM Unit := do

@@ -1,9 +1,6 @@
 import «Calculus@JokerXin».Function.Differential.Defs
-import «Calculus@JokerXin».Expr.UndeterminedEqual
+import «Calculus@JokerXin».Expr.Defs
 
-
-/- All the derivative conclusions related to calculations ought to be presented in the form
-    of expressions. -/
 
 /- ## 导数表达式 Derivative Expression -/
 
@@ -41,12 +38,13 @@ def NthDerivExpr (n : ℕ) (f : ℝ → ℝ) (x₀ : ℝ) : Option ℝ :=
     the (choose h)
   else none
 
+end
+
 macro "D" : term => `(DerivExpr)
 macro "D₋" : term => `(LeftDerivExpr)
 macro "D₊" : term => `(RightDerivExpr)
 macro "Dₙ" : term => `(NthDerivExpr)
 
-end
 
 /-- ### 导数表达式的局部同余性
     ### Derivative Expression's Local Congruence -/

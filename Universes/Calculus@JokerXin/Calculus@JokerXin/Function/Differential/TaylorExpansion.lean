@@ -16,7 +16,7 @@ theorem TaylorExpansion_Peano {N : ℕ} {F : Function} {x₀ : ℝ}
     (h_deriv : isNthDerivableAt N F x₀)
   : ∃ R : Function,
       F = TaylorPolynomial F x₀ N + R
-      ∧ isHigherInfinitesimal R.map (fun x ↦ x^N) x₀
+      ∧ isHigherInfinitesimal R ⟨fun x ↦ x^N, Iii⟩ x₀
 := sorry
 
 /-- ### 带拉格朗日余项的泰勒展开式（对于 `x ≤ x₀`）

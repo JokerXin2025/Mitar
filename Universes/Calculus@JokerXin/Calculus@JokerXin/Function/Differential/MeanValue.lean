@@ -19,7 +19,7 @@ theorem Fermat_Lemma {F : Function} {x₀ δ : ℝ}
 theorem Rolle_MeanValue {F : Function} {a b : ℝ}
     (h_a_lt_b : a < b)
     (h_eq : F.map a = F.map b)
-    (h_cont : isContinuousIn F (Icc a b))
+    (h_cont : isContinuousInIcc F a b)
     (h_deriv : ∀ x ∈ Ioo a b, isDerivableAt F x)
   : ∃ ξ ∈ Ioo a b,
       Deriv F ξ 0
@@ -29,7 +29,7 @@ theorem Rolle_MeanValue {F : Function} {a b : ℝ}
     ### Lagrange Mean Value Theorem -/
 theorem Lagrange_MeanValue {F : Function} {a b : ℝ}
     (h_a_lt_b : a < b)
-    (h_cont : isContinuousIn F (Icc a b))
+    (h_cont : isContinuousInIcc F a b)
     (h_deriv : ∀ x ∈ Ioo a b, isDerivableAt F x)
   : ∃ ξ ∈ Ioo a b,
       Deriv F ξ ((F.map b - F.map a) / (b - a))
@@ -40,8 +40,8 @@ theorem Lagrange_MeanValue {F : Function} {a b : ℝ}
 theorem Cauchy_MeanValue {F G : Function} {a b : ℝ}
     (h_a_lt_b : a < b)
     (h_g'_ne_0 : ∀ x ∈ (Diff G).domain, (Diff G).map x ≠ 0)
-    (h_F_cont : isContinuousIn F (Icc a b))
-    (h_G_cont : isContinuousIn G (Icc a b))
+    (h_F_cont : isContinuousInIcc F a b)
+    (h_G_cont : isContinuousInIcc G a b)
     (h_F_deriv : ∀ x ∈ Ioo a b, isDerivableAt F x)
     (h_G_deriv : ∀ x ∈ Ioo a b, isDerivableAt G x)
   : ∃ ξ ∈ Ioo a b,
@@ -52,8 +52,8 @@ theorem Cauchy_MeanValue {F G : Function} {a b : ℝ}
     ### Cauchy Mean Value Theorem (Product Form) -/
 theorem Cauchy_MeanValue' {F G : Function} {a b : ℝ}
     (h_a_lt_b : a < b)
-    (h_F_cont : isContinuousIn F (Icc a b))
-    (h_G_cont : isContinuousIn G (Icc a b))
+    (h_F_cont : isContinuousInIcc F a b)
+    (h_G_cont : isContinuousInIcc G a b)
     (h_F_deriv : ∀ x ∈ Ioo a b, isDerivableAt F x)
     (h_G_deriv : ∀ x ∈ Ioo a b, isDerivableAt G x)
   : ∃ ξ ∈ Ioo a b,

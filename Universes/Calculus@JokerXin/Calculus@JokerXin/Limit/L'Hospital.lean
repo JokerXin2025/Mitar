@@ -12,6 +12,14 @@ theorem FuncLimit.L'Hospital_x₀_zero {F G : Function} {x₀ L : ℝ}
   : FuncLimit (F / G) x₀ L
 := sorry
 
+/-- ### 洛必达法则（`x → x₀`、0/0型）（表达式）
+    ### L'Hospital's Rule (`x → x₀`, 0/0 Type) (Expression) -/
+theorem FuncLimitExpr.L'Hospital_x₀_zero {f g : ℝ → ℝ} {x₀ L : ℝ}
+    (h_f : lim f x₀ = the 0) (h_g : lim g x₀ = the 0)
+    (h_deriv : lim (f / g) x₀ = the L)
+  : FuncLimit (F / G) x₀ L
+:= sorry
+
 /-- ### 洛必达法则（`x → x₀`、0/0型、左极限）
     ### L'Hospital's Rule (`x → x₀`, 0/0 Type, Left Limit) -/
 theorem LeftLimit.L'Hospital_x₀_zero {F G : Function} {x₀ L : ℝ}
