@@ -1,10 +1,10 @@
 import Lean
-import Batteries.Lean.Expr
 
 export Lean (Name Expr Json MetaM CoreM FVarId)
 export Lean.Meta (isProp inferType)
 
 namespace Lean2TeX
+
 
 inductive DisplayType where
   | Root
@@ -19,16 +19,7 @@ inductive DisplayType where
   deriving Repr, BEq, Inhabited
 
 instance : ToString DisplayType where
-  toString
-  | .Root => "Root"
-  | .Basic => "Basic"
-  | .Def => "Def"
-  | .Symbol => "Symbol"
-  | .Word => "Word"
-  | .Plain => "Plain"
-  | .Fancy => "Fancy"
-  | .Mathbb => "Mathbb"
-  | .Mathbf => "Mathbf"
+  toString type := ((reprStr type).splitOn ".").getLast!
 
 def parseDisplayType (style : Name) : CoreM DisplayType := do
   match style with
@@ -49,9 +40,7 @@ inductive NodeType where
   | Display
   | Unit
   | Supscript
-    | BySupscript   -- as parent
   | Subscript
-    | BySubscript   -- as parent
   | App
   | BracApp
   | Expr
@@ -66,26 +55,7 @@ inductive NodeType where
   deriving Repr, BEq, Inhabited
 
 instance : ToString NodeType where
-  toString
-  | .UnknownType => "UnknownType"
-  | .Text => "Text"
-  | .Display => "Display"
-  | .Unit => "Unit"
-  | .Supscript => "Supscript"
-    | .BySupscript => "BySupscript"
-  | .Subscript => "Subscript"
-    | .BySubscript => "BySubscript"
-  | .App => "App"
-  | .BracApp => "BracApp"
-  | .Expr => "Expr"
-  | .MultiLine => "MultiLine"
-  | .Add => "Add"
-  | .Minus => "Minus"
-  | .Mul => "Mul"
-  | .Frac => "Frac"
-  | .Abs => "Abs"
-  | .Rel => "Rel"
-  | .Implies => "Implies"
+  toString type := ((reprStr type).splitOn ".").getLast!
 
 def parseNodeType (node : Name) : CoreM NodeType := do
   match node with
@@ -94,9 +64,7 @@ def parseNodeType (node : Name) : CoreM NodeType := do
   | `Display => return .Display
   | `Unit => return .Unit
   | `Supscript => return .Supscript
-    | `BySupscript => return .BySupscript
   | `Subscript => return .Subscript
-    | `BySubscript => return .BySubscript
   | `App => return .App
   | `BracApp => return .BracApp
   | `Expr => return .Expr
@@ -110,6 +78,21 @@ def parseNodeType (node : Name) : CoreM NodeType := do
   | `Implies => return .Implies
   | _ => throwError "Unknown NodeType: {node}"
 
+inductive NodeRole where
+  | only
+  | left
+  | right
+  | base
+  | script
+  | numerator
+  | denominator
+  | lower
+  | upper
+  | operand
+  | func
+  | func_arg
+  deriving Repr, BEq, Inhabited
+
 structure TemplateConfig where
   TargetDisplay   : DisplayType := .Basic
   ArgsDisplay     : List (List DisplayType) := []
@@ -122,13 +105,29 @@ structure TemplateData where
   config    : TemplateConfig := {}
   deriving Repr, Inhabited
 
-abbrev NodeInfo := String × NodeType
-abbrev ExprRecFunc := Expr → NodeType → List DisplayType → List (FVarId × String) → MetaM String
-abbrev ExprPassFunc := Array Expr → Expr → MetaM String
-abbrev Rule := Expr → ExprRecFunc → List DisplayType → List (FVarId × String) → MetaM (Option NodeInfo)
-abbrev MetaRule := Expr → ExprRecFunc → NodeType → List DisplayType → List (FVarId × String) → MetaM (Option NodeInfo)
+abbrev NodeInfo :=
+  String × NodeType
+abbrev ExprRecFunc :=
+  Expr → NodeType → NodeRole → List DisplayType → List (FVarId × String)
+  → MetaM String
+abbrev Rule :=
+  Expr → ExprRecFunc → List DisplayType → List (FVarId × String)
+  → MetaM (Option NodeInfo)
 
 initialize JSON_boxes : IO.Ref (Array (Name × Array Json)) ← IO.mkRef #[]
 initialize Var_Usages : IO.Ref (Array (String × Array Bool)) ← IO.mkRef #[]
 
 end Lean2TeX
+
+
+/-! Utilities Copied From `Batteries` -/
+
+def Lean.Expr.getAppArgs' (e : Expr) : Array Expr :=
+  let dummy := mkSort .zero
+  let nargs := e.getAppNumArgs'
+  go e (.replicate nargs dummy) (nargs - 1)
+where
+  go : Expr → Array Expr → Nat → Array Expr
+    | mdata _ b, as, i => go b as i
+    | app f a  , as, i => go f (as.set! i a) (i-1)
+    | _        , as, _ => as

@@ -2,7 +2,7 @@ tag = "改写"
 id = ["change"]
 
 [atHypo]
-content = "条件#{h}又可写为#{h'}"
+content = "条件#{h}又可写作#{h'}"
 
 [atGoal]
 content = "原命题等价于#{goal'}"

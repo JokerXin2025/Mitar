@@ -1,10 +1,9 @@
-import Lean2TeX.Defs
-import Lean2TeX.Utils
+import Lean2TeX.Prelude
 
 open Lean2TeX
-open Lean Meta
 
 namespace Lean2TeX
+
 
 def resetVarAllocator : IO Unit := do
   Var_Usages.set #[]
@@ -61,6 +60,7 @@ def parseBVar (part : String) : Option (Nat × String × String) := Id.run do
   return some (indexStr.toNat!, typeStr, String.ofList (charsArray.toList.drop j))
 
 def processPlaceholders (s : String) : MetaM (String × Array (Option (String × Nat))) := do
+  /- 该模块由 Vibe Coding 完成，未经过验证 -/
   let parts := (s.splitOn "#").toArray
   if parts.size <= 1 then
     return (s, #[])
@@ -74,27 +74,27 @@ def processPlaceholders (s : String) : MetaM (String × Array (Option (String ×
     else
       match parseBVar part with
       | some (n, typeStr, restStr) =>
-          -- 【核心逻辑 1】：按需扩容数组。如果 n 超出了当前数组边界，用 none 填补空缺
-          if n >= allocatedArray.size then
-            let mut temp := allocatedArray
-            while temp.size <= n do
-              temp := temp.push none
-            allocatedArray := temp
-          -- 【核心逻辑 2】：直接通过索引 n 瞬间判断是否分配过
-          match allocatedArray[n]! with
-          | some (existingType, existingIdx) =>
-              -- 严谨检查：如果发现同一个 #n 对应了不同类型，抛出错误
-              if existingType != typeStr then
-                throwError s!"占位符冲突：#n 为 {n} 时，前面使用了类型 {existingType}，现在却使用类型 {typeStr}"
-              -- 直接拼接之前生成的变量名（如 "Real1"）
-              let name := s!"{existingType}{existingIdx + 1}"
-              result := result ++ name ++ restStr
-          | none =>
-              -- 还没分配过，向全局申请新变量
-              let (name, idx) ← allocateVar typeStr
-              -- 记录入数组的第 n 个位置
-              allocatedArray := allocatedArray.set! n (some (typeStr, idx))
-              result := result ++ name ++ restStr
+        -- 【核心逻辑 1】：按需扩容数组。如果 n 超出了当前数组边界，用 none 填补空缺
+        if n >= allocatedArray.size then
+          let mut temp := allocatedArray
+          while temp.size <= n do
+            temp := temp.push none
+          allocatedArray := temp
+        -- 【核心逻辑 2】：直接通过索引 n 瞬间判断是否分配过
+        match allocatedArray[n]! with
+        | some (existingType, existingIdx) =>
+          -- 严谨检查：如果发现同一个 #n 对应了不同类型，抛出错误
+          if existingType != typeStr then
+            throwError s!"占位符冲突：#n 为 {n} 时，前面使用了类型 {existingType}，现在却使用类型 {typeStr}"
+          -- 直接拼接之前生成的变量名（如 "Real1"）
+          let name := s!"{existingType}{existingIdx + 1}"
+          result := result ++ name ++ restStr
+        | none =>
+          -- 还没分配过，向全局申请新变量
+          let (name, idx) ← allocateVar typeStr
+          -- 记录入数组的第 n 个位置
+          allocatedArray := allocatedArray.set! n (some (typeStr, idx))
+          result := result ++ name ++ restStr
       | none =>
           result := result ++ "#" ++ part
   return (result, allocatedArray)

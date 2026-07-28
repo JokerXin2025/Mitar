@@ -1,8 +1,0 @@
-
-[[tactic]]
-name = "lim_simp"
-regex = '^lim_simp$'
-
-[[tactic]]
-name = "lim_equiv"
-regex = '^lim_equiv$'

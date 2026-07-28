@@ -1,6 +1,7 @@
-import Lean2TeX.Defs
+import Lean2TeX.Prelude
 
 open Lean2TeX
+
 
 def Rule_Mathbb_Nat : Rule := fun expr _ _ _ => do
   if expr.isConstOf ``Nat then

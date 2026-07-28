@@ -1,17 +1,24 @@
-import Lean2TeX.Defs
-import Lean2TeX.Utils
 import Lean2TeX.Constant
 import Lean2TeX.Rules
 
 open Lean2TeX NodeInfo
-
 namespace Lean2TeX
 
+
+/-- 这些作用器无需打印 直接将特定索引的内容递交递归器 后续将封装进外部配置文件以便维护 -/
+def UnwrapRegistry : List (Name × Nat) := [
+  (``OfNat.ofNat, 1),
+  (``Nat.cast, 2),
+  (``Int.cast, 2)
+]
+
 partial def Expr2TeX (expr : Expr) (parent : NodeType) (styles : List DisplayType) (fvars : List (FVarId × String)) : MetaM String := do
-  /- Match with preseted metarules of same `DisplayType` -/
-  for metarule in PresetMetaRules do
-    if let some res ← metarule expr.consumeMData Expr2TeX parent styles fvars then
-      return ← res.WrappedIn parent
+  /- Match with preseted metarules -/
+  for (name, argIdx) in UnwrapRegistry do
+    if expr.getAppFn.isConstOf name then
+      let args := expr.getAppArgs'
+      if _ : argIdx < args.size then  -- Safety Check
+        return (← Expr2TeX args[argIdx] parent styles fvars, parent).WrappedIn 1 parent
   /- Match with preseted rules of same `DisplayType` -/
   for (rule, rule_style) in PresetRules do
     if styles.contains rule_style then
@@ -29,9 +36,10 @@ partial def Expr2TeX (expr : Expr) (parent : NodeType) (styles : List DisplayTyp
   | .mvar _ => return "[mvar]"
   | .proj _ _ _ => return "[proj]"
   | .lam _ _ _ _ => return "[lam]"
-  /- This case will never be executed due to `MetaRule_Lambda` -/
-  | .forallE _ _ _ _ => return "[forallE]"
-  /- This case will never be executed due to `Rule_Implies` and `Rule_Forall` -/
+  | .forallE _ _ _ _ =>
+    let res ← lambdaTelescope expr fun _ body =>
+      Expr2TeX body parent role styles fvars
+    return ← (res, parent, role).WrappedIn parent
   | .letE _ _ _ _ _ => return "[letE]"
   | .lit (.natVal n) => return ← WrappedIn (s!"{n}", .Unit) parent
   | .lit (.strVal s) => return ← WrappedIn (s, .Text) parent
@@ -62,3 +70,4 @@ partial def Expr2TeX (expr : Expr) (parent : NodeType) (styles : List DisplayTyp
   | .mdata _ expr' => Expr2TeX expr' parent styles fvars
 
 end Lean2TeX
+

@@ -1,4 +1,4 @@
-import Lean2TeX.Defs
+import Lean2TeX.Prelude
 
 open Lean2TeX
 open Lean

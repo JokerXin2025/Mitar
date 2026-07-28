@@ -1,25 +1,41 @@
-import Lean2TeX.Defs
-import Lean2TeX.ExpressionRecursion
+import Lean2TeX.Core
 
 open Lean2TeX
-open Lean Elab Command
-open Lean.Elab.Term (elabTerm)
+open Lean Elab Tactic
 
-namespace Lean2TeX.Command
-
-def addObj (box : TSyntax `ident)
-           (name : Option (TSyntax `str))
-           (ptrs : Array (TSyntax `ident))
-           (ptr_keys : Array (Option (TSyntax `str)))
-           (arrs : Array (TSyntax `ident))
-           (arr_keys : Array (Option (TSyntax `str)))
-           : CommandElabM Unit := do
+private def addObj  (box : TSyntax `ident)
+                    (name : Option (TSyntax `str))
+                    (args : Array (TSyntax `ident))
+                    (arg_keys : Array (Option (TSyntax `str)))
+                    (ptrs : Array (TSyntax `ident))
+                    (ptr_keys : Array (Option (TSyntax `str)))
+                    (arrs : Array (TSyntax `ident))
+                    (arr_keys : Array (Option (TSyntax `str)))
+                    (withGoal : Bool)
+                    : TacticM Unit := do
   /- Initialize `PropertiesList` -/
   let mut PropertiesList := []
   if let some name! := name then
     PropertiesList := PropertiesList.concat (
       "name", Json.str name!.getString
     )
+  if withGoal then
+    PropertiesList := PropertiesList.concat (
+      "goal", Json.str (← Expr2TeX (← GetGoal) .Text [.Root] [])
+    )
+  /- Add arguments to `PropertiesList` -/
+  let mut arg_index := 1
+  for (arg, arg_key) in args.zip arg_keys do
+    let expr ← instantiateMVars (← elabTerm arg none)
+    if let some arg_key! := arg_key then
+      PropertiesList := PropertiesList.concat (
+        arg_key!.getString, Json.str (← Expr2TeX expr .Text [.Root] [])
+      )
+    else
+      PropertiesList := PropertiesList.concat (
+        s!"arg_{arg_index}", Json.str (← Expr2TeX expr .Text [.Root] [])
+      )
+    arg_index := arg_index + 1
   /- Add JSON objects to `PropertiesList` by pointers -/
   let mut ptr_index := 1
   let mut ptrName := Name.anonymous
@@ -63,13 +79,15 @@ def addObj (box : TSyntax `ident)
     | none =>
       logWarning m! "[Lean2TeX] Box '{arrName}' has not been initialized."
     arr_index := arr_index + 1
-  /- Make JSON object and add it to JSON box -/
-  liftTermElabM do addtoBox box.getId (Json.mkObj PropertiesList)
+  /- Make JSON object -/
+  addtoBox box.getId (Json.mkObj PropertiesList)
+  /- Refresh the goal to eliminate the warning -/
+  evalTactic (← `(tactic| skip))
 
-def addVals (box : TSyntax `ident)
-            (ptrs : Array (TSyntax `ident))
-            (arrs : Array (TSyntax `ident))
-            : CommandElabM Unit := do
+private def addVals (box : TSyntax `ident)
+                    (ptrs : Array (TSyntax `ident))
+                    (arrs : Array (TSyntax `ident))
+                    : TacticM Unit := do
   /- Initialize `ItemsList` -/
   let mut ItemsList := []
   /- Add JSON objects to `ItemsList` by pointers -/
@@ -103,42 +121,27 @@ def addVals (box : TSyntax `ident)
       logWarning m! "[Lean2TeX] Box '{arrName}' has not been initialized."
   /- Add JSON values to JSON box -/
   for val in ItemsList do
-    liftTermElabM do addtoBox box.getId val
+    addtoBox box.getId val
+  /- Refresh the goal to eliminate the warning -/
+  evalTactic (← `(tactic| skip))
 
-end Lean2TeX.Command
-
-syntax "#Lean2TeX_const" ident : command
+/-- Add information to a JSON box -/
 syntax "Lean2TeX" ident "<-"
-    (str)? (colGt "*" ident ("(" str ")")?)* (colGt "&" ident ("(" str ")")?)* : command
+    (str)? ("_goal_")? (colGt ident ("(" str ")")?)*
+    (colGt "*" ident ("(" str ")")?)* (colGt "&" ident ("(" str ")")?)* : tactic
+/-- Merge JSON values into a new JSON box -/
 syntax "Lean2TeX" "vals" ident "<-"
-    (colGt "*" ident)* (colGt "&" ident)* : command
-syntax "Lean2TeX" ident "=>" str : command
+    (colGt "*" ident)* (colGt "&" ident)* : tactic
 
-elab_rules : command
-| `(command| #Lean2TeX_const $const:ident) => liftTermElabM do
-  /- ## View constant's definition -/
-  let expr ← instantiateMVars (← elabTerm const none)
-  let output ← Expr2TeX expr .Text [.Def] []
-  logInfo m! "[Lean2TeX] {const} :\n{output}"
-| `(command| Lean2TeX $box:ident <-
-    $[$name:str]? $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
-  /- ## Merge JSON values into a new JSON object -/
-  Lean2TeX.Command.addObj box name ptrs ptr_keys arrs arr_keys
-| `(command| Lean2TeX vals $box:ident <-
+elab_rules : tactic
+| `(tactic| Lean2TeX $box:ident <-
+    $[$name:str]? $[$args:ident$[($arg_keys:str)]?]*
+    $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
+  addObj box name args arg_keys ptrs ptr_keys arrs arr_keys false
+| `(tactic| Lean2TeX $box:ident <-
+    $[$name:str]? _goal_ $[$args:ident$[($arg_keys:str)]?]*
+    $[* $ptrs:ident$[($ptr_keys:str)]?]* $[& $arrs:ident$[($arr_keys:str)]?]*) =>
+  addObj box name args arg_keys ptrs ptr_keys arrs arr_keys true
+| `(tactic| Lean2TeX vals $box:ident <-
     $[* $ptrs:ident]* $[& $arrs:ident]*) =>
-  /- ## Merge JSON values into a new JSON array -/
-  Lean2TeX.Command.addVals box ptrs arrs
-| `(command| Lean2TeX $box:ident => $file:str) => do
-  /- ## Export JSON box into a JSON file (as JSON array) -/
-  let boxName := box.getId
-  let arr ← JSON_boxes.get
-  match arr.findIdx? (fun (b, _) => b == boxName) with
-  | some idx =>
-    let (_, currentData) := arr[idx]!
-    if currentData.isEmpty then
-      logWarning m! "[Lean2TeX] Box '{boxName}' has been dumped."
-    else
-      IO.FS.writeFile file.getString (Json.arr currentData).pretty
-      JSON_boxes.set (arr.set! idx (boxName, #[]))
-  | none =>
-    logWarning m! "[Lean2TeX] Box '{boxName}' has not been initialized."
+  addVals box ptrs arrs

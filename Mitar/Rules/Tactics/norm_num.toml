@@ -11,7 +11,7 @@ content = "算式#{h}不成立"
 content = "通过数值计算获得矛盾"
 
 [NonFinal]
-content = "目标可转化为#{goal'}"
+content = "目标可标准化为#{goal'}"
 
 [NonFinal.atHypo]
 content = "通过计算可得#{h'}"
