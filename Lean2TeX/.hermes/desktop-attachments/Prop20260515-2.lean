@@ -1,3 +1,4 @@
+import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith.Frontend
 import Mathlib.tactic.Ring.RingNF
 
@@ -25,7 +26,8 @@ theorem Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
   cases n with
   | zero =>
     unfold a at h_m
-    have h_cases : m = 0 ∨ m = 1 ∨ m ≥ 2 := by omega
+    have h_cases : m = 0 ∨ m = 1 ∨ m ≥ 2 := by
+      omega
     rcases h_cases with rfl | rfl | _
     · norm_num at h_m
     · norm_num at h_m
@@ -47,9 +49,25 @@ theorem Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
           rw [h_m]
         _     = 3 := by
           ring
+    have h_B_geq_3 : B ≥ 3 := by
+      omega
     have h_A_geq_1 : A ≥ 1 := by
       by_contra h_A_l_1
-      have h_AB_leq_0 : A * B ≤ 0 := by nlinarith
+      have h_AB_leq_0 : A * B ≤ 0 := by
+        nlinarith
+      linarith
+    have h_A_leq_1 : A ≤ 1 := by
+      by_contra h_A_g_1
+      have h_AB_geq_6 : A * B ≥ 6 := by
+        nlinarith
       linarith
     have h_A_eq_1 : A = 1 := le_antisymm h_A_leq_1 h_A_geq_1
+    have h_B_eq_3 : B = 3 := by
+      calc
+        B = 1 * B := by
+          ring
+        _ = A * B := by
+          rw [h_A_eq_1]
+        _ = 3 :=
+          h_factor
     omega

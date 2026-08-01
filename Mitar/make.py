@@ -1,12 +1,7 @@
-import sys, json, tomllib, subprocess
+import sys, json, subprocess
 from pathlib import Path
 from Mitar.Rules import Initialize
 from Mitar.engine import ProofEngine
-from Mitar.Lean2TeX import Lean2TeX_init
-
-CURRENT_DIR = Path(__file__).absolute().parent
-CONFIG_PATH = CURRENT_DIR / "tactics.toml"
-
 
 def make(input_path: str):
 
@@ -15,28 +10,15 @@ def make(input_path: str):
     json_file = input_file.with_name(f"{input_file.stem}_Lean2TeX.json")
     output_file = input_file.with_suffix(".html")
 
-    # Read the configuration file
-    if CONFIG_PATH.exists():
-        with open(CONFIG_PATH, 'rb') as f:
-            config = tomllib.load(f)
-            tactics_cfg = config.get("built-in", [])
-            import_cfgs = config.get("import", [])
-            for import_cfg in import_cfgs:
-                cfg_path = Path(import_cfg.get("path", "")) / "Mitar" / "tactics.toml"
-                if cfg_path.exists():
-                    with open(cfg_path, 'rb') as _f:
-                        tactics_cfg.extend(tomllib.load(_f).get("tactic", []))
-        Lean2TeX_init_ = Lean2TeX_init(input_file, tactics_cfg)
-    else:
-        # Error: Configuration file not found
-        print(f"\n\033[31m\033[1m✗ Configuration file not found\033[0m\n")
-        return
-        
-    if Lean2TeX_init_ == 1:
+    if not input_file.exists():
         # Error: Input file not found
         print(f"\n\033[31m\033[1m✗ File \033[4m{input_file}\033[0m\033[31m\033[1m not found\033[0m\n")
         return
 
+    if json_file.exists():
+        json_file.unlink()
+
+    print(f"Building Lean project to extract proof steps...")
     result = subprocess.run(
         ["lake", "build"],
         cwd = Path.cwd(),
@@ -62,5 +44,7 @@ def make(input_path: str):
 
 
 if __name__ == "__main__":
-
-    make(sys.argv[1])
+    if len(sys.argv) < 2:
+        print("Usage: python make.py <input_file.lean>")
+    else:
+        make(sys.argv[1])

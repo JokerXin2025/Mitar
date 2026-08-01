@@ -1,6 +1,20 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith.Frontend
 import Mathlib.tactic.Ring.RingNF
+import Lean2TeX
+
+-- Load Mathlib tactic configs (nlinarith, linarith, ring, norm_cast, ...)
+-- so the text-level matcher can instrument them.
+#load_tactics "/Users/zhoukexin/Mitar/Lean2TeX/Lean2TeX/tactics_mathlib.json"
+
+-- The `#Lean2TeX` pipeline re-elaborates the proof text, so the `unusedTactic`
+-- linter (Mathlib, on by default) sees the `Lean2TeX` recorders (pure side
+-- effects that never change the goal) as "does nothing", and the
+-- `unreachableTactic` linter (Lean core) sees the original tactic sequence as
+-- "never executed" (it is only used as the text-level blueprint).  Both are
+-- harmless; disable them for this file.
+set_option linter.unusedTactic false
+set_option linter.unreachableTactic false
 
 def a : ℕ → ℤ
   | 0 => 2
@@ -20,7 +34,7 @@ lemma Lemma1 (n : ℕ) : a n ≥ 2 := by
       _ ≤ a k * (a k - 1) + 1 := by
         omega
 
-theorem Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
+#Lean2TeX theorem Theorem (n : ℕ) : ¬ ∃ m : ℕ, a n = m ^ 2 := by
   intro h_intro
   obtain ⟨m, h_m⟩ := h_intro
   cases n with

@@ -1,0 +1,16 @@
+{
+  "structural": [
+    { "name": "cases",     "markers": ["|"] },
+    { "name": "induction", "markers": ["|"] },
+    { "name": "rcases",    "markers": ["·"] },
+    { "name": "by_cases",  "markers": ["·"] }
+  ],
+  "calc_relations": {
+    "=":  "$=$",
+    "<":  "$<$",
+    ">":  "$>$",
+    "≤":  "$\\leqslant$",
+    "≥":  "$\\geqslant$",
+    "=?": "$\\textcolor{lightgrey}=$"
+  }
+}

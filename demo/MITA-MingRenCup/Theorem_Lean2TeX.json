@@ -1,0 +1,102 @@
+[[{"goal": "不存在 $m\\in\\mathbb{N}$ 使得 $a[n]=\\left(m\\right)^{2}$ "},
+  {"proof":
+   [{"goal": "矛盾"},
+    {"name": "obtain"},
+    {"goal": "矛盾"},
+    {"name": "Cases",
+     "info": {"name": "cases"},
+     "cases":
+     [[{"goal": "矛盾"},
+       {"name": "unfold", "concept": " $a$ "},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal": " $m=0$ 或 $m=1$ 或 $m\\geqslant 2$ "}, {"name": "omega"}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"name": "Cases",
+        "info": {"name": "rcases"},
+        "cases":
+        [[{"goal": "矛盾"}, {"name": "norm_num"}],
+         [{"goal": "矛盾"}, {"name": "norm_num"}],
+         [{"goal": "矛盾"},
+          {"proof":
+           [{"goal": " $\\left(m\\right)^{2}\\geqslant 4$ "},
+            {"name": "norm_cast"},
+            {"goal": " $4\\leqslant m^{2}$ "},
+            {"name": "change"},
+            {"goal": " $m^{2}\\geqslant \\left(2\\right)^{2}$ "},
+            {"name": "gcongr"}],
+           "name": "have"},
+          {"goal": "矛盾"},
+          {"name": "omega"}]]}],
+      [{"goal": "矛盾"},
+       {"name": "unfold", "concept": " $a$ "},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal":
+          " $\\left(2\\cdot m-2\\cdot a[k]+1\\right)\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)=3$ "},
+         {"name": "calc",
+          "calc_steps":
+          [{"rhs":
+            " $4\\cdot \\left(m\\right)^{2}-\\left(2\\cdot a[k]-1\\right)^{2}$ ",
+            "name": "=",
+            "lhs":
+            " $\\left(2\\cdot m-2\\cdot a[k]+1\\right)\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)$ "},
+           {"rhs":
+            " $4\\cdot \\left(a[k]\\cdot \\left(a[k]-1\\right)+1\\right)-\\left(2\\cdot a[k]-1\\right)^{2}$ ",
+            "name": "="},
+           {"rhs": " $3$ ", "name": "="}]}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal": " $2\\cdot m+2\\cdot a[k]-1\\geqslant 3$ "},
+         {"name": "omega"}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal": " $2\\cdot m-2\\cdot a[k]+1\\geqslant 1$ "},
+         {"proof":
+          [{"goal": "矛盾"},
+           {"proof":
+            [{"goal":
+              " $\\left(2\\cdot m-2\\cdot a[k]+1\\right)\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)\\leqslant 0$ "},
+             {"name": "nlinarith"}],
+            "name": "have"},
+           {"goal": "矛盾"},
+           {"name": "linarith"}],
+          "name": "Contradiction",
+          "info": {"h_contra": "命题[mvar]不成立"}}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal": " $2\\cdot m-2\\cdot a[k]+1\\leqslant 1$ "},
+         {"proof":
+          [{"goal": "矛盾"},
+           {"proof":
+            [{"goal":
+              " $\\left(2\\cdot m-2\\cdot a[k]+1\\right)\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)\\geqslant 6$ "},
+             {"name": "nlinarith"}],
+            "name": "have"},
+           {"goal": "矛盾"},
+           {"name": "linarith"}],
+          "name": "Contradiction",
+          "info": {"h_contra": "命题[mvar]不成立"}}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"proof":
+        [{"goal": " $2\\cdot m+2\\cdot a[k]-1=3$ "},
+         {"name": "calc",
+          "calc_steps":
+          [{"rhs": " $1\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)$ ",
+            "name": "=",
+            "lhs": " $2\\cdot m+2\\cdot a[k]-1$ "},
+           {"rhs":
+            " $\\left(2\\cdot m-2\\cdot a[k]+1\\right)\\cdot \\left(2\\cdot m+2\\cdot a[k]-1\\right)$ ",
+            "name": "="},
+           {"rhs": " $3$ ", "name": "="}]}],
+        "name": "have"},
+       {"goal": "矛盾"},
+       {"name": "omega"}]]}],
+   "name": "Contradiction",
+   "info":
+   {"h_contra": "存在 $m\\in\\mathbb{N}$ 使得 $a[n]=\\left(m\\right)^{2}$ "}}]]

@@ -9,7 +9,7 @@ partial def existsTelescope (expr : Expr)
                             (expr_pass : Array Expr → Expr → MetaM String)
                             : MetaM String := do
   if expr.isAppOfArity' ``Exists 2 then
-    return ← lambdaBoundedTelescope expr.getAppArgs'[1]! 1 fun newFvar body => do
+    return ← lambdaBoundedTelescope expr.getAppArgs_'[1]! 1 fun newFvar body => do
       existsTelescope body fun restFvars finalBody =>
         expr_pass (newFvar ++ restFvars) finalBody
   else
@@ -34,25 +34,3 @@ def addtoBox  (box : Name)
     | none =>
       /- create the JSON array for the first time -/
       arr.push (box, #[json_obj])
-
-/-- Automatic TeX Wrapper based on `NodeType` and `NodeRole` -/
-def NodeInfo.WrappedIn  (nodeInfo : NodeInfo)
-                        (role : NodeRole)
-                        (parent : NodeType)
-                        : MetaM String := do
-  let mut (expr, type) := nodeInfo
-  /- Operation Priority -/
-  if type == .Add && parent == .Mul then
-    expr := s!"\\left({expr}\\right)"
-  /- Base of Power Expression -/
-  if role == .base && parent == .Supscript then
-    if type == .Add || type == .Mul || type == .Supscript then
-      expr := s!"\\left({expr}\\right)"
-  /- Inline Equation -/
-  if type != .Text && parent == .Text then
-    expr := s!" ${expr}$ "
-  /- Embedded Text -/
-  if type == .Text && parent != .Text then
-    expr := s!"\\text{"{"}{expr}{"}"}"
-  return expr
-end Lean2TeX

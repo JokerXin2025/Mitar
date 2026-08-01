@@ -1,22 +1,22 @@
 import Lean
 
-export Lean (Name Expr Json MetaM CoreM FVarId)
+export Lean (Name Expr Json MetaM CoreM FVarId getEnv)
 export Lean.Meta (isProp inferType)
 
 namespace Lean2TeX
 
 
 inductive DisplayType where
-  | Root
-  | Basic
-  | Def             -- only once
-  | Symbol
-  | Word
-  | Plain
-  | Fancy
-  | Mathbb
-  | Mathbf
-  deriving Repr, BEq, Inhabited
+| Root
+| Basic
+| Def             -- only once
+| Symbol
+| Word
+| Plain
+| Fancy
+| Mathbb
+| Mathbf
+deriving Repr, BEq, Inhabited
 
 instance : ToString DisplayType where
   toString type := ((reprStr type).splitOn ".").getLast!
@@ -35,24 +35,24 @@ def parseDisplayType (style : Name) : CoreM DisplayType := do
   | _ => throwError "Unknown DisplayType: {style}"
 
 inductive NodeType where
-  | UnknownType
-  | Text
-  | Display
-  | Unit
-  | Supscript
-  | Subscript
-  | App
-  | BracApp
-  | Expr
-  | MultiLine
-  | Add
-  | Minus
-  | Mul
-  | Frac
-  | Abs
-  | Rel
-  | Implies
-  deriving Repr, BEq, Inhabited
+| UnknownType
+| Text
+| Display
+| Unit
+| Supscript
+| Subscript
+| App
+| BracApp
+| Expr
+| MultiLine
+| Add
+| Minus
+| Mul
+| Frac
+| Abs
+| Rel
+| Implies
+deriving Repr, BEq, Inhabited
 
 instance : ToString NodeType where
   toString type := ((reprStr type).splitOn ".").getLast!
@@ -79,24 +79,42 @@ def parseNodeType (node : Name) : CoreM NodeType := do
   | _ => throwError "Unknown NodeType: {node}"
 
 inductive NodeRole where
-  | only
-  | left
-  | right
-  | base
-  | script
-  | numerator
-  | denominator
-  | lower
-  | upper
-  | operand
-  | func
-  | func_arg
-  deriving Repr, BEq, Inhabited
+| any
+| only
+| left
+| right
+| base
+| script
+| numerator
+| denominator
+| upper
+| lower
+| operand
+| func
+| func_arg
+deriving Repr, BEq, Inhabited
+
+def parseNodeRole (role : Name) : CoreM NodeRole := do
+  match role with
+  | `any => return .any
+  | `only => return .only
+  | `left => return .left
+  | `right => return .right
+  | `base => return .base
+  | `script => return .script
+  | `numerator => return .numerator
+  | `denominator => return .denominator
+  | `upper => return .upper
+  | `lower => return .lower
+  | `operand => return  .operand
+  | `func => return .func
+  | `func_arg => return .func_arg
+  | _ => throwError "Unknown NodeRole: {role}"
 
 structure TemplateConfig where
   TargetDisplay   : DisplayType := .Basic
   ArgsDisplay     : List (List DisplayType) := []
-  ArgsContextNode : List NodeType := []
+  ArgsRole        : List NodeRole := []
   deriving Repr, Inhabited
 
 structure TemplateData where
@@ -108,7 +126,7 @@ structure TemplateData where
 abbrev NodeInfo :=
   String × NodeType
 abbrev ExprRecFunc :=
-  Expr → NodeType → NodeRole → List DisplayType → List (FVarId × String)
+  Expr → NodeRole → NodeType → List DisplayType → List (FVarId × String)
   → MetaM String
 abbrev Rule :=
   Expr → ExprRecFunc → List DisplayType → List (FVarId × String)
@@ -122,7 +140,7 @@ end Lean2TeX
 
 /-! Utilities Copied From `Batteries` -/
 
-def Lean.Expr.getAppArgs' (e : Expr) : Array Expr :=
+def Lean.Expr.getAppArgs_' (e : Expr) : Array Expr :=
   let dummy := mkSort .zero
   let nargs := e.getAppNumArgs'
   go e (.replicate nargs dummy) (nargs - 1)

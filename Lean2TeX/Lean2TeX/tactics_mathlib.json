@@ -1,0 +1,156 @@
+[
+  {
+    "name": "norm_num",
+    "kind": true,
+    "pattern": "normNum"
+  },
+  {
+    "name": "norm_cast",
+    "kind": true,
+    "pattern": "normCast"
+  },
+  {
+    "name": "linarith",
+    "kind": false,
+    "pattern": "linarith",
+    "prefix_match": false
+  },
+  {
+    "name": "nlinarith",
+    "kind": false,
+    "pattern": "nlinarith",
+    "prefix_match": false
+  },
+  {
+    "name": "ring",
+    "kind": false,
+    "pattern": "ring",
+    "prefix_match": false
+  },
+  {
+    "name": "positivity",
+    "kind": false,
+    "pattern": "positivity",
+    "prefix_match": false
+  },
+  {
+    "name": "field_simp",
+    "kind": false,
+    "pattern": "field_simp",
+    "prefix_match": true
+  },
+  {
+    "name": "mod_cast",
+    "kind": false,
+    "pattern": "mod_cast",
+    "prefix_match": true
+  },
+  {
+    "name": "exact_mod_cast",
+    "kind": false,
+    "pattern": "exact_mod_cast",
+    "prefix_match": true
+  },
+  {
+    "name": "apply_mod_cast",
+    "kind": false,
+    "pattern": "apply_mod_cast",
+    "prefix_match": true
+  },
+  {
+    "name": "push_cast",
+    "kind": false,
+    "pattern": "push_cast",
+    "prefix_match": true
+  },
+  {
+    "name": "cancel_denoms",
+    "kind": false,
+    "pattern": "cancel_denoms",
+    "prefix_match": true
+  },
+  {
+    "name": "polyrith",
+    "kind": false,
+    "pattern": "polyrith",
+    "prefix_match": false
+  },
+  {
+    "name": "abel",
+    "kind": false,
+    "pattern": "abel",
+    "prefix_match": false
+  },
+  {
+    "name": "zify",
+    "kind": false,
+    "pattern": "zify",
+    "prefix_match": true
+  },
+  {
+    "name": "lift",
+    "kind": false,
+    "pattern": "lift",
+    "prefix_match": true
+  },
+  {
+    "name": "wlog",
+    "kind": false,
+    "pattern": "wlog",
+    "prefix_match": true
+  },
+  {
+    "name": "choose",
+    "kind": false,
+    "pattern": "choose",
+    "prefix_match": true
+  },
+  {
+    "name": "set",
+    "kind": false,
+    "pattern": "set",
+    "prefix_match": true
+  },
+  {
+    "name": "bound",
+    "kind": false,
+    "pattern": "bound",
+    "prefix_match": true
+  },
+  {
+    "name": "mono",
+    "kind": false,
+    "pattern": "mono",
+    "prefix_match": false
+  },
+  {
+    "name": "ac_mono",
+    "kind": false,
+    "pattern": "ac_mono",
+    "prefix_match": false
+  },
+  {
+    "name": "apply_rules",
+    "kind": false,
+    "pattern": "apply_rules",
+    "prefix_match": true
+  },
+  {
+    "name": "aesop",
+    "kind": false,
+    "pattern": "aesop",
+    "prefix_match": true
+  },
+  {
+    "name": "hint",
+    "kind": false,
+    "pattern": "hint",
+    "prefix_match": false
+  },
+  {
+    "name": "nudge",
+    "kind": false,
+    "pattern": "nudge",
+    "prefix_match": false
+  }
+]

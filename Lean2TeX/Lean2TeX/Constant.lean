@@ -15,8 +15,8 @@ def Expr.isComplexDef (expr : Expr) : Bool :=
     s.contains "brecOn" || s.contains "casesOn" || s.contains "recOn"
   | _ => false
 
-def Expr.getConstDef : Expr → ExprRecFunc → NodeType → NodeRole → List DisplayType → List (FVarId × String)
-  → MetaM (Option NodeInfo) := fun expr expr_rec parent role styles fvars => do
+def Lean.Expr.getConstDef : Expr → ExprRecFunc → NodeRole → NodeType → List DisplayType → List (FVarId × String)
+  → MetaM (Option NodeInfo) := fun expr expr_rec role parent styles fvars => do
   /- Move `.Def` from the DisplayType list -/
   let styles := styles.erase .Def
   match ← getConstInfo expr.constName! with
@@ -26,7 +26,7 @@ def Expr.getConstDef : Expr → ExprRecFunc → NodeType → NodeRole → List D
       if let some eqns ← getEqnsFor? expr.constName! then
         let mut output_array := #[]
         for eqnName in eqns do
-          let next ← expr_rec (← getConstInfo eqnName).type .MultiLine NodeRole.only styles fvars
+          let next ← expr_rec (← getConstInfo eqnName).type .any/- !!! -/ .MultiLine styles fvars
           output_array := output_array.push next
         let output := "\\\\".intercalate output_array.toList
         let output' := s!"$$\\begin{"{"}cases{"}"}{output}\\end{"{"}cases{"}"}$$"
@@ -34,13 +34,13 @@ def Expr.getConstDef : Expr → ExprRecFunc → NodeType → NodeRole → List D
       else
         return none
     else
-      return (← expr_rec defn.value parent role styles fvars, parent)
+      return (← expr_rec defn.value role parent styles fvars, parent)
   /- __Theorem (or Lemma)__ -/
   | thmInfo thm =>
-    return (← expr_rec thm.type parent role styles fvars, parent)
+    return (← expr_rec thm.type role parent styles fvars, parent)
   /- __Axiom__ -/
   | axiomInfo _axiom =>
-    return (← expr_rec _axiom.type parent role styles fvars, parent)
+    return (← expr_rec _axiom.type role parent styles fvars, parent)
   /- __Inductive__ -/
   | inductInfo _ =>
     return none

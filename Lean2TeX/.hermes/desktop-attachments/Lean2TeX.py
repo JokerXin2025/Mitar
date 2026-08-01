@@ -244,7 +244,7 @@ def __parser(lines, start, basic_indent: int, tactics_cfg, contra = False):
             if match:
                 node = Tactic(line)
                 node.name = tactic.get("name", "")
-                node.position = tactic.get("position", "before")
+                node.put_off = tactic.get("put_off", False)
                 node.args = []
                 for name, label in tactic.get("args", {}).items():
                     var_name = match.group(name)
@@ -430,7 +430,7 @@ def __output(node):
             output.extend(__output(child))
 
     elif node.__class__ == Tactic:
-        if node.position == "before":
+        if not node.put_off:
             output.append(indent + node.step_info)
             output_extend(node.post_recorders)
             output.append(node.raw)
