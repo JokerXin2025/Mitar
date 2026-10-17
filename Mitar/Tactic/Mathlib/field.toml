@@ -1,0 +1,10 @@
+name = "field"
+syntax = "field"
+
+[language.zh]
+tag = "域性质"
+content = "通过代数推导即可证明${goal}"
+
+[language.en]
+tag = "By field arithmetic,"
+content = "the goal ${goal} follows."

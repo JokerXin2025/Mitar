@@ -39,7 +39,19 @@
  *-------------------*/
 
 .codicon-move:before { content: "\eb22" }
+.codicon-close:before { content: "\ea76" }
 .codicon-check:before { content: "\eab2" }
 .codicon-check-all:before { content: "\ebb1" }
-.codicon-copilot-warning:before { content: "\ec38" }
-.codicon-copilot-error:before { content: "\ec4d" }
+.codicon-warning:before { content: "\ea6c" }
+.codicon-error:before { content: "\ea87" }
+.codicon-file-code:before { content: "\eae9" }
+.codicon-file-symlink-file:before { content: "\eaee" }
+.codicon-arrow-right:before { content: "\ea9c" }
+.codicon-comment-discussion-quote:before { content: "\ec5b" }
+.codicon-workspace-unknown:before { content: "\ebc3" }
+.codicon-info:before { content: "\ea74" }
+.codicon-chevron-down:before { content: "\eab4" }
+.codicon-triangle-right:before { content: "\eb70" }
+.codicon-symbol-color:before { content: "\eb5c" }
+.codicon-globe:before { content: "\eb01" }
+.codicon-home:before { content: "\eb06" }

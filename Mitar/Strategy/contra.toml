@@ -1,0 +1,13 @@
+[strategy]
+name = "contra"
+kind = "contradiction"
+nodes = ["proof"]
+syntax = "contra h:ident"
+[language.zh]
+tag = "反证法"
+assumption_tag = "假设"
+assumption_content = "假设结论不成立, 即${hypothesis}"
+[language.en]
+tag = "By contradiction,"
+assumption_tag = "For the contrary assumption,"
+assumption_content = "suppose the conclusion is false, namely ${hypothesis}."

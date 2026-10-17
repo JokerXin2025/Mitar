@@ -1,5 +1,5 @@
 details.goal-block {
-    margin-left: 16px;
+    box-sizing: border-box;
 }
 details.goal-block > summary {
     cursor: pointer;
@@ -17,9 +17,20 @@ details.goal-block > summary .content {
 }
 
 details.goal-block > summary i.toggle-icon {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 28px;
     color: var(--text-muted);
-    margin-top: 6px;
+    margin-left: -10px;
+    margin-right: 4px;
+    font-size: 22px;
+    line-height: 28px;
+    transform-origin: center;
     transition: transform 0.25s;
+}
+
+details.goal-block > summary .tag {
+    margin-left: 4px;
 }
 
 details.goal-block[open] > summary i.toggle-icon {
@@ -34,7 +45,8 @@ details.goal-block[open] > summary i.toggle-icon {
     transition: 0.25s;
 }
 .goal-content.with-line {
-    margin: 16px 0 8px 8px;
+    margin: 16px 0 8px;
+    padding-left: calc(var(--proof-indent) - 2px);
     border-left: 2px solid var(--border-color-light);
 }
 .goal-content.with-line:hover {

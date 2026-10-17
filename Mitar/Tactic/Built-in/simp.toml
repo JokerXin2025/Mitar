@@ -1,0 +1,10 @@
+name = "simp"
+syntax = "simp [lemmas:term]"
+
+[language.zh]
+tag = "化简"
+content = "目标可化简为${goal}"
+
+[language.en]
+tag = "After simplification,"
+content = "the goal becomes ${goal}."

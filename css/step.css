@@ -2,20 +2,33 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    margin-left: 16px;
     border-radius: 8px;
     padding: 8px;
-    padding-right: 38px;
+    border: 1px solid transparent;
     transition: 0.3s;
-    transform: translateX(-15px);
+}
+.step-block:has(> .final-mark) {
+    padding-right: 38px;
 }
 .step-block.calc {
     align-items: center;
 }
 .step-block:hover {
-    background: var(--current-step-color-background);
-    border-left-color: var(--current-step-color);
+    border-color: var(--current-step-color);
     box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.step-block.unknown {
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.step-block.unknown:hover {
+    border-color: var(--proof-mark-error-color-light);
+}
+
+.step-tag.unknown {
+    color: var(--proof-mark-error-color-light);
 }
 
 .step-tag {
@@ -36,10 +49,11 @@
 .step-content {
     flex: 1;
     align-items: center;
+    line-height: 1.75;
 }
 
 .step-rel {
-    width: 24px;
+    min-width: 24px;
     margin: 0 6px;
     text-align: center;
 }

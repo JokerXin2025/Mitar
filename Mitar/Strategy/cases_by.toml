@@ -1,0 +1,15 @@
+[strategy]
+name = "cases_by"
+kind = "cases"
+nodes = ["left", "right"]
+syntax = "cases_by h:ident"
+[language.zh]
+tag = "分类讨论"
+basis_tag = "分类依据"
+basis_content = "对假设${p}的不同情形分别讨论"
+case_tag = "情形 {case}"
+[language.en]
+tag = "By cases,"
+basis_tag = "As the case distinction,"
+basis_content = "consider the possible cases of ${p}"
+case_tag = "In Case {case},"

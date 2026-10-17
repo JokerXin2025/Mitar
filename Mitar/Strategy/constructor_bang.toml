@@ -1,0 +1,17 @@
+[strategy]
+name = "constructor!"
+kind = "decompose"
+dynamic_nodes = true
+syntax = "constructor! constructor:term"
+
+[language.zh]
+tag = "应用指定构造器"
+intro_tag = "构造目标"
+intro_content = "应用指定构造器，并分别证明各字段"
+subgoal_tag = "构造器字段 {case}"
+
+[language.en]
+tag = "Apply the specified constructor"
+intro_tag = "Construct the goal"
+intro_content = "apply the specified constructor and prove each field"
+subgoal_tag = "Constructor field {case},"

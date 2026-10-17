@@ -1,0 +1,13 @@
+{"version": "1.2.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"type": "path",
+   "scope": "",
+   "name": "ProofScript",
+   "manifestFile": "lake-manifest.json",
+   "inherited": false,
+   "dir": "../../ProofScript",
+   "configFile": "lakefile.toml"}],
+ "name": "MitarDemo",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

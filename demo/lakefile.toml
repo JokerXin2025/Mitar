@@ -1,0 +1,11 @@
+name = "MitarDemo"
+version = "1.0.0"
+defaultTargets = ["MitarDemo"]
+
+[[require]]
+name = "ProofScript"
+path = "../../ProofScript"
+
+[[lean_lib]]
+name = "MitarDemo"
+roots = ["MitarDemo.Library", "MitarDemo.Gallery", "MitarDemo.Dependencies", "MitarDemo.Fibonacci"]

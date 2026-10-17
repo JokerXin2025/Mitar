@@ -1,0 +1,16 @@
+[strategy]
+name = "cases_on"
+kind = "cases"
+nodes = []
+dynamic_nodes = true
+syntax = "cases_on value:term"
+[language.zh]
+tag = "分类讨论"
+basis_tag = "分类依据"
+basis_content = "对${p}的不同情形分别讨论"
+case_tag = "情形 {case}"
+[language.en]
+tag = "By cases,"
+basis_tag = "As the case distinction,"
+basis_content = "consider the possible cases of ${p}"
+case_tag = "In Case {case},"

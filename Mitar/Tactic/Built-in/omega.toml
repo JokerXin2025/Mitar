@@ -1,0 +1,9 @@
+name = "omega"
+
+[language.zh]
+tag = "算术"
+content = "通过算术推导即可证明"
+
+[language.en]
+tag = "Arithmetically,"
+content = "the claim follows."

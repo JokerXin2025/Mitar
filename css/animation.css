@@ -1,4 +1,5 @@
-details[open] > *:not(summary) {
+details.goal-block[open] > *:not(summary),
+details.reference-item[open] > .reference-theorems {
     animation: sweep 0.35s ease-out forwards;
     will-change: transform, opacity;
     transform-origin: top;
@@ -11,10 +12,6 @@ details[open] > *:not(summary) {
 
 details .step-block {
     opacity: 0;
-}
-
-details[open] .step-block {
-    animation: slideInStep 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 details details:not([open]) .step-block {
@@ -33,7 +30,8 @@ details[open] .step-block {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    details[open] > *:not(summary),
+    details.goal-block[open] > *:not(summary),
+    details.reference-item[open] > .reference-theorems,
     details[open] .step-block {
         animation: none !important;
         opacity: 1 !important;

@@ -1,0 +1,16 @@
+[strategy]
+name = "witness"
+kind = "decompose"
+tag = "构造性证明"
+nodes = ["data", "proof"]
+syntax = "witness"
+[language.zh]
+tag = "构造性证明"
+intro_tag = "目标拆解"
+intro_content = "将目标拆分为数据构造和性质证明两个子目标"
+subgoal_tag = "子目标 {case}"
+[language.en]
+tag = "As a constructive proof,"
+intro_tag = "To construct the proof,"
+intro_content = "split the goal into data construction and proof subgoals"
+subgoal_tag = "Subgoal {case},"

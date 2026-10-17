@@ -1,0 +1,16 @@
+[strategy]
+name = "split_exist_unique"
+kind = "decompose"
+tag = "拆分存在唯一"
+nodes = ["exist", "unique"]
+syntax = "split_exist_unique"
+[language.zh]
+tag = "拆分存在唯一"
+intro_tag = "目标拆解"
+intro_content = "将目标拆分为存在性和唯一性两个子目标"
+subgoal_tag = "子目标 {case}"
+[language.en]
+tag = "To split existence and uniqueness,"
+intro_tag = "To decompose the goal,"
+intro_content = "split the goal into existence and uniqueness"
+subgoal_tag = "Subgoal {case},"

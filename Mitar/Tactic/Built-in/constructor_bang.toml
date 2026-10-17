@@ -1,0 +1,10 @@
+name = "constructor!"
+syntax = "constructor! constructor:term"
+
+[language.zh]
+tag = "应用指定构造器"
+content = "使用构造器${constructor}后证明${goal}"
+
+[language.en]
+tag = "By the specified constructor,"
+content = "using ${constructor}, prove ${goal}."

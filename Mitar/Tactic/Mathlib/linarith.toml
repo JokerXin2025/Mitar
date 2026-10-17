@@ -1,0 +1,10 @@
+name = "linarith"
+syntax = "linarith"
+
+[language.zh]
+tag = "不等式"
+content = "通过不等式推导即可证明${goal}"
+
+[language.en]
+tag = "By linear arithmetic,"
+content = "the goal ${goal} follows."

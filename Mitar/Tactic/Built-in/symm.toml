@@ -1,0 +1,8 @@
+name = "symm"
+syntax = "symm"
+
+[language.zh]
+tag = "[沉默]"
+
+[language.en]
+tag = "[Silently]"

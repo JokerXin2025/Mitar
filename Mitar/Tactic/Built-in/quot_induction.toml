@@ -1,0 +1,10 @@
+name = "quot_induction"
+syntax = "quot_induction q:term with a:ident"
+
+[language.zh]
+tag = "商归纳"
+content = "不妨令${a}"
+
+[language.en]
+tag = "By quotient induction,"
+content = "it suffices to take ${a}."

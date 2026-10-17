@@ -6,10 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "Mitar"
 version = "0.1.0"
 description = "An automatic informalization tool for mathematical proofs in Lean4"
+license = {file = "LICENSE"}
+dependencies = ["Pygments>=2.18,<3"]
 
 [project.scripts]
-Mitar = "Mitar.cli:main"
+mitar = "Mitar.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["Mitar"]
+include = ["Mitar", "Lean2TeX"]
+
+[tool.setuptools.package-data]
+Lean2TeX = ["config/*.toml"]
+Mitar = ["Templates/*.html", "Rules/*.toml", "Tactic/**/*.toml", "Strategy/*.toml"]

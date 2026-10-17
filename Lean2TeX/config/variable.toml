@@ -1,0 +1,41 @@
+#   Lean2TeX Variable Configuration
+#
+#   [[type]] - each entry defines one type's variable naming:
+#     name      = Lean constant name (e.g., "Real", "Nat", "Int")
+#     default   = short name for fallback when pool exhausted (e.g., "x" → x_1)
+#     var_names = human-readable name pool (tried in order)
+
+[[type]]
+name = "Real"
+default = "x"
+var_names = ["x", "y", "z", "a", "b", "c", "u", "v", "w"]
+
+[[type]]
+name = "Nat"
+default = "n"
+var_names = ["n", "m", "i", "j", "k", "p", "q"]
+
+[[type]]
+name = "Int"
+default = "n"
+var_names = ["n", "m", "i", "j", "k", "p", "q"]
+
+[[type]]
+name = "Rat"
+default = "q"
+var_names = ["r", "s", "t"]
+
+[[type]]
+name = "Prop"
+default = "P"
+var_names = ["P", "Q", "R", "S", "T"]
+
+[[type]]
+name = "Proof"
+default = "h"
+var_names = ["h", "h_1", "h_2", "h_3"]
+
+[[type]]
+name = "Type"
+default = "α"
+var_names = ["\\alpha", "\\beta", "\\gamma", "\\delta"]

@@ -1,0 +1,9 @@
+name = "trivial"
+
+[language.zh]
+tag = "显然"
+content = "该命题显然成立"
+
+[language.en]
+tag = "Clearly,"
+content = "the proposition holds."

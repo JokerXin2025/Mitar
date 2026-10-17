@@ -1,0 +1,10 @@
+name = "norm_num"
+syntax = "norm_num"
+
+[language.zh]
+tag = "数值"
+content = "通过数值计算即可证明${goal}"
+
+[language.en]
+tag = "By numerical normalization,"
+content = "the goal ${goal} follows."

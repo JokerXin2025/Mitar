@@ -1,0 +1,9 @@
+name = "apply_thm"
+
+[language.zh]
+tag = "应用结论"
+content = "根据定理，要证明${goal}，只需证明${goal'}即可"
+
+[language.en]
+tag = "By the theorem,"
+content = "to prove ${goal}, it suffices to prove ${goal'}."

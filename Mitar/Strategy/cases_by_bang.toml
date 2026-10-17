@@ -1,0 +1,16 @@
+[strategy]
+name = "cases_by!"
+kind = "cases"
+nodes = []
+dynamic_nodes = true
+syntax = "cases_by! h:ident"
+[language.zh]
+tag = "递归分类讨论"
+basis_tag = "分类依据"
+basis_content = "递归拆解假设${p}并逐一讨论"
+case_tag = "情形 {case}"
+[language.en]
+tag = "By recursive cases,"
+basis_tag = "As the case distinction,"
+basis_content = "recursively decompose ${p} and consider every case"
+case_tag = "In Case {case},"

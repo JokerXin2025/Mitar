@@ -1,0 +1,16 @@
+[strategy]
+name = "by_cases"
+kind = "cases"
+tag = "分类讨论"
+nodes = ["caseI", "caseII"]
+syntax = "by_cases h:ident : p:term"
+[language.zh]
+tag = "分类讨论"
+basis_tag = "分类依据"
+basis_content = "命题${p}要么成立，要么不成立"
+case_tag = "情形 {case}"
+[language.en]
+tag = "By cases,"
+basis_tag = "As the case distinction,"
+basis_content = "either ${p} holds or it does not"
+case_tag = "In Case {case},"

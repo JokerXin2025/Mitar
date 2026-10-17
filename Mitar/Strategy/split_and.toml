@@ -1,0 +1,16 @@
+[strategy]
+name = "split_and"
+kind = "decompose"
+tag = "拆分合取"
+nodes = ["left", "right"]
+syntax = "split_and"
+[language.zh]
+tag = "拆分合取"
+intro_tag = "目标拆解"
+intro_content = "将目标拆分为子目标逐一证明"
+subgoal_tag = "子目标 {case}"
+[language.en]
+tag = "To split the conjunction,"
+intro_tag = "To decompose the goal,"
+intro_content = "decompose the goal into subgoals and prove them one by one"
+subgoal_tag = "Subgoal {case},"

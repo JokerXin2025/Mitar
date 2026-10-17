@@ -1,0 +1,16 @@
+[strategy]
+name = "split_and!"
+kind = "decompose"
+nodes = []
+dynamic_nodes = true
+syntax = "split_and!"
+[language.zh]
+tag = "递归拆分合取"
+intro_tag = "目标拆解"
+intro_content = "将合取目标递归拆分为全部子目标"
+subgoal_tag = "子目标 {case}"
+[language.en]
+tag = "To split the conjunction recursively,"
+intro_tag = "To decompose the goal,"
+intro_content = "recursively decompose the conjunction into all subgoals"
+subgoal_tag = "Subgoal {case},"

@@ -1,4 +1,3 @@
-
 HANDLERS = {}
 
 def register_rule(name):
@@ -7,9 +6,6 @@ def register_rule(name):
         return func
     return decorator
 
-
-def len_indent(string: str):
-    return len(string) - len(string.lstrip())
 
 def to_roman(num):
     val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]

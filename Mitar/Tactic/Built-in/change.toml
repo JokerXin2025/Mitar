@@ -1,0 +1,9 @@
+name = "change"
+
+[language.zh]
+tag = "重述"
+content = "原命题等价于${goal}"
+
+[language.en]
+tag = "Equivalently,"
+content = "the original proposition is ${goal}."

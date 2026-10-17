@@ -1,0 +1,10 @@
+name = "ring"
+syntax = "ring"
+
+[language.zh]
+tag = "环性质"
+content = "通过代数推导即可证明${goal}"
+
+[language.en]
+tag = "By ring normalization,"
+content = "the goal ${goal} follows."

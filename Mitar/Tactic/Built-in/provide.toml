@@ -1,0 +1,10 @@
+name = "provide"
+syntax = "provide proof:term"
+
+[language.zh]
+tag = "构造"
+content = "断言${proof}就是符合条件的对象"
+
+[language.en]
+tag = "As a witness,"
+content = "${proof} satisfies the required conditions."

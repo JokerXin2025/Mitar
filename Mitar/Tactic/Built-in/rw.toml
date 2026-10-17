@@ -1,0 +1,9 @@
+name = "rw"
+
+[language.zh]
+tag = "变形"
+content = "原命题等价变形为${goal}"
+
+[language.en]
+tag = "Equivalently,"
+content = "the original proposition can be rewritten as ${goal}."

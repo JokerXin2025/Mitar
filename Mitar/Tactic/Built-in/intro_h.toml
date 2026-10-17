@@ -1,0 +1,7 @@
+name = "intro_h"
+
+[language.zh]
+tag = "[沉默]"
+
+[language.en]
+tag = "[Silently]"

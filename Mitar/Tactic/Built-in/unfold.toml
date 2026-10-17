@@ -1,0 +1,10 @@
+name = "unfold"
+syntax = "unfold definitions:(colGt ident)+"
+
+[language.zh]
+tag = "追溯定义"
+content = "根据${definitions}的定义，需要证明${goal}"
+
+[language.en]
+tag = "By definition,"
+content = "after unfolding ${definitions}, it remains to prove ${goal}."

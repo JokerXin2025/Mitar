@@ -64,15 +64,5 @@ function alignAndScaleMath() {
 // 1. 页面窗口大小改变时，实时重新居中分配
 window.addEventListener('resize', alignAndScaleMath);
 
-// 2. 页面加载与公式渲染完成后计算
-document.addEventListener("DOMContentLoaded", function() {
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false}
-        ]
-    });
-    
-    // KaTeX 渲染完毕后，执行完美居中与对齐
-    alignAndScaleMath();
-});
+// 2. 页面加载与 KaTeX 渲染完成后计算
+document.addEventListener("DOMContentLoaded", alignAndScaleMath);

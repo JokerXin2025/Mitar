@@ -1,0 +1,25 @@
+[strategy]
+name = "induction"
+kind = "induction"
+tag = "数学归纳法"
+nodes = ["zero", "succ"]
+syntax = "induction n:ident"
+info_param = "on"
+[language.zh]
+tag = "数学归纳法"
+method = "数学归纳法"
+intro_tag = "归纳对象"
+intro = "对自然数${n}使用<span class='ref-link'>${method}</span>。"
+base_tag = "基础情形"
+base_title = "验证命题对 $0$ 成立"
+step_tag = "归纳步骤"
+step_title = "假设命题对 $k$ 成立，下面证明命题对 $k+1$ 成立"
+[language.en]
+tag = "By induction,"
+method = "mathematical induction"
+intro_tag = "On the induction variable,"
+intro = "on the natural number ${n}, apply <span class='ref-link'>${method}</span>."
+base_tag = "In the base case,"
+base_title = "verify that the proposition holds for $0"
+step_tag = "In the inductive step,"
+step_title = "suppose the proposition holds for $k$, then prove it for $k+1"

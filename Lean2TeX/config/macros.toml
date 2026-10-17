@@ -1,0 +1,251 @@
+# Semantic macros use ProofScript's explicit application arguments.
+
+[[normalization]]
+name = "OfNat.ofNat"
+operation = "select"
+argument = 1
+
+[[normalization]]
+name = "Nat.cast"
+operation = "select"
+argument = 2
+
+[[normalization]]
+name = "Int.cast"
+operation = "select"
+argument = 2
+
+[[relation]]
+name = "Eq"
+symbol = "="
+
+[[relation]]
+name = "Ne"
+symbol = "\\ne"
+
+[[relation]]
+name = "LT.lt"
+symbol = "<"
+
+[[relation]]
+name = "LE.le"
+symbol = "\\leqslant"
+
+[[relation]]
+name = "GT.gt"
+symbol = ">"
+
+[[relation]]
+name = "GE.ge"
+symbol = "\\geqslant"
+
+[[phrase]]
+name = "forall"
+zh = "${body}对一切 $${binder}\\in ${type}$ 成立"
+en = "${body} holds for every $${binder}\\in ${type}$"
+
+[[phrase]]
+name = "exists"
+zh = "存在 $${binder}\\in ${type}$ 使得${body}"
+en = "there exists $${binder}\\in ${type}$ such that ${body}"
+
+[[macro]]
+name = "Eq"
+kind = "relation"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "formula", template = "#0=#1", fixity = "infix", precedence = 50, associativity = "none", child_roles = ["left", "right"] }
+]
+
+[[macro]]
+name = "HAdd.hAdd"
+kind = "operator"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "formula", template = "#0+#1", fixity = "infix", precedence = 65, associativity = "left", child_roles = ["left", "right"] }
+]
+
+[[macro]]
+name = "HMul.hMul"
+kind = "operator"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "formula", template = "#0\\cdot #1", fixity = "infix", precedence = 70, associativity = "left", child_roles = ["left", "right"] }
+]
+
+[[macro]]
+name = "HPow.hPow"
+kind = "operator"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "formula", template = "{#0}^{#1}", fixity = "infix", precedence = 80, associativity = "right", child_roles = ["base", "script"] }
+]
+
+[[macro]]
+name = "And"
+kind = "logic"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "text", template = "#0且#1", fixity = "infix", precedence = 40, associativity = "left" },
+  { name = "prose-zh", mode = "text", template = "#0且#1", fixity = "infix", precedence = 40, associativity = "left" },
+  { name = "prose-en", mode = "text", template = "#0 and #1", fixity = "infix", precedence = 40, associativity = "left" },
+  { name = "debug", mode = "text", template = "And(#0, #1)", fixity = "custom", precedence = 100, associativity = "none" }
+]
+
+[[macro]]
+name = "Not"
+kind = "logic"
+arguments = "explicit"
+styles = [
+  { name = "formula", mode = "text", template = "命题#0不成立", fixity = "prefix", precedence = 45, associativity = "none" },
+  { name = "prose-zh", mode = "text", template = "命题#0不成立", fixity = "prefix", precedence = 45, associativity = "none" },
+  { name = "prose-en", mode = "text", template = "proposition #0 is false", fixity = "prefix", precedence = 45, associativity = "none" }
+]
+
+[[macro]]
+name = "True"
+kind = "const"
+arguments = []
+styles = [{ name = "formula", mode = "text", template = "虚真" }, { name = "prose-zh", mode = "text", template = "虚真" }, { name = "prose-en", mode = "text", template = "true" }]
+
+[[macro]]
+name = "False"
+kind = "const"
+arguments = []
+styles = [{ name = "formula", mode = "text", template = "矛盾" }, { name = "prose-zh", mode = "text", template = "矛盾" }, { name = "prose-en", mode = "text", template = "false" }]
+
+[[macro]]
+name = "Or"
+kind = "logic"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "text", template = "#0或#1", fixity = "infix", precedence = 35, associativity = "left" }, { name = "prose-zh", mode = "text", template = "#0或#1", fixity = "infix", precedence = 35, associativity = "left" }, { name = "prose-en", mode = "text", template = "#0 or #1", fixity = "infix", precedence = 35, associativity = "left" }]
+
+[[macro]]
+name = "Iff"
+kind = "logic"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "text", template = "#0当且仅当#1", fixity = "infix", precedence = 25, associativity = "none" }, { name = "prose-zh", mode = "text", template = "#0当且仅当#1", fixity = "infix", precedence = 25, associativity = "none" }, { name = "prose-en", mode = "text", template = "#0 if and only if #1", fixity = "infix", precedence = 25, associativity = "none" }]
+
+[[macro]]
+name = "Nat.succ"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0+1", fixity = "infix", precedence = 65, associativity = "left" }]
+
+[[macro]]
+name = "HSub.hSub"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0-#1", fixity = "infix", precedence = 65, associativity = "left" }]
+
+[[macro]]
+name = "HDiv.hDiv"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "\\frac{#0}{#1}", fixity = "infix", precedence = 70, associativity = "none" }]
+
+[[macro]]
+name = "Neg.neg"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "-#0", fixity = "prefix", precedence = 75, associativity = "none" }]
+
+[[macro]]
+name = "Inv.inv"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "{#0}^{-1}", fixity = "postfix", precedence = 80, associativity = "none" }]
+
+[[macro]]
+name = "Ne"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\ne #1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "LT.lt"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0<#1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "LE.le"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\leqslant #1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "GT.gt"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0>#1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "GE.ge"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\geqslant #1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "Dvd.dvd"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\mid #1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "Nat"
+kind = "const"
+arguments = []
+styles = [
+  { name = "formula", mode = "formula", template = "\\mathbb{N}", fixity = "atom", precedence = 100 },
+  { name = "Mathbb", mode = "formula", template = "\\mathbb{N}", fixity = "atom", precedence = 100 },
+  { name = "Mathbf", mode = "formula", template = "\\mathbf{N}", fixity = "atom", precedence = 100 }
+]
+
+[[macro]]
+name = "Real"
+kind = "const"
+arguments = []
+styles = [{ name = "formula", mode = "formula", template = "\\mathbb{R}", fixity = "atom", precedence = 100 }]
+
+[[macro]]
+name = "And.left"
+kind = "projection"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0", fixity = "atom", precedence = 100 }]
+
+[[macro]]
+name = "And.right"
+kind = "projection"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0", fixity = "atom", precedence = 100 }]
+
+[[macro]]
+name = "Or.inl"
+kind = "constructor"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0", fixity = "atom", precedence = 100 }]
+
+[[macro]]
+name = "Or.inr"
+kind = "constructor"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0", fixity = "atom", precedence = 100 }]
+
+[[macro]]
+name = "Membership.mem"
+kind = "relation"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\in #1", fixity = "infix", precedence = 50, associativity = "none" }]
+
+[[macro]]
+name = "Inter.inter"
+kind = "operator"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "#0\\cap #1", fixity = "infix", precedence = 70, associativity = "left" }]
+
+[[macro]]
+name = "Set"
+kind = "type"
+arguments = "explicit"
+styles = [{ name = "formula", mode = "formula", template = "\\mathcal{P}(#0)", fixity = "application", precedence = 90 }]

@@ -1,0 +1,16 @@
+[strategy]
+name = "split_suffice_necess"
+kind = "decompose"
+tag = "拆分充分必要"
+nodes = ["suffice", "necess"]
+syntax = "split_suffice_necess"
+[language.zh]
+tag = "拆分充分必要"
+intro_tag = "目标拆解"
+intro_content = "将目标拆分为充分性和必要性两个子目标"
+subgoal_tag = "子目标 {case}"
+[language.en]
+tag = "To split the equivalence,"
+intro_tag = "To decompose the goal,"
+intro_content = "split the equivalence into sufficiency and necessity"
+subgoal_tag = "Subgoal {case},"

@@ -7,20 +7,28 @@ CURRENT_DIR = Path(__file__).absolute().parent
 
 # Special
 
-from .Special.have import rule_have
-from .Special.calc import rule_calc
+from .have import rule_have
+from .calc import rule_calc
+from .infer import rule_infer
+from .diagram import rule_svg
+from .remark import rule_remark
+from .admit import rule_admit
+from .embed import rule_embed
 
 
 # Strategy
 
-from .Strategy.Induction import rule_Induction
-from .Strategy.Contradiction import rule_Contradiction
-from .Strategy.Cases import rule_Cases
+from Mitar.strategy import register_strategies
 
 
 # Tactic
 
-from .Tactics import tactic_register
+from Mitar.tactic import register_generic_tactics, tactic_register_dir
+
 
 def Initialize():
-    tactic_register(CURRENT_DIR / "Tactics.toml")
+    """Load built-in Strategy and Tactic configurations."""
+
+    register_strategies()
+    tactic_register_dir(CURRENT_DIR.parent / "Tactic")
+    register_generic_tactics()

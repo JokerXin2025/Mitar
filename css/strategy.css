@@ -1,8 +1,8 @@
 .strategy-block {
-    margin-left: 24px;
+    box-sizing: border-box;
     border-radius: 8px;
-    padding: 0 16px 8px 0;
-    transition: 0.25s;
+    padding: 0 var(--proof-inset) 8px var(--proof-indent);
+    transition: background-color 0.25s, box-shadow 0.25s;
 }
 .strategy-block:hover {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
@@ -11,28 +11,66 @@
 
 .strategy-block.cases {
     border-left: 2px solid var(--border-color);
+    padding-left: calc(var(--proof-indent) - 2px);
 }
 .strategy-block.induction {
     background: var(--induction-color-background);
     border-left: 2px solid var(--induction-color);
+    padding-left: calc(var(--proof-indent) - 2px);
 }
 .strategy-block.contradiction {
     background: var(--contradiction-color-background);
     border-left: 2px solid var(--contradiction-color);
+    padding-left: calc(var(--proof-indent) - 2px);
+}
+.strategy-block.decompose {
+    border-left: 2px solid var(--border-color);
+    padding-left: calc(var(--proof-indent) - 2px);
+}
+.strategy-block.remark {
+    background: var(--remark-color-background);
+    padding: 12px var(--strategy-content-inset) 10px var(--strategy-content-indent);
+}
+.strategy-block.cause {
+    background: var(--cause-color-background);
+    padding: 12px var(--strategy-content-inset) 10px var(--strategy-content-indent);
+}
+
+.annotation-icon {
+    display: block;
+    line-height: 2;
+}
+.strategy-block .annotation-icon .codicon {
+    font-size: 14px;
+}
+.strategy-block.remark .annotation-icon .codicon {
+    color: var(--remark-color);
+}
+.strategy-block.cause .annotation-icon .codicon {
+    color: var(--cause-color);
+}
+
+.annotation-content {
+    line-height: 1.75;
 }
 
 .tag.cases {
     color: var(--cases-color);
     border: 1px solid var(--cases-color-light);
-    margin: 20px 0 0 20px;
+    margin: 20px 0 0 calc(var(--strategy-content-indent) - var(--proof-indent));
 }
 .tag.induction {
     color: var(--induction-color);
     border: 1px solid var(--induction-color-light);
-    margin: 20px 0 0 20px;
+    margin: 20px 0 0 calc(var(--strategy-content-indent) - var(--proof-indent));
 }
 .tag.contradiction {
     color: var(--contradiction-color);
     border: 1px solid var(--contradiction-color-light);
-    margin: 20px 0 0 20px;
+    margin: 20px 0 0 calc(var(--strategy-content-indent) - var(--proof-indent));
+}
+.tag.decompose {
+    color: var(--cases-color);
+    border: 1px solid var(--cases-color-light);
+    margin: 20px 0 0 calc(var(--strategy-content-indent) - var(--proof-indent));
 }

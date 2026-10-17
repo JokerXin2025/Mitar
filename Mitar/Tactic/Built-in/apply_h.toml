@@ -1,0 +1,9 @@
+name = "apply_h"
+
+[language.zh]
+tag = "转移"
+content = "要证明${goal}，只需证明${goal'}即可"
+
+[language.en]
+tag = "By the hypothesis,"
+content = "to prove ${goal}, it suffices to prove ${goal'}."

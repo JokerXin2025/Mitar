@@ -251,7 +251,8 @@ tmbootpicker.efi
 
 
 # --------------------------------------------------
-# Mitar | Lean2TeX
+# Mitar | ProofScript
 # --------------------------------------------------
 
-*_Lean2TeX.lean
+.Mitar/build/
+.ProofScript/
